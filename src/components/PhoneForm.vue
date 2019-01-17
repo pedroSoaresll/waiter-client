@@ -67,7 +67,7 @@
                     return false
                 }
 
-                const phone = this.mobilePhone;
+                const phone = `55${this.mobilePhone}`;
                 const step = this.step;
 
                 this.$apollo.mutate({
