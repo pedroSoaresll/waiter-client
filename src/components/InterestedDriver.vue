@@ -47,12 +47,12 @@
 
 
         <!--Passo 4 dados adicional -->
-        <v-stepper-step step="4" v-bind:editable="(step >= 4) ? true : false">Informacao adicional</v-stepper-step>
+        <v-stepper-step step="4" :complete="steps.SEND_SURVEY_DRIVER.complete" :rules="[() => !steps.SEND_SURVEY_DRIVER.invalid]">Informacao adicional</v-stepper-step>
         <v-stepper-content step="4">
             <v-container>
-                <!--<SurveyDriver/>-->
+                <SurveyDriver ref="surveyDriver"/>
 
-                <v-btn color="primary" @click="step = step+1">Continuar</v-btn>
+                <v-btn color="primary" @click="surveyDriver">Continuar</v-btn>
                 <v-btn flat @click="step = step-1">Voltar</v-btn>
             </v-container>
         </v-stepper-content>
@@ -87,12 +87,12 @@
             CodePhoneConfirmForm,
             PhoneForm,
             BasicDriver,
-            //SurveyDriver,
+            SurveyDriver,
             //DocumentsColection
         },
         data() {
             return {
-                step: 1,
+                step: this.$store.getters['lead/step'],
                 openVerify: false,
             }
         },
@@ -126,6 +126,12 @@
                 if (this.$refs.basicDriver.isValid()) {
                     this.$refs.basicDriver.openVerify(true);
                     this.step = 4
+                }
+            },
+            surveyDriver() {
+                if (this.$refs.surveyDriver.isValid()) {
+                    this.$refs.surveyDriver.openVerify(true);
+                    this.step = 5
                 }
             }
         },

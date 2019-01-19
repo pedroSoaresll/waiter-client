@@ -47,7 +47,7 @@
             valid: false,
             verify: false,
             mobilePhone: '',
-            step: 1,
+            step: '1',
             nameRules: [
                 v => !!v || 'Número de celular é obrigatorio!',
                 v => `${v}`.length === 11 || 'O número deve ter 11 dígitos com DD.'
@@ -79,9 +79,9 @@
                 }).then((result) => {
                     this.verify = false;
                     const { data: { createLead: { id, step: stepQuery, phone_number: phoneQuery }} } = result;
-                    this.$store.commit('lead/setLeadId', id);
+                    this.$store.commit('lead/setDriverId', id);
                     this.$store.commit('lead/setMobilePhone', phoneQuery);
-                    this.$store.commit('lead/setStep', stepQuery+1);
+                    this.$store.commit('lead/setStep', parseInt(stepQuery)+1);
                     this.$store.commit('lead/setSteps', {GET_PHONE: { complete: true, invalid: false}});
                     console.log(result);
                 }).catch((error) => {
@@ -93,7 +93,6 @@
                 })
             },
             isValid() {
-                this.$store.commit('lead/setSteps', {GET_PHONE: { complete: false, invalid: !this.valid}});
                 return this.valid;
             }
         },

@@ -14,6 +14,15 @@
                             required
                     ></v-text-field>
                 </v-flex>
+                <v-flex xs12 md4 >
+                    <v-text-field
+                            v-model="cpf"
+                            :rules="cpfRules"
+                            prepend-icon="assignment_ind"
+                            label="CPF:"
+                            required
+                    ></v-text-field>
+                </v-flex>
                 <v-flex
                         xs12
                         md5
@@ -52,16 +61,19 @@
         props: ['phoneNumber'],
         data: () => ({
             city: null,
+            cpf: null,
             citys: [
-                'São Paulo', 'Rio de Janeiro', 'Belo-orizonte', 'Curitiba', 'Grande São Paulo',
-            ],
+                'São Paulo', 'Rio de Janeiro', 'Belo-orizonte', 'Curitiba', 'Grande São Paulo'],
             valid: false,
             verify: false,
             mobilePhone: '',
             email: '',
             name: '',
-            step: 3,
+            step: '3',
             nameRules: [
+                v => !!v || 'Nome é obrigatorio!'
+            ],
+            cpfRules: [
                 v => !!v || 'Nome é obrigatorio!'
             ],
             cityRules: [
@@ -82,7 +94,7 @@
                 this.verify = val;
                 if (!val) return;
 
-                const {city, name, email, step } = this;
+                const {city, name, email, step, cpf } = this;
 
                 this.$apollo.mutate({
                     mutation: BASIC_INFORMATION,
@@ -91,8 +103,9 @@
                         code2fa: this.$store.getters['lead/code2fa'],
                         city,
                         name,
+                        cpf,
                         email,
-                        step: `${step}`
+                        step
                     },
                 }).then((result) => {
                     this.verify = false;
@@ -102,10 +115,13 @@
                     this.$store.commit('lead/setWorkCity', city);
                     this.$store.commit('lead/setName', name);
                     this.$store.commit('lead/setSteps', {GET_BASIC: { complete: true, invalid: !this.valid}});
+                    this.$store.commit('lead/setStep', parseInt(this.step) + 1);
+
                 }).catch((error) => {
                     alert(`Error from ${error}`)
                     this.verify = false;
                     this.$store.commit('lead/setSteps', {GET_BASIC: { complete: false, invalid: !this.valid}});
+                    this.$store.commit('lead/setStep', this.step);
 
                     console.error(error)
                 })

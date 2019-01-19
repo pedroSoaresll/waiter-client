@@ -21,29 +21,33 @@ export const SURVEY_DRIVER = gql`
         $phone: String!,
         $step: String!,
         $code2fa: String!,
-        $driver99: Boolean!,
-        $driverUber: Boolean!,
-        $age: Boolean!,
-        $garage: Boolean!,
-        $cnhPoints: String!
+        $survey_be_over_21: Boolean
+        $survey_has_garage: Boolean
+        $survey_low_points: Boolean
+        $survey_app_99: Boolean
+        $survey_app_uber: Boolean
         ) {
       updateLead(input: { 
            phone_number: $phone,
            step: $step,
            code2fa: $code2fa,
-           driver99: $driver99,
-           driverUber: $driverUber,
-           garage: $garage,
-           cnhPoints: $cnhPoints
+           survey_be_over_21: $survey_be_over_21,
+           survey_has_garage: $survey_has_garage,
+           survey_low_points: $survey_low_points,
+           survey_app_99: $survey_app_99,
+           survey_app_uber: $survey_app_uber,
            }) {
         id,
-        step
+        step,
+        survey_app_uber,
+        survey_app_99,
       }
     }`;
 
 export const BASIC_INFORMATION = gql`
     mutation  updateLead(
         $name: String!,
+        $cpf: String!,
         $email: String!,
         $city: String!,
         $step: String!,
@@ -52,6 +56,7 @@ export const BASIC_INFORMATION = gql`
         ) {
       updateLead(input: { 
            name: $name,
+           cpf: $cpf,
            email: $email,
            work_city: $city,
            step: $step,
@@ -62,8 +67,8 @@ export const BASIC_INFORMATION = gql`
         id,
         status,
         step,
+        cpf,
         email,
-        name,
         work_city,
       }
     }`;

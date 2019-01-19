@@ -55,17 +55,28 @@
                 update: data => data,
                 result(data) {
                     if (!data.loading) {
-                        if (data.error === undefined) {
+                        if (data.error !== undefined || data.lead === null) {
+                            this.valid = false;
+                            this.$store.commit('lead/setSteps', {
+                                GET_CODE_CONFIRMATION: {
+                                    complete: false,
+                                    invalid: true
+                                }
+                            });
+                            this.$store.commit('lead/setStep', this.step);
+
+                        } else {
+
                             this.$store.commit('lead/setSteps', {
                                 GET_CODE_CONFIRMATION: {
                                     complete: true,
-                                    invalid: false
+                                    invalid: !this.valid
                                 }
                             });
                             this.$store.commit('lead/setCode2fa', this.code2fa);
-                            this.$store.commit('lead/setStep', this.step+1);
+                            this.$store.commit('lead/setStep', parseInt(this.step) + 1);
                         }
-                        if (data.error === undefined &&  this.code2fa !== '')
+                        if (data.error === undefined && this.code2fa !== '')
                             this.verify = false;
                         if (data.lead !== null) {
                         }
@@ -90,7 +101,6 @@
                 })
             },
             isValid() {
-                this.$store.commit('lead/steps', {GET_CODE_CONFIRMATION: {complete: false, invalid: !this.valid}});
                 return this.valid;
             }
         },

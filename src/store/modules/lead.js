@@ -5,7 +5,13 @@ export const state = {
     driverId: null,
     email: null,
     name: null,
+    cpf: null,
     work_city: null,
+    survey_app_99: false,
+    survey_app_uber: false,
+    survey_be_over_21: false,
+    survey_has_garage: false,
+    survey_low_points: false,
     steps: {
         GET_PHONE: {complete: false, invalid: false},
         GET_BASIC: {complete: false, invalid: false},
@@ -43,9 +49,16 @@ export const mutations = {
     setName(state, _name) {
         state.name = _name
     },
+    setCpf(state, _cpf) {
+        state.cpf = _cpf
+    },
     setWorkCity(state, _work_city) {
         state.work_city = _work_city
     },
+    setSurvey(state, survey) {
+        state = {state, ...survey}
+    },
+
 }
 
 export const getters = {
@@ -70,7 +83,25 @@ export const getters = {
     name: state => {
         return state.name
     },
+    cpf: state => {
+        return state.cpf
+    },
     email: state => {
         return state.email
+    },
+    survey_app_99: state => {
+        return state.survey_app_99
+    },
+    survey_app_uber: state => {
+        return state.survey_app_uber
+    },
+    survey_be_over_21: state => {
+        return state.survey_be_over_21
+    },
+    survey_has_garage: state => {
+        return state.survey_has_garage
+    },
+    survey_low_points: state => {
+        return state.survey_low_points
     },
 }
