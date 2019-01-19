@@ -47,7 +47,7 @@
             valid: false,
             verify: false,
             mobilePhone: '',
-            step: 'AWAIT_CODE',
+            step: 1,
             nameRules: [
                 v => !!v || 'Número de celular é obrigatorio!',
                 v => `${v}`.length === 11 || 'O número deve ter 11 dígitos com DD.'
@@ -67,8 +67,8 @@
                     return false
                 }
 
-                const phone = `55${this.mobilePhone}`;
-                const step = this.step;
+                const phone = `${this.mobilePhone}`;
+                const step = `${this.step}`;
 
                 this.$apollo.mutate({
                     mutation: CREATE_LEAD,
@@ -78,15 +78,15 @@
                     },
                 }).then((result) => {
                     this.verify = false;
-                    const { data: { createLead: { id, driver, step: stepQuery, phone: phoneQuery }} } = result;
+                    const { data: { createLead: { id, step: stepQuery, phone_number: phoneQuery }} } = result;
                     this.$store.commit('lead/setLeadId', id);
                     this.$store.commit('lead/setMobilePhone', phoneQuery);
-                    this.$store.commit('lead/setStep', stepQuery);
+                    this.$store.commit('lead/setStep', stepQuery+1);
                     this.$store.commit('lead/setSteps', {GET_PHONE: { complete: true, invalid: false}});
                     console.log(result);
                 }).catch((error) => {
-                    alert(`Error from ${error}`);
-                    this.$store.commit('lead/setSteps', {GET_PHONE: { complete: true, invalid: true}});
+                    this.$store.commit('lead/setStep', this.step);
+                    this.$store.commit('lead/setSteps', {GET_PHONE: { complete: false, invalid: true}});
                     this.verify = false;
 
                     console.error(error)

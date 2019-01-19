@@ -1,8 +1,11 @@
 export const state = {
     mobilePhone: null,
     code2fa: null,
-    step: null,
-    driver: {},
+    step: 1,
+    driverId: null,
+    email: null,
+    name: null,
+    work_city: null,
     steps: {
         GET_PHONE: {complete: false, invalid: false},
         GET_BASIC: {complete: false, invalid: false},
@@ -15,14 +18,11 @@ export const state = {
 }
 
 export const mutations = {
-    setLeadId(state, _leadId) {
-        state.leadId = _leadId
-    },
     setStep(state, _step) {
         state.step = _step
     },
-    setDriver(state, _driver) {
-        state.driver = {...state.driver, ..._driver}
+    setDriverId(state, _driverId) {
+        state.driverId = _driverId
     },
     setSteps(state, _steps) {
         state.steps = {...state.steps, ..._steps}
@@ -34,18 +34,21 @@ export const mutations = {
     setCode2fa(state, _code2fa) {
         state.code2fa = _code2fa
     },
-    delLead(state) {
-        state.mobilePhone = null
-        state.step = null
-        state.driver = {}
-        state.leadId = null
+    delStep(state) {
+        state.step = 1
+    },
+    setEmail(state, _email) {
+        state.email = _email
+    },
+    setName(state, _name) {
+        state.name = _name
+    },
+    setWorkCity(state, _work_city) {
+        state.work_city = _work_city
     },
 }
 
 export const getters = {
-    leadId: state => {
-        return state.leadId
-    },
     mobilePhone: state => {
         return state.mobilePhone
     },
@@ -58,7 +61,16 @@ export const getters = {
     steps: state => {
         return state.steps
     },
-    driver: state => {
-        return state.driver
+    driverId: state => {
+        return state.driverId
+    },
+    work_city: state => {
+        return state.work_city
+    },
+    name: state => {
+        return state.name
+    },
+    email: state => {
+        return state.email
     },
 }

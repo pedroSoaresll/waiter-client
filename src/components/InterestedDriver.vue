@@ -3,20 +3,22 @@
 
 
         <!--Passo 1 enviar sms -->
-        <v-stepper-step step="1" :complete="steps.GET_PHONE.complete || false" :rules="[() => !steps.GET_PHONE.invalid]">
+        <v-stepper-step step="1" :complete="steps.GET_PHONE.complete || false"
+                        :rules="[() => !steps.GET_PHONE.invalid]">
             Informe seu Celular
         </v-stepper-step>
         <v-stepper-content step="1">
             <v-container>
-                <PhoneForm btn-text="Enviar convite" phone-number="11" ref="phoneForm"/>
-                <v-btn color="primary" @click="sendSms" >Enviar Convite</v-btn>
+                <PhoneForm btn-text="Enviar convite" ref="phoneForm"/>
+                <v-btn color="primary" @click="sendSms">Enviar Convite</v-btn>
             </v-container>
         </v-stepper-content>
         <!--Fim 1 enviar sms -->
 
 
         <!--Passo 2 confirmar sms -->
-        <v-stepper-step step="2" :complete="steps.GET_CODE_CONFIRMATION.complete" :rules="[() => !steps.GET_CODE_CONFIRMATION.invalid]">
+        <v-stepper-step step="2" :complete="steps.GET_CODE_CONFIRMATION.complete"
+                        :rules="[() => !steps.GET_CODE_CONFIRMATION.invalid]">
             Confirme seu cadastro:
         </v-stepper-step>
         <v-stepper-content step="2">
@@ -29,14 +31,15 @@
         <!--Fim 2 confirmar sms -->
 
 
-
         <!--Passo 3 dados basicos -->
-        <v-stepper-step step="3" v-bind:editable="(step >= 3) ? true : false">Seus Dados</v-stepper-step>
+        <v-stepper-step step="3" :complete="steps.GET_BASIC.complete" :rules="[() => !steps.GET_BASIC.invalid]">Seus
+            Dados
+        </v-stepper-step>
         <v-stepper-content step="3">
             <v-container>
-                <BasicDriver/>
+                <BasicDriver ref="basicDriver"/>
 
-                <v-btn color="primary" @click="step = step+1">Continuar</v-btn>
+                <v-btn color="primary" @click="basiInfoLead">Continuar</v-btn>
                 <v-btn flat @click="step = step-1">Voltar</v-btn>
             </v-container>
         </v-stepper-content>
@@ -47,7 +50,7 @@
         <v-stepper-step step="4" v-bind:editable="(step >= 4) ? true : false">Informacao adicional</v-stepper-step>
         <v-stepper-content step="4">
             <v-container>
-                <SurveyDriver/>
+                <!--<SurveyDriver/>-->
 
                 <v-btn color="primary" @click="step = step+1">Continuar</v-btn>
                 <v-btn flat @click="step = step-1">Voltar</v-btn>
@@ -60,7 +63,7 @@
         <v-stepper-step step="5" v-bind:editable="(step >= 5) ? true : false">Enviar documentacao</v-stepper-step>
         <v-stepper-content step="5">
             <v-container>
-                <DocumentsColection/>
+                <!--<DocumentsColection/>-->
 
                 <v-btn color="primary" @click="step = step+1">Continuar</v-btn>
                 <v-btn flat @click="step = step-1">Voltar</v-btn>
@@ -77,15 +80,15 @@
     import SurveyDriver from './SurveyDriver';
     import DocumentsColection from './DocumentsColection';
 
-    import { mapGetters } from 'vuex'
+    import {mapGetters} from 'vuex'
 
     export default {
         components: {
             CodePhoneConfirmForm,
             PhoneForm,
             BasicDriver,
-            SurveyDriver,
-            DocumentsColection
+            //SurveyDriver,
+            //DocumentsColection
         },
         data() {
             return {
@@ -114,11 +117,15 @@
                 }
             },
             verifyPhoneNumber() {
-                console.warn(this.$refs.codePhoneConfirmForm.isValid())
                 if (this.$refs.codePhoneConfirmForm.isValid()) {
-                    console.warn(2)
                     this.$refs.codePhoneConfirmForm.openVerify(true);
-                    this.step = 3
+                    this.step = 3;
+                }
+            },
+            basiInfoLead() {
+                if (this.$refs.basicDriver.isValid()) {
+                    this.$refs.basicDriver.openVerify(true);
+                    this.step = 4
                 }
             }
         },

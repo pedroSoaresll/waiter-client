@@ -29,7 +29,10 @@
     export default {
         props: [],
         data: () => ({
+            verify: false,
+            skipQuery: true,
             valid: false,
+            step: 2,
             code2fa: '',
             codeRules: [
                 v => !!v || 'Digite o codigo que recebeu via sms!',
@@ -38,14 +41,13 @@
         }),
 
         mounted() {
-
             this.code2fa = this.$store.getters['lead/code2fa'];
         },
         apollo: {
             lead: {
                 query: VERIFY_CODE_LEAD,
                 skip() {
-                    return false;
+                    return this.skipQuery;
                 },
                 variables() {
                     return {phone: '', code2fa: ''}
@@ -60,17 +62,13 @@
                                     invalid: false
                                 }
                             });
+                            this.$store.commit('lead/setCode2fa', this.code2fa);
+                            this.$store.commit('lead/setStep', this.step+1);
                         }
-                        if (data.error === undefined &&  code2fa !== '')
-                        this.verify = false;
-                        // if (result.data.lead === null) {
-                        //     throw new Error('Código inválido!');
-                        // }
-                        // const {data: {lead: {id, driver, step,}}} = result;
-                        // this.$store.commit('lead/setCode2fa', code2fa);
-                        // this.$store.commit('lead/setStep', step);
-
-
+                        if (data.error === undefined &&  this.code2fa !== '')
+                            this.verify = false;
+                        if (data.lead !== null) {
+                        }
                     }
                 },
             },
@@ -85,6 +83,7 @@
                     return false
                 }
 
+                this.$apollo.queries.lead.skip = false;
                 this.$apollo.queries.lead.refetch({
                     phone: this.$store.getters['lead/mobilePhone'],
                     code2fa: this.code2fa,

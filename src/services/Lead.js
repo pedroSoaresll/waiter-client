@@ -2,23 +2,17 @@ import gql from 'graphql-tag'
 
 export const CREATE_LEAD = gql`
     mutation newLead($phone: String!, $step: String!) {
-      createLead(input: { phone: $phone, step: $step }) {
+      createLead(input: { phone_number: $phone, step: $step }) {
         id,
-        phone
+        phone_number
       }
     }`;
 export const VERIFY_CODE_LEAD = gql`
     query verify($phone: String!, $code2fa: String!) {
-      lead(phone: $phone, code2fa: $code2fa) {
+      lead(phone_number: $phone, code2fa: $code2fa) {
          id,
-         phone,
+         phone_number,
          step,
-         driver {
-            id,
-            gender,
-            name,
-            updated_at 
-          }
       }
     }`;
 
@@ -34,7 +28,7 @@ export const SURVEY_DRIVER = gql`
         $cnhPoints: String!
         ) {
       updateLead(input: { 
-           phone: $phone,
+           phone_number: $phone,
            step: $step,
            code2fa: $code2fa,
            driver99: $driver99,
@@ -52,13 +46,24 @@ export const BASIC_INFORMATION = gql`
         $name: String!,
         $email: String!,
         $city: String!,
+        $step: String!,
+        $phone: String!,
+        $code2fa: String!,
         ) {
       updateLead(input: { 
            name: $name,
            email: $email,
-           city: $city,
+           work_city: $city,
+           step: $step,
+           phone_number: $phone,
+           code2fa: $code2fa,
+           
            }) {
         id,
-        step
+        status,
+        step,
+        email,
+        name,
+        work_city,
       }
     }`;
