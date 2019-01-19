@@ -23,7 +23,6 @@
             },
             title: {
                 default: undefined,
-                type: Function
             },
         },
         data: () => ({
@@ -49,7 +48,7 @@
                     fr.addEventListener('load', () => {
                         this.imageUrl = fr.result
                         this.imageFile = files[0]
-                        fileChangedCallback({imageUrl: this.imageUrl, imageFile: this.imageFile});
+                        this.fileChangedCallback({imageUrl: this.imageUrl, imageFile: this.imageFile});
 
                     })
                 } else {

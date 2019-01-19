@@ -60,16 +60,55 @@
 
 
         <!--Passo 5 dados adicional -->
-        <v-stepper-step step="5" v-bind:editable="(step >= 5) ? true : false">Enviar documentacao</v-stepper-step>
+        <v-stepper-step step="5" :complete="steps.SEND_DOCUMENTS.complete" :rules="[() => !steps.SEND_DOCUMENTS.invalid]">Enviar documentos</v-stepper-step>
         <v-stepper-content step="5">
             <v-container>
-                <!--<DocumentsColection/>-->
+                <DocumentsColection ref="documentsColection"/>
 
-                <v-btn color="primary" @click="step = step+1">Continuar</v-btn>
+                <v-btn color="primary" @click="documentsColection">Continuar</v-btn>
                 <v-btn flat @click="step = step-1">Voltar</v-btn>
             </v-container>
         </v-stepper-content>
         <!--Fim 5 dados adicional -->
+
+
+        <!--Passo 6 dados apps -->
+        <v-stepper-step step="6" :complete="steps.SEND_DOCUMENTS.complete" :rules="[() => !steps.SEND_DOCUMENTS.invalid]">Aplicativos</v-stepper-step>
+        <v-stepper-content step="6">
+            <v-container>
+                <AppsDriver/>
+
+                <v-btn color="primary" @click="documentsColection">Continuar</v-btn>
+                <v-btn flat @click="step = step-1">Voltar</v-btn>
+            </v-container>
+        </v-stepper-content>
+        <!--Fim 6 dados apps -->
+
+
+        <!--Passo 7 -->
+        <v-stepper-step step="7" :complete="steps.SEND_DOCUMENTS.complete" :rules="[() => !steps.SEND_DOCUMENTS.invalid]">Pagamento</v-stepper-step>
+        <v-stepper-content step="7">
+            <v-container>
+                <!--<DocumentsColection ref="documentsColection"/>-->
+
+                <v-btn color="primary" @click="documentsColection">Continuar</v-btn>
+                <v-btn flat @click="step = step-1">Voltar</v-btn>
+            </v-container>
+        </v-stepper-content>
+        <!--Fim 7  -->
+
+
+        <!--Passo 8 -->
+        <v-stepper-step step="7" :complete="steps.SEND_DOCUMENTS.complete" :rules="[() => !steps.SEND_DOCUMENTS.invalid]">Reserva do carro:</v-stepper-step>
+        <v-stepper-content step="7">
+            <v-container>
+                <!--<DocumentsColection ref="documentsColection"/>-->
+
+                <v-btn color="primary" @click="documentsColection">Continuar</v-btn>
+                <v-btn flat @click="step = step-1">Voltar</v-btn>
+            </v-container>
+        </v-stepper-content>
+        <!--Fim 8 -->
     </v-stepper>
 </template>
 
@@ -81,14 +120,16 @@
     import DocumentsColection from './DocumentsColection';
 
     import {mapGetters} from 'vuex'
+    import AppsDriver from "./AppsDriver";
 
     export default {
         components: {
+            AppsDriver,
+            DocumentsColection,
             CodePhoneConfirmForm,
             PhoneForm,
             BasicDriver,
             SurveyDriver,
-            //DocumentsColection
         },
         data() {
             return {
@@ -132,6 +173,12 @@
                 if (this.$refs.surveyDriver.isValid()) {
                     this.$refs.surveyDriver.openVerify(true);
                     this.step = 5
+                }
+            },
+            documentsColection() {
+                if (this.$refs.documentsColection.isValid()) {
+                    this.$refs.documentsColection.openVerify(true);
+                    this.step = 6
                 }
             }
         },

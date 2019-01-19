@@ -12,12 +12,25 @@ export const state = {
     survey_be_over_21: false,
     survey_has_garage: false,
     survey_low_points: false,
+    license_number: false,
+    emergency_2_name: false,
+    emergency_2_phone_number: false,
+    emergency_1_name: false,
+    emergency_1_phone_number: false,
+    address_state: false,
+    address_city: false,
+    address_neighborhood: false,
+    address_street_details: false,
+    address_street_no_number: false,
+    address_street_name: false,
+    address_postal_code: false,
     steps: {
         GET_PHONE: {complete: false, invalid: false},
         GET_BASIC: {complete: false, invalid: false},
         GET_CODE_CONFIRMATION: {complete: false, invalid: false},
         SEND_SURVEY_DRIVER: {complete: false, invalid: false},
         SEND_DOCUMENTS: {complete: false, invalid: false},
+        COMPLETE_INFO: {complete: false, invalid: false},
     }
     ,
     leadId: null,
@@ -57,6 +70,9 @@ export const mutations = {
     },
     setSurvey(state, survey) {
         state = {state, ...survey}
+    },
+    setInfo(state, info) {
+        state = {state, ...info}
     },
 
 }
@@ -103,5 +119,41 @@ export const getters = {
     },
     survey_low_points: state => {
         return state.survey_low_points
+    },
+    license_number: state => {
+        return state.license_number
+    },
+    emergency_2_name: state => {
+        return state.emergency_2_name
+    },
+    emergency_2_phone_number: state => {
+        return state.emergency_2_phone_number
+    },
+    emergency_1_name: state => {
+        return state.emergency_1_name
+    },
+    emergency_1_phone_number: state => {
+        return state.emergency_1_phone_number
+    },
+    address_state: state => {
+        return state.address_state
+    },
+    address_city: state => {
+        return state.address_city
+    },
+    address_neighborhood: state => {
+        return state.address_neighborhood
+    },
+    address_street_details: state => {
+        return state.address_street_details
+    },
+    address_street_no_number: state => {
+        return state.address_street_no_number
+    },
+    address_street_name: state => {
+        return state.address_street_name
+    },
+    address_postal_code: state => {
+        return state.address_postal_code
     },
 }

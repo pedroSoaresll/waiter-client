@@ -20,6 +20,7 @@
                             :rules="cpfRules"
                             prepend-icon="assignment_ind"
                             label="CPF:"
+                            mask="###.###.###-##"
                             required
                     ></v-text-field>
                 </v-flex>

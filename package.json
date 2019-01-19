@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "URL_PREFIX=http://localhost:4000 && vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -16,6 +16,7 @@
     "apollo-link-http": "^1.5.9",
     "aws-amplify": "^1.1.18",
     "aws-amplify-vue": "^0.2.5",
+    "axios": "^0.18.0",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
     "vue": "^2.5.21",

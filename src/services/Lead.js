@@ -72,3 +72,45 @@ export const BASIC_INFORMATION = gql`
         work_city,
       }
     }`;
+
+export const COMPLETE_INFO = gql`
+    mutation  updateLead(
+        $license_number: String,
+        $emergency_2_name: String,
+        $emergency_2_phone_number: String,
+        $emergency_1_name: String,
+        $emergency_1_phone_number: String,
+        $address_state: String,
+        $address_city: String,
+        $address_neighborhood: String,
+        $address_street_details: String,
+        $address_street_no_number: Int,
+        $address_street_name: String,
+        $address_postal_code: String,  
+        $step: String!,
+        $phone: String!,
+        $code2fa: String!
+        ) {
+      updateLead(input: { 
+            license_number: $license_number,
+            emergency_2_name: $emergency_2_name,
+            emergency_2_phone_number: $emergency_2_phone_number,
+            emergency_1_name: $emergency_1_name,
+            emergency_1_phone_number: $emergency_1_phone_number,
+            address_state: $address_state,
+            address_city: $address_city,
+            address_neighborhood: $address_neighborhood,
+            address_street_details: $address_street_details,
+            address_street_no_number: $address_street_no_number,
+            address_street_name: $address_street_name,
+            address_postal_code: $address_postal_code,  
+            step: $step,
+            phone_number: $phone,
+            code2fa: $code2fa,
+           
+           }) {
+        id,
+        status,
+        step,
+      }
+    }`;
