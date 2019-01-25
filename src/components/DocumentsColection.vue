@@ -241,7 +241,7 @@
                 };
 
 
-                axios.post(`${process.env.URL_PREFIX}/documents`, form_data)
+                axios.post(`${process.env.VUE_APP_URL_PREFIX}/documents`, form_data)
                     .then(res => {
                         sendGraph(infoDoc)
                     }).catch(e => _error())

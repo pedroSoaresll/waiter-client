@@ -31,6 +31,8 @@ export const state = {
         SEND_SURVEY_DRIVER: {complete: false, invalid: false},
         SEND_DOCUMENTS: {complete: false, invalid: false},
         COMPLETE_INFO: {complete: false, invalid: false},
+        COMPLETE_INFO_APPS: {complete: false, invalid: false},
+        COMPLETE_INFO_PAYMENT: {complete: false, invalid: false},
     }
     ,
     leadId: null,

@@ -5,22 +5,13 @@
                     wrap
                     justify-space-between
             >
-                <v-flex xs12 md4 >
+                <v-flex xs12
+                        md4 >
                     <v-text-field
                             v-model="name"
                             :rules="nameRules"
                             prepend-icon="person"
                             label="Nome completo"
-                            required
-                    ></v-text-field>
-                </v-flex>
-                <v-flex xs12 md4 >
-                    <v-text-field
-                            v-model="cpf"
-                            :rules="cpfRules"
-                            prepend-icon="assignment_ind"
-                            label="CPF:"
-                            mask="###.###.###-##"
                             required
                     ></v-text-field>
                 </v-flex>
@@ -50,6 +41,17 @@
                             autocomplete="off"
                     >
                     </v-autocomplete>
+                </v-flex>
+                <v-flex xs12
+                        md4 >
+                    <v-text-field
+                            v-model="cpf"
+                            :rules="cpfRules"
+                            prepend-icon="assignment_ind"
+                            label="CPF:"
+                            mask="###.###.###-##"
+                            required
+                    ></v-text-field>
                 </v-flex>
             </v-layout>
     </v-form>
@@ -115,6 +117,7 @@
                     this.$store.commit('lead/setEmail', email);
                     this.$store.commit('lead/setWorkCity', city);
                     this.$store.commit('lead/setName', name);
+                    this.$store.commit('lead/setCpf', cpf);
                     this.$store.commit('lead/setSteps', {GET_BASIC: { complete: true, invalid: !this.valid}});
                     this.$store.commit('lead/setStep', parseInt(this.step) + 1);
 
@@ -128,7 +131,10 @@
                 })
             },
             isValid() {
-                this.$store.commit('lead/setSteps', {GET_BASIC: { complete: false, invalid: !this.valid}});
+                if (this.valid) {
+                    this.$store.commit('lead/setSteps', {GET_BASIC: { complete: false, invalid: false}});
+                }
+
                 return this.valid;
             }
         },

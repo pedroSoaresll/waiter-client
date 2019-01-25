@@ -73,12 +73,12 @@
 
 
         <!--Passo 6 dados apps -->
-        <v-stepper-step step="6" :complete="steps.SEND_DOCUMENTS.complete" :rules="[() => !steps.SEND_DOCUMENTS.invalid]">Aplicativos</v-stepper-step>
+        <v-stepper-step step="6" :complete="steps.COMPLETE_INFO_APPS.complete" :rules="[() => !steps.COMPLETE_INFO_APPS.invalid]">Aplicativos</v-stepper-step>
         <v-stepper-content step="6">
             <v-container>
                 <AppsDriver/>
 
-                <v-btn color="primary" @click="documentsColection">Continuar</v-btn>
+                <v-btn color="primary" @click="step = step+1">Continuar</v-btn>
                 <v-btn flat @click="step = step-1">Voltar</v-btn>
             </v-container>
         </v-stepper-content>
@@ -86,12 +86,12 @@
 
 
         <!--Passo 7 -->
-        <v-stepper-step step="7" :complete="steps.SEND_DOCUMENTS.complete" :rules="[() => !steps.SEND_DOCUMENTS.invalid]">Pagamento</v-stepper-step>
+        <v-stepper-step step="7" :complete="steps.COMPLETE_INFO_PAYMENT.complete" :rules="[() => !steps.COMPLETE_INFO_PAYMENT.invalid]">Pagamento</v-stepper-step>
         <v-stepper-content step="7">
             <v-container>
-                <!--<DocumentsColection ref="documentsColection"/>-->
+                <Payments/>
 
-                <v-btn color="primary" @click="documentsColection">Continuar</v-btn>
+                <v-btn color="primary" @click="">Continuar</v-btn>
                 <v-btn flat @click="step = step-1">Voltar</v-btn>
             </v-container>
         </v-stepper-content>
@@ -104,7 +104,7 @@
             <v-container>
                 <!--<DocumentsColection ref="documentsColection"/>-->
 
-                <v-btn color="primary" @click="documentsColection">Continuar</v-btn>
+                <v-btn color="primary" @click="step= step +1">Continuar</v-btn>
                 <v-btn flat @click="step = step-1">Voltar</v-btn>
             </v-container>
         </v-stepper-content>
@@ -118,6 +118,7 @@
     import BasicDriver from './BasicDriver';
     import SurveyDriver from './SurveyDriver';
     import DocumentsColection from './DocumentsColection';
+    import Payments from './Payments';
 
     import {mapGetters} from 'vuex'
     import AppsDriver from "./AppsDriver";
@@ -130,6 +131,7 @@
             PhoneForm,
             BasicDriver,
             SurveyDriver,
+            Payments
         },
         data() {
             return {
@@ -144,13 +146,6 @@
             }),
         },
         methods: {
-            nextStep(n) {
-                if (n === this.steps) {
-                    this.step = 1
-                } else {
-                    this.step = n + 1
-                }
-            },
             sendSms() {
                 if (this.$refs.phoneForm.isValid()) {
                     this.$refs.phoneForm.openVerify(true);
