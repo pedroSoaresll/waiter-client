@@ -96,20 +96,22 @@
             cc_expired_atRules: [
                 v => !!v || 'Data de vencimento é obrigatorio!',
             ],
-            step: '6',
+            step: '7',
         }),
         methods: {
             openVerify(val) {
                 this.verify = val;
                 if (!val) return;
 
-                const {cc_holder_name, cc_holder_cpf, cc_number, cc_expired_at } = this;
+                const {cc_holder_name, cc_holder_cpf, cc_number, cc_expired_at, paymentType } = this;
+                const driver = this.$store.getters['lead/driverId'];
 
                 this.$apollo.mutate({
                     mutation: PAYMENT,
                     variables: {
                         phone: this.$store.getters['lead/mobilePhone'],
                         code2fa: this.$store.getters['lead/code2fa'],
+                        driver,
                         cc_holder_name,
                         cc_holder_cpf,
                         cc_number,
@@ -119,9 +121,10 @@
                 }).then((result) => {
                     this.verify = false;
 
+                    this.$store.commit('lead/setSteps', {COMPLETE_INFO_PAYMENT: { complete: true, invalid: false}});
+                    this.$store.commit('lead/setStep', this.step);
 
                 }).catch((error) => {
-                    alert(`Error from ${error}`)
                     this.verify = false;
                     this.$store.commit('lead/setSteps', {COMPLETE_INFO_PAYMENT: { complete: false, invalid: !this.valid}});
                     this.$store.commit('lead/setStep', this.step);

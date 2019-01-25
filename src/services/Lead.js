@@ -142,10 +142,10 @@ export const LOGIN_99 = gql`
    `;
 export const PAYMENT = gql`
     mutation  updateLead(
-        $cc_holder_name: String!,
-        $cc_holder_cpf: String!,
-        $cc_number: String!,
-        $cc_expired_at: String!,
+        $cc_holder_name: String,
+        $cc_holder_cpf: String,
+        $cc_number: String,
+        $cc_expired_at: String,
         $driver: String!,
         $type: String!,
         $phone: String!,
@@ -157,8 +157,6 @@ export const PAYMENT = gql`
               cc_holder_cpf: $cc_holder_cpf,
               cc_number: $cc_number,
               cc_expired_at: $cc_expired_at,
-              driver: $driver
-              username: $username,
               driver: $driver
               type: $type
             },

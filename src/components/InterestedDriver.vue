@@ -78,7 +78,7 @@
             <v-container>
                 <AppsDriver/>
 
-                <v-btn color="primary" @click="step = step+1">Continuar</v-btn>
+                <v-btn color="primary" @click="step =step+1">Continuar</v-btn>
                 <v-btn flat @click="step = step-1">Voltar</v-btn>
             </v-container>
         </v-stepper-content>
@@ -89,9 +89,9 @@
         <v-stepper-step step="7" :complete="steps.COMPLETE_INFO_PAYMENT.complete" :rules="[() => !steps.COMPLETE_INFO_PAYMENT.invalid]">Pagamento</v-stepper-step>
         <v-stepper-content step="7">
             <v-container>
-                <Payments/>
+                <Payments ref="payments"/>
 
-                <v-btn color="primary" @click="">Continuar</v-btn>
+                <v-btn color="primary" @click="payments">Continuar</v-btn>
                 <v-btn flat @click="step = step-1">Voltar</v-btn>
             </v-container>
         </v-stepper-content>
@@ -99,8 +99,8 @@
 
 
         <!--Passo 8 -->
-        <v-stepper-step step="7" :complete="steps.SEND_DOCUMENTS.complete" :rules="[() => !steps.SEND_DOCUMENTS.invalid]">Reserva do carro:</v-stepper-step>
-        <v-stepper-content step="7">
+        <v-stepper-step step="8" :complete="steps.SEND_DOCUMENTS.complete" :rules="[() => !steps.SEND_DOCUMENTS.invalid]">Reserva do carro:</v-stepper-step>
+        <v-stepper-content step="8">
             <v-container>
                 <!--<DocumentsColection ref="documentsColection"/>-->
 
@@ -174,6 +174,12 @@
                 if (this.$refs.documentsColection.isValid()) {
                     this.$refs.documentsColection.openVerify(true);
                     this.step = 6
+                }
+            },
+            payments() {
+                if (this.$refs.payments.isValid()) {
+                    this.$refs.payments.openVerify(true);
+                    this.step = 8
                 }
             }
         },
