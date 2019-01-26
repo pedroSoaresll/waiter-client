@@ -30,8 +30,8 @@
                 <v-text-field
                         v-model="mobilePhone"
                         :rules="nameRules"
-                        :counter="
-                        11"mask="(##) #####-####"
+                        :counter="11"
+                        mask="(##) #####-####"
                         label="Celular"
                         required
                 ></v-text-field>
