@@ -15,10 +15,10 @@
 		</v-flex>
 
 		<v-flex column wrap xs12 class="mt-5">
-			<v-text-field box label="Nome completo" class="input-text"/>
-			<v-text-field box label="CPF"/>
-			<v-text-field box label="E-mail"/>
-			<v-select box label="Cidade que você vai trabalhar"/>
+			<v-text-field box dark label="Nome completo" class="input-text"/>
+			<v-text-field box dark label="CPF"/>
+			<v-text-field box dark label="E-mail"/>
+			<v-select box dark label="Cidade que você vai trabalhar"/>
 		</v-flex>
 
 		<v-flex column wrap xs12 class="mt-4">

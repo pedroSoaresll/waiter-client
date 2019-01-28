@@ -1,10 +1,67 @@
 import gql from 'graphql-tag'
 
+const returnDriver = `
+  id
+  code2fa
+  cpf
+  name
+  birthdate
+  nickname
+  gender
+  photo
+  email
+  email_verified
+  phone_number
+  phone_number_verified
+  address_street_name
+  address_street_number
+  address_street_no_number
+  address_street_details
+  address_neighborhood
+  address_city
+  address_state
+  address_postal_code
+  address_country
+  address_latlong
+  license_number
+  license_issued_at
+  license_expired_at
+  license_category
+  license_points
+  license_status
+  license_status_detail
+  license_remarks
+  license_city
+  license_state
+  emergency_1_name
+  emergency_1_phone_number
+  emergency_2_name
+  emergency_2_phone_number
+  newsletter
+  status
+  total_referrals
+  total_fines
+  total_bookings
+  booking {
+    id
+    plan {
+      id
+      name
+      description
+      status
+      pre_transaction_amount
+      transaction_amount
+    }
+  }
+  checked_at
+  created_at
+  updated_at
+`
+
 export const CREATE_LEAD = gql`
-    mutation newLead($phone: String!, $step: String!) {
-      createLead(input: { phone_number: $phone, step: $step }) {
-        id,
-        phone_number
+    mutation newLead($phone_number: String!) {
+      createLead(input: { phone_number: $phone_number }) {
+        ${returnDriver}
       }
     }`;
 export const VERIFY_CODE_LEAD = gql`

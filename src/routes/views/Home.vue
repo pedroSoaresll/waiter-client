@@ -9,26 +9,72 @@
       <p class="text-a-mudanca">A mudança começa hoje!</p>
     </v-flex>
 
-    <v-flex column wrap xs12 class="mt-5">
-      <v-text-field label="Número do seu celular" box/>
-      <v-flex column xs12>
-        <v-radio color="#FFFFFF">
-          <span slot="label" class="text-termos-uso">
-            Concordo com os
-            <a href="#">Termos de Uso</a> da Kovi
-          </span>
-        </v-radio>
+    <v-form v-model="isValid">
+      <v-flex column wrap xs12 class="mt-5">
+        <v-text-field
+          label="Número do seu celular"
+          v-model="phone"
+          box
+          dark
+          :rules="numberRule"
+          :counter="11"
+          mask="(##) #####-####"
+          required
+        />
+        <v-flex column xs12>
+          <v-radio color="#FFFFFF" dark>
+            <span slot="label" class="text-termos-uso">
+              Concordo com os
+              <a href="#">Termos de Uso</a> da Kovi
+            </span>
+          </v-radio>
+        </v-flex>
       </v-flex>
-    </v-flex>
 
-    <v-flex column wrap xs12 class="mt-4">
-      <v-btn class="btn-quero-kovi ml-0">Quero um Kovi</v-btn>
-    </v-flex>
+      <v-flex column wrap xs12 class="mt-4">
+        <v-btn @click="createDriver" class="btn-quero-kovi ml-0">Quero um Kovi</v-btn>
+      </v-flex>
+    </v-form>
   </v-layout>
 </template>
 
 <script>
-export default {};
+import { CREATE_LEAD } from "../../services/Lead";
+
+export default {
+  data: () => ({
+    isValid: false,
+    phone: "",
+    numberRule: [
+      v => !!v || "Número de celular é obrigatorio!",
+      v => `${v}`.length === 11 || "O número deve ter 11 dígitos com DD."
+    ],
+    driverUnwatch: null
+  }),
+  methods: {
+    createDriver() {
+      if (!this.isValid) return;
+      this.$store.dispatch("lead/createDriver", this.phone);
+    }
+  },
+  mounted() {
+    this.driverUnwatch = this.$store.watch(
+      state => {
+        return state.lead.driver;
+      },
+      value => {
+        if (value && value.status === "LEAD") {
+          this.$router.push({ name: "FirstData" });
+        } else {
+        }
+      }
+    );
+  },
+
+  beforeDestroy() {
+    if (this.driverUnwatch) this.driverUnwatch();
+  }
+};
 </script>
 
 <style scoped>
