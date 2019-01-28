@@ -133,7 +133,4 @@ export default {
   font-size: 16px;
   color: #4a4a4a;
 }
-
-.area-info-radio {
-}
 </style>
