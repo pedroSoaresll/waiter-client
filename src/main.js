@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueRouter from 'vue-router'
 import './plugins/vuetify'
 import VueApollo from 'vue-apollo'
 import Amplify, * as AmplifyModules from 'aws-amplify'
@@ -6,6 +7,7 @@ import { AmplifyPlugin } from 'aws-amplify-vue'
 import App from './App.vue'
 import store from './store';
 import apolloClient from './services/ApolloClient'
+import routes from './routes'
 
 Amplify.configure({Auth: {
     userPoolId: "us-east-1_bOqbI1cFg",
@@ -13,6 +15,7 @@ Amplify.configure({Auth: {
         userPoolWebClientId: "gc7m92hpt9e42tus6bj3jnnh3"
 }});
 
+Vue.use(VueRouter)
 Vue.use(VueApollo);
 Vue.use(AmplifyPlugin, AmplifyModules);
 
@@ -20,9 +23,15 @@ const apolloProvider = new VueApollo({
     defaultClient: apolloClient,
 });
 
+const router = new VueRouter({
+    mode: 'history',
+    routes
+})
+
 Vue.config.productionTip = false;
 
 new Vue({
+    router,
     store,
     apolloProvider,
     render: h => h(App),
