@@ -173,6 +173,14 @@ export const COMPLETE_INFO = gql`
       $cpf: String
       $email: String
       $work_city: String
+      $survey_be_over_21: Boolean
+      $survey_has_garage: Boolean
+      $survey_low_points: Boolean
+      $survey_app_99: Boolean
+      $survey_app_uber: Boolean
+      $survey_app_cabify: Boolean
+      $survey_app_lady_driver: Boolean
+      $survey_app_others: Boolean
     ) {
       updateLead(input: { 
         code2fa: $code2fa
@@ -195,6 +203,14 @@ export const COMPLETE_INFO = gql`
         address_postal_code: $address_postal_code  
         step: $step
         status: $status
+        survey_be_over_21: $survey_be_over_21
+        survey_has_garage: $survey_has_garage
+        survey_low_points: $survey_low_points
+        survey_app_99: $survey_app_99
+        survey_app_uber: $survey_app_uber
+        survey_app_cabify: $survey_app_cabify
+        survey_app_lady_driver: $survey_app_lady_driver
+        survey_app_others: $survey_app_others
       }) {
         ${returnDriver}
       }

@@ -153,7 +153,7 @@ export const actions = {
     // caso não, enviar para tela de confirmar número
   },
 
-  async sendGetBasics({state, commit}, input) {
+  async sendGetBasics({ state, commit }, input) {
     const updated = await updateDriver(state, commit, input)
     if (updated) {
       let complete = false
@@ -169,6 +169,40 @@ export const actions = {
     } else {
       commit('setSteps', {
         GET_BASIC: { complete: false, invalid: true }
+      })
+    }
+  },
+
+  async sendSurveyDriver({ state, commit }, input) {
+    const updated = await updateDriver(state, commit, input)
+    if (updated) {
+      let complete = false
+
+      const requiredFields = [
+        input.survey_be_over_21,
+        input.survey_has_garage,
+        input.survey_low_points,
+      ]
+        .filter(value => !value)
+
+      const oneOrMoreRequiredFields = [
+        input.survey_app_99,
+        input.survey_app_uber,
+        input.survey_app_cabify,
+        input.survey_app_lady_driver,
+        input.survey_app_others,
+      ]
+        .filter(value => !!value)
+
+      if (!requiredFields.length && oneOrMoreRequiredFields.length)
+        complete = true
+
+      commit('setSteps', {
+        SEND_SURVEY_DRIVER: { complete, invalid: false },
+      })
+    } else {
+      commit('setSteps', {
+        SEND_SURVEY_DRIVER: { complete: false, invalid: true }
       })
     }
   }
