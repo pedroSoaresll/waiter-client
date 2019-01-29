@@ -15,6 +15,16 @@ const routes = [
     component: () => import('./views/ConfirmNumber')
   },
   {
+    name: 'SelectPlan',
+    path: '/selecione-seu-plano',
+    component: () => import('../components/signup-form/SelectPlan')
+  },
+    {
+        name: 'Payment',
+        path: '/faca-o-pagamento-do-seu-kovi',
+        component: () => import('../components/signup-form/Payment')
+    },
+  {
     name: 'FormSignup',
     path: '/cadastro',
     component: () => import('./views/SignupSteps'),
