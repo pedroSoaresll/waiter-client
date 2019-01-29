@@ -17,50 +17,51 @@ const routes = [
   {
     name: 'FormSignup',
     path: '/cadastro',
+    component: () => import('./views/SignupSteps'),
     children: [
       {
         name: 'PreData',
-        path: '/pre-dados',
+        path: 'pre-dados',
         component: () => import('../components/signup-form/PreData')
       },
       {
         name: 'ConnectAccounts',
-        path: '/conectar-contas',
+        path: 'conectar-contas',
         component: () => import('../components/signup-form/ConnectAccounts')
       },
       {
         name: 'ReportDocs',
-        path: '/informacoes-pessoais',
+        path: 'informacoes-pessoais',
         component: () => import('../components/signup-form/ReportDocs')
       },
       {
         name: 'SelectPlan',
-        path: '/selecione-seu-plano',
+        path: 'selecione-seu-plano',
         component: () => import('../components/signup-form/SelectPlan')
       },
       {
         name: 'FinishForm',
-        path: '/cadastro-realizado',
+        path: 'cadastro-realizado',
         component: () => import('../components/signup-form/FinishForm')
       },
       {
         name: 'DoPayment',
-        path: '/plano-selecionado',
+        path: 'plano-selecionado',
         component: () => import('../components/signup-form/DoPayment')
       },
       {
         name: 'Payment',
-        path: '/faca-o-pagamento-do-seu-kovi',
+        path: 'faca-o-pagamento-do-seu-kovi',
         component: () => import('../components/signup-form/Payment')
       },
       {
         name: 'PaymentStatus',
-        path: '/status-do-pagamento',
+        path: 'status-do-pagamento',
         component: () => import('../components/signup-form/PaymentStatus')
       },
       {
         name: 'BookingDate',
-        path: '/data-de-retirada-do-seu-kovi',
+        path: 'data-de-retirada-do-seu-kovi',
         component: () => import('../components/signup-form/BookingDate')
       },
     ]

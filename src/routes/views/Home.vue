@@ -63,10 +63,8 @@ export default {
         return state.lead.driver;
       },
       value => {
-        if (value && value.status === "LEAD") {
-          this.$router.push({ name: "FirstData" });
-        } else {
-        }
+        if (value.phone_number)
+          this.$router.push({ name: 'ConfirmNumber', params: { code2fa: true } })
       }
     );
   },

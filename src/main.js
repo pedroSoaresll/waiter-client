@@ -31,24 +31,6 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach(async (to, from, next) => {
-  // validar entrada do usuário
-  try {
-    if (to.params.load)
-      return next()
-      
-    const phone_number = sessionStorage.getItem('kovi_phone')
-    if (!phone_number)
-      return next({ name: 'Home', params: { load: true } })
-
-    store.dispatch('lead/createDriver', phone_number)
-    next()
-
-  } catch (e) {
-    // voltar o driver pra home
-  }
-})
-
 Vue.config.productionTip = false;
 
 new Vue({
