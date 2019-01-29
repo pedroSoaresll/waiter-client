@@ -56,7 +56,11 @@
     </v-form>
 
     <v-flex column wrap xs12 class="mt-4">
-      <v-btn :large="true" class="btn-radius ml-0" @click="updateDriver">Avançar</v-btn>
+      <p
+        class="error-message"
+        v-show="errorMessage"
+      >Não foi possível atualizar suas informações. Por favor, tente novamente mais tarde.</p>
+      <v-btn :disabled="sent" :large="true" class="btn-radius ml-0" @click="updateDriver">Avançar</v-btn>
     </v-flex>
 
     <v-flex column wrap xs12 class="mt-5">
@@ -72,10 +76,12 @@
 <script>
 export default {
   data: () => ({
+    sent: false,
+    errorMessage: false,
     items: [
       {
-        text: 'Item1',
-        value: 'item1'
+        text: "Item1",
+        value: "item1"
       }
     ],
     input: {
@@ -85,14 +91,38 @@ export default {
       work_city: ""
     },
     isValid: false,
-    dataRule: [v => !!v || "Este campo é obrigatório!"]
+    dataRule: [v => !!v || "Este campo é obrigatório!"],
+    stepsUnwatch: null
   }),
   methods: {
     updateDriver() {
+      this.errorMessage = false
       if (this.isValid) {
-        this.$store.dispatch("lead/updateDriver", this.input);
+        this.sent = true;
+        this.$store.dispatch("lead/sendGetBasics", this.input);
       }
     }
+  },
+  mounted() {
+    // watch steps data
+    this.stepsUnwatch = this.$store.watch(
+      state => {
+        return state.lead.steps;
+      },
+      value => {
+        const { complete, invalid } = value.GET_BASIC;
+        if (invalid) {
+          // show error to user
+          this.sent = false;
+          this.errorMessage = true;
+        } else if (complete) {
+          this.$router.push({ name: 'PreData' })
+        }
+      }
+    );
+  },
+  beforeDestroy() {
+    if (this.stepsUnwatch) this.stepsUnwatch();
   }
 };
 </script>
@@ -134,6 +164,11 @@ export default {
   text-decoration: none;
   font-size: 16px;
 }
+
+.error-message {
+  color: #ffffff;
+}
+
 
 /* material edit */
 .theme--light.v-icon {

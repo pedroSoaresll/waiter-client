@@ -23,7 +23,8 @@ export const state = {
 export const getters = {
   code2fa: state => state.code2fa,
   code2faVerified: state => state.code2faVerified,
-  driver: state => state.driver
+  driver: state => state.driver,
+  steps: state => state.steps
 }
 
 export const mutations = {
@@ -131,10 +132,16 @@ export const actions = {
 
         sessionStorage.setItem(SESSION_STORAGE_PHONE, phone_number)
         commit('setDriver', driver)
+        commit('setSteps', {
+          GET_PHONE: { complete: true, invalid: false },
+        })
 
       })
       .catch(error => {
         console.error('error create driver:: ', error)
+        commit('setSteps', {
+          GET_PHONE: { complete: false, invalid: true },
+        })
       })
 
     // tratar retorno do apollo
@@ -146,21 +153,46 @@ export const actions = {
     // caso não, enviar para tela de confirmar número
   },
 
-  updateDriver({state, commit}, input) {
-    console.log('update', input)
-    apollo.mutate({
-      mutation: COMPLETE_INFO,
-      variables: {
-        phone_number: state.driver.phone_number,
-        code2fa: state.code2fa,
-        input
+  async sendGetBasics({state, commit}, input) {
+    const updated = await updateDriver(state, commit, input)
+    if (updated) {
+      let complete = false
+      const values = Object.values(input)
+        .filter(value => !value)
+
+      if (!values.length)
+        complete = true
+
+      commit('setSteps', {
+        GET_BASIC: { complete, invalid: false },
+      })
+    } else {
+      commit('setSteps', {
+        GET_BASIC: { complete: false, invalid: true }
+      })
+    }
+  }
+}
+
+const updateDriver = (state, commit, input) => {
+  return apollo.mutate({
+    mutation: COMPLETE_INFO,
+    variables: {
+      phone_number: state.driver.phone_number,
+      code2fa: state.code2fa,
+      ...input
+    }
+  })
+    .then(result => {
+      if (result.data.updateLead) {
+        commit('setDriver', result.data.updateLead)
+        return true
+      } else {
+        return false
       }
     })
-      .then(result => {
-        console.log('resultado update driver:: ', result)
-      })
-      .catch(error => {
-        console.error('error update driver:: ', error)
-      })
-  }
+    .catch(error => {
+      console.error('error update driver:: ', error)
+      return false
+    })
 }

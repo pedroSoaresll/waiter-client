@@ -153,50 +153,50 @@ export const VERIFY_CODE2FA = gql`
 
 export const COMPLETE_INFO = gql`
     mutation  updateLead(
-      $license_number: String,
-      $emergency_2_name: String,
-      $emergency_2_phone_number: String,
-      $emergency_1_name: String,
-      $emergency_1_phone_number: String,
-      $address_state: String,
-      $address_city: String,
-      $address_neighborhood: String,
-      $address_street_details: String,
-      $address_street_no_number: Int,
-      $address_street_name: String,
-      $address_postal_code: String,  
-      $status: DriverStatusEnum,
-      $step: String,
-      $phone_number: String!,
+      $license_number: String
+      $emergency_2_name: String
+      $emergency_2_phone_number: String
+      $emergency_1_name: String
+      $emergency_1_phone_number: String
+      $address_state: String
+      $address_city: String
+      $address_neighborhood: String
+      $address_street_details: String
+      $address_street_no_number: Int
+      $address_street_name: String
+      $address_postal_code: String  
+      $status: DriverStatusEnum
+      $step: String
+      $phone_number: String!
       $code2fa: String!
-      name: String
-      cpf: String
-      email: String
-      work_city: String
+      $name: String
+      $cpf: String
+      $email: String
+      $work_city: String
     ) {
-      updateLead(phone_number: $phone_number, code2fa: $code2fa, input: { 
+      updateLead(input: { 
+        code2fa: $code2fa
+        phone_number: $phone_number
         name: $name
         cpf: $cpf
         email: $email
         work_city: $work_city
-        license_number: $license_number,
-        emergency_2_name: $emergency_2_name,
-        emergency_2_phone_number: $emergency_2_phone_number,
-        emergency_1_name: $emergency_1_name,
-        emergency_1_phone_number: $emergency_1_phone_number,
-        address_state: $address_state,
-        address_city: $address_city,
-        address_neighborhood: $address_neighborhood,
-        address_street_details: $address_street_details,
-        address_street_no_number: $address_street_no_number,
-        address_street_name: $address_street_name,
-        address_postal_code: $address_postal_code,  
+        license_number: $license_number
+        emergency_2_name: $emergency_2_name
+        emergency_2_phone_number: $emergency_2_phone_number
+        emergency_1_name: $emergency_1_name
+        emergency_1_phone_number: $emergency_1_phone_number
+        address_state: $address_state
+        address_city: $address_city
+        address_neighborhood: $address_neighborhood
+        address_street_details: $address_street_details
+        address_street_no_number: $address_street_no_number
+        address_street_name: $address_street_name
+        address_postal_code: $address_postal_code  
         step: $step
         status: $status
       }) {
-        id,
-        status,
-        step,
+        ${returnDriver}
       }
     }`;
 export const LOGIN_99 = gql`
