@@ -1,4 +1,5 @@
 import apollo from '../../services/ApolloClient'
+import * as axios from 'axios'
 import { CREATE_LEAD, CODE2FA, VERIFY_CODE2FA, COMPLETE_INFO } from '../../services/Lead';
 const SESSION_STORAGE_CODE2FA = 'kovi_code2fs'
 const SESSION_STORAGE_PHONE = 'kovi_phone'
@@ -205,6 +206,27 @@ export const actions = {
         SEND_SURVEY_DRIVER: { complete: false, invalid: true }
       })
     }
+  },
+
+  async uploadDoc({ commit }, { documentType, file }) {
+    if (!documentType || !file)
+      return false
+
+    // buscar driver id
+    const driver = null
+
+    let formData = new FormData()
+    formData.append(documentType, file)
+    formData.append('driverId', driver.id)
+    return fetch(`${process.env.KOVI_API_URL}/documents`, {
+      method: 'POST',
+      body: formData
+    })
+      .then(result => {
+        return result.json()
+      })
+      .then(() => true)
+      .catch(() => false)
   }
 }
 
