@@ -159,6 +159,27 @@ export const actions = {
     // caso não, enviar para tela de confirmar número
   },
 
+  async sendDocs({state, commit}, input) {
+    const updated = await updateDriver(state, commit, input)
+
+    if (updated) {
+      let complete = false
+      const values = Object.values(input)
+        .filter(value => !value)
+
+      if (!values.length)
+        complete = true
+
+      commit('setSteps', {
+        SEND_DOCUMENTS: { complete, invalid: false },
+      })
+    } else {
+      commit('setSteps', {
+        SEND_DOCUMENTS: { complete: false, invalid: true }
+      })
+    }
+  },
+
   async sendGetBasics({ state, commit }, input) {
     const updated = await updateDriver(state, commit, input)
     if (updated) {
@@ -233,7 +254,7 @@ export const actions = {
   }
 }
 
-const updateDriver = (state, commit, input) => {
+const updateDriver = (state, commit, input) => {  
   return apollo.mutate({
     mutation: COMPLETE_INFO,
     variables: {
