@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "clear-cache": "curl -s --write-out \"Cache cleaning status: %{http_code}\n\" -X POST -H \"X-Auth-Email: $CF_AUTH_EMAIL\" -H \"X-Auth-Key: $CF_AUTH_KEY\" -H \"Content-Type: application/json\" --data '{ \"purge_everything\":true }' --output /dev/null https://api.cloudflare.com/client/v4/zones/$CF_ZONE_ID/purge_cache"
   },
   "dependencies": {
     "@babel/preset-env": "^7.2.3",

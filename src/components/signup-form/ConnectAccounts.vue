@@ -145,28 +145,24 @@ export default {
       switch (status) {
         case true:
           return `Conta ${appName} adicionada!`;
-          break;
 
         case false:
           return `Conta ${appName} não adicionada`;
 
         default:
           return `Adicionar conta ${appName}`;
-          break;
       }
     },
     colorButton(status) {
       switch (status) {
         case true:
           return `success`;
-          break;
 
         case false:
           return `error`;
 
         default:
           return `gray`;
-          break;
       }
     },
 
@@ -190,7 +186,7 @@ export default {
           documentType: account.documentType,
           file: this.imageFile
         })
-        .then(result => {
+        .then(() => {
           this.errorNextStep = false;
           account.status = true;
           this.closeModal(account);

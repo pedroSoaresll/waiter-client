@@ -1,0 +1,28 @@
+[[redirects]]
+  from="/*"
+  to="/index.html"
+  status=200
+
+[context.master]
+  command="npm run build && npm run clear-cache"
+  publish="dist"
+
+[context.master.environment]
+  CF_AUTH_EMAIL = "costa@kovi.com.br"
+  CF_AUTH_KEY = "f57189215d2472806c38d015a0dbd238b17b5"
+  CF_ZONE_ID = "861edae6333e25b67015ac356e034ad1"
+  VUE_APP_KOVI_API_URL="https://api-staging.kovi.us"
+  VUE_APP_KOVI_GRAPHQL_URL="https://api-staging.kovi.us/graphql"
+  NODE_VERSION="0.0.01"
+
+[context.production]
+  command="npm run build && npm run clear-cache"
+  publish="dist"
+
+[context.production.environment]
+  CF_AUTH_EMAIL = "costa@kovi.com.br"
+  CF_AUTH_KEY = "f57189215d2472806c38d015a0dbd238b17b5"
+  CF_ZONE_ID = "861edae6333e25b67015ac356e034ad1"
+  VUE_APP_KOVI_API_URL="https://api.kovi.us"
+  VUE_APP_KOVI_GRAPHQL_URL="https://api.kovi.us/graphql"
+  NODE_VERSION="0.0.01"
