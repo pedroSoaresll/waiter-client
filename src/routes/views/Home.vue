@@ -1,43 +1,48 @@
 <template>
-  <v-layout column wrap class="layout">
-    <v-flex xs12>
-      <img :src="require('../../assets/kovi-logo-white.svg')" alt="logo kovi">
-    </v-flex>
+  <v-layout column wrap align-center class="layout">
+    <v-flex column wrap xs12>
+      <v-flex xs12>
+        <img :src="require('../../assets/kovi-logo-white.svg')" alt="logo kovi">
+      </v-flex>
 
-    <v-flex column wrap xs12 class="mt-5">
-      <p class="text-uppercase text-peca-ja mt-5 mb-0">Peça já seu Kovi</p>
-      <p class="text-a-mudanca">A mudança começa hoje!</p>
-    </v-flex>
-
-    <v-form v-model="isValid">
       <v-flex column wrap xs12 class="mt-5">
-        <v-text-field
-          label="Número do seu celular"
-          v-model="phone"
-          box
-          dark
-          :rules="numberRule"
-          :counter="11"
-          mask="(##) #####-####"
-          required
-        />
-        <v-flex column xs12>
-          <v-radio-group v-model="acceptTerms">
-            <v-radio color="#FFFFFF" dark value="accept">
-              <span slot="label" class="text-termos-uso">
-                Concordo com os
-                <a href="#">Termos de Uso</a> da Kovi
-              </span>
-            </v-radio>
-          </v-radio-group>
-        </v-flex>
+        <p class="text-uppercase text-peca-ja mt-5 mb-0">Peça já seu Kovi</p>
+        <p class="text-a-mudanca">A mudança começa hoje!</p>
       </v-flex>
 
-      <v-flex column wrap xs12 class="mt-4">
-        <p class="error-message" v-show="errorMessage">Não foi possível receber seu número, por favor tente mais tarde.</p>
-        <v-btn :disabled="sent" @click="createDriver" class="btn-quero-kovi ml-0">Quero um Kovi</v-btn>
-      </v-flex>
-    </v-form>
+      <v-form v-model="isValid">
+        <v-flex column wrap xs12 class="mt-5">
+          <v-text-field
+            label="Número do seu celular"
+            v-model="phone"
+            box
+            dark
+            :rules="numberRule"
+            :counter="11"
+            mask="(##) #####-####"
+            required
+          />
+          <v-flex column xs12>
+            <v-radio-group v-model="acceptTerms">
+              <v-radio color="#FFFFFF" dark value="accept">
+                <span slot="label" class="text-termos-uso">
+                  Concordo com os
+                  <a href="#">Termos de Uso</a> da Kovi
+                </span>
+              </v-radio>
+            </v-radio-group>
+          </v-flex>
+        </v-flex>
+
+        <v-flex column wrap xs12 class="mt-4">
+          <p
+            class="error-message"
+            v-show="errorMessage"
+          >Não foi possível receber seu número, por favor tente mais tarde.</p>
+          <v-btn :disabled="sent" @click="createDriver" class="btn-quero-kovi ml-0">Quero um Kovi</v-btn>
+        </v-flex>
+      </v-form>
+    </v-flex>
   </v-layout>
 </template>
 
@@ -56,13 +61,13 @@ export default {
     ],
     driverUnwatch: null,
     stepsUnwatch: null,
-    acceptTerms: false,
+    acceptTerms: false
   }),
   methods: {
     createDriver() {
       if (!this.isValid || !this.acceptTerms) return;
-      this.errorMessage = false
-      this.sent = true
+      this.errorMessage = false;
+      this.sent = true;
       this.$store.dispatch("lead/createDriver", this.phone);
     }
   },
@@ -70,17 +75,17 @@ export default {
     // watch steps data
     this.stepsUnwatch = this.$store.watch(
       state => {
-        return state.lead.steps
+        return state.lead.steps;
       },
       value => {
-        const {invalid} = value.GET_PHONE
+        const { invalid } = value.GET_PHONE;
         if (invalid) {
           // show error to user
-          this.sent = false
-          this.errorMessage = true
+          this.sent = false;
+          this.errorMessage = true;
         }
       }
-    )
+    );
 
     // watch driver data
     this.driverUnwatch = this.$store.watch(
@@ -92,7 +97,7 @@ export default {
           this.$router.push({
             name: "ConfirmNumber",
             params: { code2fa: true }
-          });        
+          });
       }
     );
   },

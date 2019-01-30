@@ -1,74 +1,76 @@
 <template>
-  <v-layout column wrap class="layout">
-    <v-flex xs12>
-      <img :src="require('../../assets/kovi-logo-white.svg')" alt="logo kovi">
-    </v-flex>
-
-    <v-flex column wrap xs12 class="mt-5">
-      <p class="text-uppercase text-peca-ja mt-5 mb-0">Peça já seu Kovi</p>
-      <p class="text-a-mudanca">A mudança começa hoje!</p>
-    </v-flex>
-
-    <v-flex column wrap xs12 class="mt-5">
-      <p class="text-cadastre-agora">Cadastre-se agora e peça já o seu Kovi!</p>
-      <p class="text-para-comecar">Para começar, precisamos saber um pouco mais de você :)</p>
-    </v-flex>
-
-    <v-form v-model="isValid">
-      <v-flex column wrap xs12 class="mt-5">
-        <v-text-field
-          :rules="dataRule"
-          v-model="input.name"
-          box
-          dark
-          label="Nome completo"
-          class="input-text"
-          required
-        />
-        <v-text-field
-          :rules="dataRule"
-          v-model="input.cpf"
-          box
-          dark
-          label="CPF"
-          mask="###.###.###-##"
-          required
-        />
-        <v-text-field
-          :rules="dataRule"
-          v-model="input.email"
-          box
-          dark
-          label="E-mail"
-          type="email"
-          required
-        />
-        <v-select
-          :rules="dataRule"
-          v-model="input.work_city"
-          :items="items"
-          box
-          dark
-          label="Cidade que você vai trabalhar"
-          required
-        />
+  <v-layout column wrap align-center class="layout">
+    <v-flex column wrap xs12>
+      <v-flex xs12>
+        <img :src="require('../../assets/kovi-logo-white.svg')" alt="logo kovi">
       </v-flex>
-    </v-form>
 
-    <v-flex column wrap xs12 class="mt-4">
-      <p
-        class="error-message"
-        v-show="errorMessage"
-      >Não foi possível atualizar suas informações. Por favor, tente novamente mais tarde.</p>
-      <v-btn :disabled="sent" :large="true" class="btn-radius ml-0" @click="updateDriver">Avançar</v-btn>
-    </v-flex>
+      <v-flex column wrap xs12 class="mt-5">
+        <p class="text-uppercase text-peca-ja mt-5 mb-0">Peça já seu Kovi</p>
+        <p class="text-a-mudanca">A mudança começa hoje!</p>
+      </v-flex>
 
-    <v-flex column wrap xs12 class="mt-5">
-      <p class="text-ja-comecou mb-0">Já começou o cadastro?</p>
-      <a
-        href="#"
-        class="link-clique-aqui font-weight-bold mt-0"
-      >Clique aqui e verifique o seu processo.</a>
+      <v-flex column wrap xs12 class="mt-5">
+        <p class="text-cadastre-agora">Cadastre-se agora e peça já o seu Kovi!</p>
+        <p class="text-para-comecar">Para começar, precisamos saber um pouco mais de você :)</p>
+      </v-flex>
+
+      <v-form v-model="isValid">
+        <v-flex column wrap xs12 class="mt-5">
+          <v-text-field
+            :rules="dataRule"
+            v-model="input.name"
+            box
+            dark
+            label="Nome completo"
+            class="input-text"
+            required
+          />
+          <v-text-field
+            :rules="dataRule"
+            v-model="input.cpf"
+            box
+            dark
+            label="CPF"
+            mask="###.###.###-##"
+            required
+          />
+          <v-text-field
+            :rules="dataRule"
+            v-model="input.email"
+            box
+            dark
+            label="E-mail"
+            type="email"
+            required
+          />
+          <v-select
+            :rules="dataRule"
+            v-model="input.work_city"
+            :items="items"
+            box
+            dark
+            label="Cidade que você vai trabalhar"
+            required
+          />
+        </v-flex>
+      </v-form>
+
+      <v-flex column wrap xs12 class="mt-4">
+        <p
+          class="error-message"
+          v-show="errorMessage"
+        >Não foi possível atualizar suas informações. Por favor, tente novamente mais tarde.</p>
+        <v-btn :disabled="sent" :large="true" class="btn-radius ml-0" @click="updateDriver">Avançar</v-btn>
+      </v-flex>
+
+      <v-flex column wrap xs12 class="mt-5">
+        <p class="text-ja-comecou mb-0">Já começou o cadastro?</p>
+        <a
+          href="#"
+          class="link-clique-aqui font-weight-bold mt-0"
+        >Clique aqui e verifique o seu processo.</a>
+      </v-flex>
     </v-flex>
   </v-layout>
 </template>
@@ -96,7 +98,7 @@ export default {
   }),
   methods: {
     updateDriver() {
-      this.errorMessage = false
+      this.errorMessage = false;
       if (this.isValid) {
         this.sent = true;
         this.$store.dispatch("lead/sendGetBasics", this.input);
@@ -104,12 +106,12 @@ export default {
     }
   },
   mounted() {
-    const driver = this.$store.getters['lead/driver']
-    this.input.name = driver.name
-    this.input.cpf = driver.cpf
-    this.input.email = driver.email
-    this.input.work_city = driver.work_city
-    
+    const driver = this.$store.getters["lead/driver"];
+    this.input.name = driver.name;
+    this.input.cpf = driver.cpf;
+    this.input.email = driver.email;
+    this.input.work_city = driver.work_city;
+
     // watch steps data
     this.stepsUnwatch = this.$store.watch(
       state => {
@@ -122,7 +124,7 @@ export default {
           this.sent = false;
           this.errorMessage = true;
         } else if (complete) {
-          this.$router.push({ name: 'PreData' })
+          this.$router.push({ name: "PreData" });
         }
       }
     );
@@ -174,7 +176,6 @@ export default {
 .error-message {
   color: #ffffff;
 }
-
 
 /* material edit */
 .theme--light.v-icon {

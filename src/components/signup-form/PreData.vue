@@ -18,7 +18,11 @@
           <v-checkbox v-model="input.survey_app_uber" class="area-checkbox" label="Uber"/>
           <v-checkbox v-model="input.survey_app_99" class="area-checkbox" label="99"/>
           <v-checkbox v-model="input.survey_app_cabify" class="area-checkbox" label="Cabify"/>
-          <v-checkbox v-model="input.survey_app_lady_driver" class="area-checkbox" label="Lady Driver"/>
+          <v-checkbox
+            v-model="input.survey_app_lady_driver"
+            class="area-checkbox"
+            label="Lady Driver"
+          />
           <v-checkbox v-model="input.survey_app_others" class="area-checkbox" label="Outros"/>
         </v-flex>
 
@@ -122,15 +126,15 @@ export default {
     }
   },
   mounted() {
-    const driver = this.$store.getters['lead/driver']
-    this.input.survey_be_over_21 = Boolean(driver.survey_be_over_21)
-    this.input.survey_has_garage = Boolean(driver.survey_has_garage)
-    this.input.survey_low_points = Boolean(driver.survey_low_points)
-    this.input.survey_app_99 = Boolean(driver.survey_app_99)
-    this.input.survey_app_uber = Boolean(driver.survey_app_uber)
-    this.input.survey_app_cabify = Boolean(driver.survey_app_cabify)
-    this.input.survey_app_lady_driver = Boolean(driver.survey_app_lady_driver)
-    this.input.survey_app_others = Boolean(driver.survey_app_others)
+    const driver = this.$store.getters["lead/driver"];
+    this.input.survey_be_over_21 = Boolean(driver.survey_be_over_21);
+    this.input.survey_has_garage = Boolean(driver.survey_has_garage);
+    this.input.survey_low_points = Boolean(driver.survey_low_points);
+    this.input.survey_app_99 = Boolean(driver.survey_app_99);
+    this.input.survey_app_uber = Boolean(driver.survey_app_uber);
+    this.input.survey_app_cabify = Boolean(driver.survey_app_cabify);
+    this.input.survey_app_lady_driver = Boolean(driver.survey_app_lady_driver);
+    this.input.survey_app_others = Boolean(driver.survey_app_others);
 
     // watch steps data
     this.stepsUnwatch = this.$store.watch(

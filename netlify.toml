@@ -13,7 +13,7 @@
   CF_ZONE_ID = "861edae6333e25b67015ac356e034ad1"
   VUE_APP_KOVI_API_URL="https://api-staging.kovi.us"
   VUE_APP_KOVI_GRAPHQL_URL="https://api-staging.kovi.us/graphql"
-  NODE_VERSION="0.0.01"
+  NODE_VERSION="8.12.0"
 
 [context.production]
   command="npm run build && npm run clear-cache"
@@ -25,4 +25,4 @@
   CF_ZONE_ID = "861edae6333e25b67015ac356e034ad1"
   VUE_APP_KOVI_API_URL="https://api.kovi.us"
   VUE_APP_KOVI_GRAPHQL_URL="https://api.kovi.us/graphql"
-  NODE_VERSION="0.0.01"
+  NODE_VERSION="8.12.0"

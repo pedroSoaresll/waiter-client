@@ -1,76 +1,78 @@
 <template>
-  <v-layout column wrap class="layout">
-    <v-flex xs12>
-      <img :src="require('../../assets/kovi-logo-red.svg')" alt="logo kovi">
-    </v-flex>
+  <v-layout column wrap align-center class="layout">
+    <v-flex column wrap xs12>
+      <v-flex xs12>
+        <img :src="require('../../assets/kovi-logo-red.svg')" alt="logo kovi">
+      </v-flex>
 
-    <v-flex column wrap xs12 class="mt-5">
-      <p class="text-verifique-cadastro">Verifique seu telefone</p>
-      <p class="text-digite-abaixo">
-        Digite abaixo o código enviado para o número
-        <strong>11956088844</strong>.
-      </p>
-    </v-flex>
+      <v-flex column wrap xs12 class="mt-5">
+        <p class="text-verifique-cadastro">Verifique seu telefone</p>
+        <p class="text-digite-abaixo">
+          Digite abaixo o código enviado para o número
+          <strong>11956088844</strong>.
+        </p>
+      </v-flex>
 
-    <v-flex column wrap xs12 align-self-center class="mt-5">
-      <span class="text-kovi text-uppercase font-weight-bold">Kovi</span>
-      <span class="text-kovi text-uppercase font-weight-bold ml-3">-</span>
-      <input
-        ref="space1"
-        v-model="space1"
-        type="text"
-        class="input-code"
-        placeholder="0"
-        max="1"
-        maxlength="1"
-        @keyup="handleSpace($event, $refs.space2, null)"
-      >
-      <input
-        ref="space2"
-        v-model="space2"
-        type="text"
-        class="input-code ml-2"
-        placeholder="0"
-        max="1"
-        maxlength="1"
-        @keyup="handleSpace($event, $refs.space3, $refs.space1)"
-      >
-      <input
-        ref="space3"
-        v-model="space3"
-        type="text"
-        class="input-code ml-2"
-        placeholder="0"
-        max="1"
-        maxlength="1"
-        @keyup="handleSpace($event, $refs.space4, $refs.space2)"
-      >
-      <input
-        ref="space4"
-        v-model="space4"
-        type="text"
-        class="input-code ml-2"
-        placeholder="0"
-        max="1"
-        maxlength="1"
-        @keyup="handleSpace($event, null, $refs.space3)"
-      >
-    </v-flex>
+      <v-flex column wrap xs12 align-self-center class="mt-5">
+        <span class="text-kovi text-uppercase font-weight-bold">Kovi</span>
+        <span class="text-kovi text-uppercase font-weight-bold ml-3">-</span>
+        <input
+          ref="space1"
+          v-model="space1"
+          type="text"
+          class="input-code"
+          placeholder="0"
+          max="1"
+          maxlength="1"
+          @keyup="handleSpace($event, $refs.space2, null)"
+        >
+        <input
+          ref="space2"
+          v-model="space2"
+          type="text"
+          class="input-code ml-2"
+          placeholder="0"
+          max="1"
+          maxlength="1"
+          @keyup="handleSpace($event, $refs.space3, $refs.space1)"
+        >
+        <input
+          ref="space3"
+          v-model="space3"
+          type="text"
+          class="input-code ml-2"
+          placeholder="0"
+          max="1"
+          maxlength="1"
+          @keyup="handleSpace($event, $refs.space4, $refs.space2)"
+        >
+        <input
+          ref="space4"
+          v-model="space4"
+          type="text"
+          class="input-code ml-2"
+          placeholder="0"
+          max="1"
+          maxlength="1"
+          @keyup="handleSpace($event, null, $refs.space3)"
+        >
+      </v-flex>
 
-    <v-flex column wrap xs12 class="mt-5">
-      <a
-        href="javascript:void(0)"
-        @click="generateCode2fa"
-        class="text-enviar-codigo"
-      >Enviar código novamente.</a>
-    </v-flex>
+      <v-flex column wrap xs12 class="mt-5">
+        <a
+          href="javascript:void(0)"
+          @click="generateCode2fa"
+          class="text-enviar-codigo"
+        >Enviar código novamente.</a>
+      </v-flex>
 
-    <v-flex column wrap xs12 align-self-center class="mt-5" v-if="code2faVerified && !code2fa">
-      <p class="text-mensage-erro">Código incorreto.</p>
-    </v-flex>
+      <v-flex column wrap xs12 align-self-center class="mt-5" v-if="code2faVerified && !code2fa">
+        <p class="text-mensage-erro">Código incorreto.</p>
+      </v-flex>
 
-    <v-flex column wrap xs12 align-self-center :class="{'mt-5': !code2faVerified || code2fa}">
-      <v-btn class="btn-radius btn-pink" :large="true" @click="confirmCode2fa">Confirmar Código</v-btn>
+      <v-flex column wrap xs12 align-self-center :class="{'mt-5': !code2faVerified || code2fa}">
+        <v-btn class="btn-radius btn-pink" :large="true" @click="confirmCode2fa">Confirmar Código</v-btn>
+      </v-flex>
     </v-flex>
   </v-layout>
 </template>
@@ -81,8 +83,8 @@ export default {
     space1: "",
     space2: "",
     space3: "",
-		space4: "",
-		code2faWatch: null
+    space4: "",
+    code2faWatch: null
   }),
   computed: {
     code2fa() {
@@ -113,15 +115,17 @@ export default {
   mounted() {
     if (this.$route.params.code2fa) this.generateCode2fa();
 
-    this.code2faWatch = this.$store.watch(state => state.lead.code2fa, value => {
-			console.log('value:: ', value)
-			if (value) 
-				this.$router.push({ name: 'FirstData' })
-		});
-	},
-	beforeDestroy() {
-		this.code2faWatch()
-	}
+    this.code2faWatch = this.$store.watch(
+      state => state.lead.code2fa,
+      value => {
+        console.log("value:: ", value);
+        if (value) this.$router.push({ name: "FirstData" });
+      }
+    );
+  },
+  beforeDestroy() {
+    this.code2faWatch();
+  }
 };
 </script>
 
