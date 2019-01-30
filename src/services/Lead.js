@@ -7,6 +7,15 @@ const returnDriver = `
   name
   birthdate
   nickname
+  work_city
+  survey_be_over_21
+  survey_has_garage
+  survey_low_points
+  survey_app_99
+  survey_app_uber
+  survey_app_cabify
+  survey_app_lady_driver
+  survey_app_others
   gender
   photo
   email

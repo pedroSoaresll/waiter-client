@@ -18,14 +18,16 @@ export const state = {
     COMPLETE_INFO: { complete: false, invalid: false },
     COMPLETE_INFO_APPS: { complete: false, invalid: false },
     COMPLETE_INFO_PAYMENT: { complete: false, invalid: false },
-  }
+  },
+  accounts: []
 }
 
 export const getters = {
   code2fa: state => state.code2fa,
   code2faVerified: state => state.code2faVerified,
   driver: state => state.driver,
-  steps: state => state.steps
+  steps: state => state.steps,
+  accounts: state => state.accounts
 }
 
 export const mutations = {
@@ -43,6 +45,9 @@ export const mutations = {
   },
   setCode2faVerified(state, _code2faVerified) {
     state.code2faVerified = _code2faVerified
+  },
+  setAccounts(state, _accounts) {
+    state.accounts = _accounts
   }
 }
 
@@ -208,25 +213,23 @@ export const actions = {
     }
   },
 
-  async uploadDoc({ commit }, { documentType, file }) {
+  async uploadDoc({ state, commit }, { documentType, file }) {
     if (!documentType || !file)
-      return false
-
-    // buscar driver id
-    const driver = null
+      return Promise.reject('Comprovante não informado')
 
     let formData = new FormData()
     formData.append(documentType, file)
-    formData.append('driverId', driver.id)
-    return fetch(`${process.env.KOVI_API_URL}/documents`, {
+    formData.append('driverId', state.driver.id)
+
+    return await fetch(`${process.env.VUE_APP_KOVI_API_URL}/documents`, {
       method: 'POST',
       body: formData
     })
       .then(result => {
         return result.json()
       })
-      .then(() => true)
-      .catch(() => false)
+      .then(() => Promise.resolve(true))
+      .catch(() => Promise.reject('Nãofoi possível salvar a imagem desejada.'))
   }
 }
 
