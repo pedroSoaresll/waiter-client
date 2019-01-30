@@ -222,7 +222,6 @@ export default {
     }
   },
   mounted() {
-    console.log('mounted')
     const driver = this.$store.getters["lead/driver"];
     const accounts = [].concat(this.$store.getters["lead/accounts"]);
     if (accounts.length) this.accounts = accounts;
