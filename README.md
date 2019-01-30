@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/131cfbf4-c374-44c0-9588-98a916731802/deploy-status)](https://app.netlify.com/sites/kovi-signup-staging/deploys)
+
 # signup
 
 ## Project setup
