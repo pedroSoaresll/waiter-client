@@ -104,6 +104,12 @@ export default {
     }
   },
   mounted() {
+    const driver = this.$store.getters['lead/driver']
+    this.input.name = driver.name
+    this.input.cpf = driver.cpf
+    this.input.email = driver.email
+    this.input.work_city = driver.work_city
+    
     // watch steps data
     this.stepsUnwatch = this.$store.watch(
       state => {

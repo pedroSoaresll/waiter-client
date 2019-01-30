@@ -130,7 +130,7 @@
       </v-flex>
 
       <v-flex column wrap xs12 align-self-center class="mt-3">
-        <v-btn :disabled="!enableNextStep" class="btn-radius btn-pink" :large="true">Avançar</v-btn>
+        <v-btn :disabled="!enableNextStep" class="btn-radius btn-pink" :large="true" @click="$router.push({ name: 'SelectPlan' })">Avançar</v-btn>
       </v-flex>
     </v-layout>
   </v-layout>
