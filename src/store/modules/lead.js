@@ -47,7 +47,10 @@ export const mutations = {
     state.code2fa = _code2fa
   },
   setDriver(state, _driver) {
-    state.driver = _driver
+    state.driver = {
+      ...state.driver,
+      ..._driver
+    }
   },
   setBooking(state, _booking) {
     state.booking = _booking

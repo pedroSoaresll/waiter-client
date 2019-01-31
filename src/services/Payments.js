@@ -7,7 +7,7 @@ export const PAYMENTMETHOD_CREATE = gql`
     $cc_holder_cpf: String,
     $token: ID,
     $status: String!,
-    $type: String!  
+    $type: PaymentMethodEnum!  
     ) {
         createPaymentMethod(
             input: {

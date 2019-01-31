@@ -16,6 +16,7 @@ const returnDriver = `
   survey_app_cabify
   survey_app_lady_driver
   survey_app_others
+  step
   gender
   photo
   email
@@ -76,9 +77,7 @@ export const CREATE_LEAD = gql`
 export const VERIFY_CODE_LEAD = gql`
     query verify($phone: String!, $code2fa: String!) {
       lead(phone_number: $phone, code2fa: $code2fa) {
-         id,
-         phone_number,
-         step,
+         ${returnDriver}
       }
     }`;
 
@@ -103,10 +102,7 @@ export const SURVEY_DRIVER = gql`
            survey_app_99: $survey_app_99,
            survey_app_uber: $survey_app_uber,
            }) {
-        id,
-        step,
-        survey_app_uber,
-        survey_app_99,
+        ${returnDriver}
       }
     }`;
 
@@ -130,12 +126,7 @@ export const BASIC_INFORMATION = gql`
            code2fa: $code2fa,
            
            }) {
-        id,
-        status,
-        step,
-        cpf,
-        email,
-        work_city,
+        ${returnDriver}
       }
     }`;
 
@@ -244,9 +235,7 @@ export const LOGIN_99 = gql`
             code2fa: $code2fa,
           
            }) {
-        id,
-        status,
-        step,
+        ${returnDriver}
       }
     }
    `;
@@ -257,7 +246,7 @@ export const PAYMENT = gql`
         $cc_number: String,
         $cc_expired_at: String,
         $driver: String!,
-        $type: String!,
+        $type: PaymentMethodEnum!,
         $phone: String!,
         $code2fa: String!
         ) {
@@ -274,9 +263,7 @@ export const PAYMENT = gql`
             code2fa: $code2fa,
           
            }) {
-        id,
-        status,
-        step,
+        ${returnDriver}
       }
     }
    `;
