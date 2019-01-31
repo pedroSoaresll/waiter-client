@@ -9,12 +9,12 @@
       <v-flex column wrap xs12>
         <p class="text-obrigado mb-0">O seu carro está te esperando!</p>
         <p class="text-faca-pagamento text-16px mt-3">
-					Faça o pagamento do seu caucao e aluguel para o seu Kovi.
-				</p>
+            Faça o pagamento do seu caucao e aluguel para o seu Kovi.
+        </p>
       </v-flex>
 
       <v-flex column wrap xs12 align-self-center class="mt-5" v-if="errors.length > 0">
-        <p class="text-mensage-erro" v-for="error in errors">{{error.message}}</p>
+        <p class="text-mensage-erro" v-for="(error, index) in errors" :key="index">{{error.message}}</p>
       </v-flex>
 
       <v-flex column wrap xs12 align-self-center class="mt-5">
@@ -57,6 +57,7 @@ export default {
                 return res.booking
             },
             result(res) {
+                console.log(res)
                 if (!res.loading) {
                     if (res.error !== undefined || res.data.booking.id === undefined) {
                         this.$store.commit('lead/setBooking', {});

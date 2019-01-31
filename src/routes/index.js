@@ -15,14 +15,9 @@ const routes = [
     component: () => import('./views/ConfirmNumber')
   },
   {
-    name: 'SelectPlan',
-    path: '/selecione-seu-plano',
-    component: () => import('../components/signup-form/SelectPlan')
-  },
-  {
-        name: 'DoPayment',
-        path: '/reserva',
-        component: () => import('../components/signup-form/DoPayment')
+    name: 'DoPayment',
+    path: '/reserva',
+    component: () => import('../components/signup-form/DoPayment')
   },
   {
     name: 'FormSignup',

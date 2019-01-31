@@ -45,8 +45,8 @@ router.beforeEach(async (to, from, next) => {
       return next()
 
     //mock
-    await sessionStorage.setItem('kovi_phone', '11948211928')
-    await sessionStorage.setItem('kovi_code2fa', '11948211928')
+    // await sessionStorage.setItem('kovi_phone', '11948211928')
+    // await sessionStorage.setItem('kovi_code2fa', '11948211928')
     // fim mock
     const phone_number = sessionStorage.getItem('kovi_phone')
     if (!phone_number)

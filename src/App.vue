@@ -21,6 +21,28 @@ export default {
     return {
       //
     }
+  },
+  mounted() {
+    const driver = this.$store.getters['lead/driver']
+    this.$store.dispatch('lead/createDriver', driver.phone_number)
+    
+    if (!driver) {
+
+    } else {
+      console.log('driver encontrado', driver)
+      switch (driver.status) {
+        case 'PENDING_DOCS':
+          this.$router.push({ name: 'FinishForm' })
+          break;
+
+        case 'PENDING_BOOKING':
+          this.$router.push({ name: 'DoPayment', query: {booking: driver.booking.id} })
+          break;
+      
+        default:
+          break;
+      }
+    }
   }
 }
 </script>

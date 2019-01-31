@@ -182,7 +182,8 @@ export const actions = {
       const values = Object.values(input)
         .filter(value => !value)
 
-        console.log(values)
+      console.log(input)
+      console.log(values)
       if (!values.length)
         complete = true
 
