@@ -13,7 +13,7 @@
       <v-flex column wrap xs12 class="mt-4">
         <p class="text-faca-pagamento text-16px mt-3">Obrigado por aluguar com a Kovi!</p>
         <p class="text-faca-pagamento text-16px mt-3">
-          O seu carro estará disponível no dia 22/01/2019 na Rua Tavares Cabral, 209,
+          O seu {{ car }} estará disponível no dia {{ date }} na Rua Tavares Cabral, 209,
           <strong>na parte da manha</strong>
         </p>
       </v-flex>
@@ -30,6 +30,8 @@ export default {
       ...theme,
       primary: "#ff3859"
     },
+    car: '',
+    date: '',
     modal: false,
     form: {
       garageOtherAddress: false,
@@ -37,6 +39,8 @@ export default {
     }
   }),
   mounted() {
+    this.car = `${this.$route.params.car.brand.name} ${this.$route.params.car.version}`;
+    this.date = this.$moment(this.$route.params.car_delivery_scheduled).format('DD/MM/YYYY');
     this.$vuetify.theme = this.newTheme;
   },
   beforeDestroy() {

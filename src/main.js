@@ -8,7 +8,11 @@ import App from './App.vue'
 import store from './store';
 import apolloClient from './services/ApolloClient'
 import routes from './routes'
-import { CREATE_LEAD } from './services/Lead';
+import VueMoment from 'vue-moment'
+import moment from 'moment-timezone'
+import 'moment/locale/pt-br';
+moment.suppressDeprecationWarnings = true;
+moment.tz.setDefault('America/Sao_Paulo');
 
 Amplify.configure({
   Auth: {
@@ -18,9 +22,10 @@ Amplify.configure({
   }
 });
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 Vue.use(VueApollo);
 Vue.use(AmplifyPlugin, AmplifyModules);
+Vue.use(VueMoment, { moment });
 
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
@@ -29,6 +34,30 @@ const apolloProvider = new VueApollo({
 const router = new VueRouter({
   mode: 'history',
   routes
+})
+
+
+router.beforeEach(async (to, from, next) => {
+  // validar entrada do usuário
+  try {
+
+      if (to.params.load)
+      return next()
+
+    //mock
+    await sessionStorage.setItem('kovi_phone', '11948211928')
+    await sessionStorage.setItem('kovi_code2fa', '11948211928')
+    // fim mock
+    const phone_number = sessionStorage.getItem('kovi_phone')
+    if (!phone_number)
+      return next({ name: 'Home', params: { load: true } })
+
+    //store.dispatch('lead/createDriver', phone_number)
+      return next()
+
+  } catch (e) {
+    console.error(e)
+  }
 })
 
 Vue.config.productionTip = false;

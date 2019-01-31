@@ -9,6 +9,9 @@ export const state = {
   code2fa: null,
   code2faVerified: false,
   driver: {},
+  transactions: [],
+  booking: {},
+  plan: {},
   steps: {
     GET_PHONE: { complete: false, invalid: false },
     GET_BASIC: { complete: false, invalid: false },
@@ -26,6 +29,9 @@ export const getters = {
   code2fa: state => state.code2fa,
   code2faVerified: state => state.code2faVerified,
   driver: state => state.driver,
+  booking: state => state.booking,
+  plan: state => state.plan,
+  transactions: state => state.transactions,
   steps: state => state.steps,
   accounts: state => state.accounts
 }
@@ -42,6 +48,15 @@ export const mutations = {
   },
   setDriver(state, _driver) {
     state.driver = _driver
+  },
+  setBooking(state, _booking) {
+    state.booking = _booking
+  },
+  setPlan(state, _plan) {
+    state.plan = _plan
+  },
+  setTransactions(state, _transactions) {
+    state.transactions = _transactions
   },
   setCode2faVerified(state, _code2faVerified) {
     state.code2faVerified = _code2faVerified
@@ -255,7 +270,7 @@ export const actions = {
   }
 }
 
-const updateDriver = (state, commit, input) => {  
+const updateDriver = (state, commit, input) => {
   return apollo.mutate({
     mutation: COMPLETE_INFO,
     variables: {
