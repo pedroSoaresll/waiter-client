@@ -122,6 +122,16 @@
         </v-flex>
       </v-layout>
 
+          <v-flex column wrap xs12 align-self-center class="mt-5" v-if="info.length > 0">
+              <div v-for="item in info">
+                  <p class="text-mensage-erro"
+                     :class="{'text-mensage-erro': item.type === 'error', 'text-mensage-success': item.type === 'success'}">
+                      - {{item.message}}
+                  </p>
+              </div>
+
+          </v-flex>
+
       <!-- button avançar -->
       <v-layout column wrap xs12 class="mt-3">
         <v-flex column wrap xs12 align-self-center>
@@ -135,13 +145,14 @@
 
 <script>
 import { theme } from "../../plugins/vuetify";
-import { DRIVER_BOOKINGS } from "../../services/Booking";
+import { BOOKING_INFO, BOOKING_UPDATE } from "../../services/Booking";
 import { PAYMENTMETHOD_CREATE } from "../../services/Payments";
 
 export default {
   data: () => ({
     valid: false,
-    newTheme: {
+      info: [],
+      newTheme: {
       ...theme,
       primary: "#ff3859"
     },
@@ -187,9 +198,9 @@ export default {
   },
   apollo: {
       bookings: {
-          query: DRIVER_BOOKINGS,
+          query: BOOKING_INFO,
           variables() {
-              return { id: this.$route.query.booking }
+              return { id: this.$route.params.id }
           },
       },
   },
@@ -214,13 +225,16 @@ export default {
               const card_token = await this.setCardToken(data);
               console.log(card_token);
               console.log({
-                  driver: this.$route.query.id,
+                  driver: this.$route.params.driver.id,
                   holder_name: data.cc_holder_name,
                   holder_cpf: data.cc_holder_cpf,
                   token: card_token,
                   status: 'ACTIVE',
               });
-              if (card_token === false) throw new Error('Cartão inválido!');
+              if (card_token === false) {
+                  this.info.push({message: 'Cartão Inválido!', type: 'error'});
+                  throw new Error('Cartão inválido!');
+              }
 
               return this.$apollo
                   .mutate({
@@ -234,12 +248,18 @@ export default {
                           status: 'ACTIVE',
                       },
                   })
-                  .then(result => result)
+                  .then(result => {
+                      this.info.push({message: 'Metodo de pagamento via cartão criado!', type: 'success'});
+
+                      return result;
+                  })
                   .catch(error => {
-                      console.log(error)
-                      throw new Error('Não foi possível salvar este cartão');
+                      this.info.push({message: 'Não foi possível salvar este cartão!', type: 'error'});
+                      throw error;
                   });
           } catch (e) {
+              this.info.push({message: 'Finalizado sem sucesso!', type: 'error'});
+
               throw e;
           }
       },
@@ -249,15 +269,18 @@ export default {
                       .mutate({
                           mutation: PAYMENTMETHOD_CREATE,
                           variables: {
-                              driver: this.$route.query.id,
+                              driver: this.$route.params.driver.id,
                               type: 'boleto',
                               status: 'ACTIVE',
                           },
                       })
-                      .then(result => result)
+                      .then(result => {
+                          this.info.push({message: 'Metodo de pagamento via boleto criado!', type: 'success'});
+
+                          return result;
+                      })
                       .catch(error => {
-                          console.log(error)
-                          throw new Error('Não foi possível salvar este cartão');
+                          this.info.push({message: 'Não foi possível salvar boleto como pagamento!', type: 'error'});
                       })
           } catch (e) {
               throw e;
@@ -269,26 +292,26 @@ export default {
                   .mutate({
                       mutation: BOOKING_UPDATE,
                       variables: {
-                          driver: this.$route.query.id,
-                          plan: this.$route.query.plan,
-                          started_at: this.$route.query.started_at,
+                          id: this.$route.params.id,
+                          driver: this.$route.params.driver.id,
+                          plan: this.$route.params.plan.id,
                           transaction_method: transaction_method,
                           pre_transaction_method: pre_transaction_method,
                       },
                   })
-                  .then(result => result)
+                  .then(result => {
+                      console.warn(result);
+                      this.info.push({message: 'Finalizado com sucesso!', type: 'success'});
+                      setTimeout(() => this.$router.push({ name: 'PaymentStatus' }), 3000)
+                  })
                   .catch(error => {
-                      console.log(error);
-                      throw new Error('Não foi possível salvar pagamentos');
+                      this.info.push({message: 'Não foi possível salvar pagamentos!', type: 'error'});
                   })
           } catch (e) {
               throw e;
           }
           },
       async wrapperPayments() {
-          if (this.$route.query.id === undefined || this.$route.query.booking === undefined) {
-              console.error("Driver & Booking not set");
-          }
           try {
               const method = { pre_transaction_method: '', transaction_method: '' };
               if (this.form.caucao.PaymentMethod === 'cartao-credito') {
@@ -315,7 +338,8 @@ export default {
 
               await this.updateBooking({...method});
           } catch (e) {
-              console.error("wrapperPayments:",e)
+
+              this.info.push({message: 'Finzalido com falha!', type: 'error'});
           }
 
       }
@@ -365,6 +389,16 @@ export default {
 .text-faca-pagamento {
   font-size: 16px;
   opacity: 0.6;
+}
+
+.text-mensage-erro {
+    font-size: 16px;
+    color: red;
+}
+
+.text-mensage-success {
+    font-size: 16px;
+    color: green;
 }
 
 .subtitle {

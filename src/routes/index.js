@@ -19,11 +19,11 @@ const routes = [
     path: '/selecione-seu-plano',
     component: () => import('../components/signup-form/SelectPlan')
   },
-    {
-        name: 'Payment',
-        path: '/faca-o-pagamento-do-seu-kovi',
-        component: () => import('../components/signup-form/Payment')
-    },
+  {
+        name: 'DoPayment',
+        path: '/reserva',
+        component: () => import('../components/signup-form/DoPayment')
+  },
   {
     name: 'FormSignup',
     path: '/cadastro',

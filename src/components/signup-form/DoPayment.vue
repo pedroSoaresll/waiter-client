@@ -13,8 +13,12 @@
 				</p>
       </v-flex>
 
+      <v-flex column wrap xs12 align-self-center class="mt-5" v-if="errors.length > 0">
+        <p class="text-mensage-erro" v-for="error in errors">{{error.message}}</p>
+      </v-flex>
+
       <v-flex column wrap xs12 align-self-center class="mt-5">
-        <v-btn round class="btn-pink" :large="true">PAGAR MINHA LOCAÇÃO</v-btn>
+        <v-btn round class="btn-pink" @click="goPayment" :large="true">PAGAR MINHA LOCAÇÃO</v-btn>
       </v-flex>
     </v-layout>
   </v-layout>
@@ -22,25 +26,80 @@
 
 <script>
 import { theme } from "../../plugins/vuetify";
+import { BOOKING_INFO } from "../../services/Booking";
+
 
 export default {
-  data: () => ({
-    newTheme: {
-      ...theme,
-      primary: "#ff3859"
+    data: () => ({
+        newTheme: {
+            ...theme,
+            primary: "#ff3859"
+        },
+        autoGoPay: false,
+        errors: [],
+        skipQuery: true,
+        modal: false,
+        form: {
+            garageOtherAddress: false,
+            date: ""
+        },
+    }),
+    mounted() {
+        this.$vuetify.theme = this.newTheme;
     },
-    modal: false,
-    form: {
-      garageOtherAddress: false,
-      date: ""
+    apollo: {
+        booking: {
+            query: BOOKING_INFO,
+            variables() {
+                return {id: this.$route.query.booking}
+            },
+            update(res) {
+                return res.booking
+            },
+            result(res) {
+                if (!res.loading) {
+                    if (res.error !== undefined || res.data.booking.id === undefined) {
+                        this.$store.commit('lead/setBooking', {});
+                        this.errors = [];
+                        this.errors.push({message: 'Reserva não encontrada!'});
+                        return false;
+                    }
+
+                    if (res.data.booking.status === 'ACTIVE') {
+                        this.$router.push({name: 'BookingDate', params: {...res.data.booking}});
+                        return;
+                    }
+
+                    this.$store.commit('lead/setBooking', res.data.booking);
+                    this.$store.commit('lead/setDriver', res.data.booking.driver);
+                    this.$store.commit('lead/setPlan', res.data.booking.plan);
+                    if (this.autoGoPay) {
+                        this.$router.push({name: 'Payment', params: {...res.data.booking}});
+                    }
+                }
+            }
+        },
+    },
+    methods: {
+        goPayment() {
+            if (this.$route.query.booking === null || this.$route.query.booking === undefined) {
+                this.errors = [];
+                this.errors.push({message: 'Reserva inválida!'});
+                return false;
+            }
+            this.autoGoPay = true;
+            this.$apollo.queries.booking.skip = false;
+            this.$apollo.queries.booking.refetch({
+                id: this.$route.query.booking,
+            });
+
+            return true;
+
+        }
+    },
+    beforeDestroy() {
+        this.$vuetify.theme = theme;
     }
-  }),
-  mounted() {
-    this.$vuetify.theme = this.newTheme;
-  },
-  beforeDestroy() {
-    this.$vuetify.theme = theme;
-  }
 };
 </script>
 
@@ -85,6 +144,11 @@ export default {
 .text-faca-pagamento {
   font-size: 18px;
   opacity: 0.6;
+}
+
+.text-mensage-erro {
+  font-size: 16px;
+  color: red;
 }
 
 .subtitle {

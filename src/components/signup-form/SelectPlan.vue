@@ -15,22 +15,16 @@
 
       <v-flex column wrap xs12 class="mt-5">
         <p class="subtitle font-weight-bold text-uppercase">PLANOS DISPONÍVEIS</p>
-        <v-radio-group>
-          <v-radio label="Pescocinho 5k" value="pescocinho-5"/>
-          <v-flex align-self-start class="area-info-radio ml-4">
+        <v-radio-group v-model="form.planSelect">
+          <div v-for="plan in plans.items">
+            <v-radio :label="plan.name" :value="plan.id"/>
+            <v-flex align-self-start class="area-info-radio ml-4">
             <span
-              class="subtitle"
-            >Com este plano você pode rodar 1.721Km / semana, ou 5.000 Km por mês</span>
-            <span class="subtitle">Valor R$ 369,00 / semana</span>
-          </v-flex>
-
-          <v-radio class="mt-4" label="Pescocinho 10k" value="pescocinho-10"/>
-          <v-flex align-self-start class="area-info-radio ml-4">
-            <span
-              class="subtitle"
-            >Com este plano você pode rodar 1.721Km / semana, ou 9.000 Km por mês</span>
-            <span class="subtitle">Valor R$ 469,00 / semana</span>
-          </v-flex>
+                    class="subtitle"
+            >{{plan.description}}</span>
+              <span class="subtitle">Valor R$ {{plan.transaction_amount/100}} / semana</span>
+            </v-flex>
+          </div>
         </v-radio-group>
       </v-flex>
 
@@ -40,7 +34,7 @@
         <v-dialog
           ref="dialog"
           v-model="modal"
-          :return-value.sync="form.date"
+          :return-value.sync="date"
           persistent
           lazy
           full-width
@@ -48,12 +42,12 @@
         >
           <v-text-field
             slot="activator"
-            v-model="form.date"
+            v-model="form.car_delivery_scheduled"
             label="Selecione a data"
             prepend-icon="event"
             readonly
           ></v-text-field>
-          <v-date-picker v-model="form.date" scrollable>
+          <v-date-picker v-model="form.car_delivery_scheduled" scrollable>
             <v-spacer></v-spacer>
             <v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
             <v-btn flat color="primary" @click="$refs.dialog.save(form.date)">OK</v-btn>
@@ -61,8 +55,16 @@
         </v-dialog>
       </v-flex>
 
+      <v-flex column wrap xs12 align-self-center class="mt-5" v-if="errors.length > 0">
+        <p class="text-mensage-erro" v-for="error in errors">- {{error.message}}</p>
+      </v-flex>
+
       <v-flex column wrap xs12 align-self-center class="mt-3">
-        <v-btn class="btn-radius btn-pink" :large="true">Avançar</v-btn>
+        <v-btn class="btn-radius btn-pink"
+               :disabled="form.planSelect === null || form.car_delivery_scheduled === null"
+               @click="createBooking"
+               large
+        >Avançar</v-btn>
       </v-flex>
     </v-layout>
   </v-layout>
@@ -70,25 +72,64 @@
 
 <script>
 import { theme } from "../../plugins/vuetify";
+import { LIST_PLANS } from "../../services/Plans";
+import { BOOKING_OPEN } from "../../services/Booking";
 
 export default {
-  data: () => ({
-    newTheme: {
-      ...theme,
-      primary: "#ff3859"
+    data: () => ({
+        newTheme: {
+            ...theme,
+            primary: "#ff3859"
+        },
+        errors: [],
+        date: new Date().toISOString().substr(0, 10),
+        modal: false,
+        form: {
+            planSelect: null,
+            car_delivery_scheduled: null,
+        }
+    }),
+    apollo: {
+        plans: {
+            query: LIST_PLANS,
+            variables() {
+                return {status: 'ACTIVE', limit: 10, page: 0}
+            },
+        },
     },
-    modal: false,
-    form: {
-      garageOtherAddress: false,
-      date: ''
+    methods: {
+        async createBooking() {
+            try {
+                return this.$apollo
+                    .mutate({
+                        mutation: BOOKING_OPEN,
+                        variables: {
+                            driver: this.$store.getters["lead/driver"].id,
+                            plan: this.form.planSelect,
+                            started_at: new Date().toJSON().slice(0, 19).replace('T', ' '),
+                            car_delivery_scheduled: this.form.car_delivery_scheduled
+                        },
+                    })
+                    .then(result => {
+                        this.$store.commit('lead/setPlan', result.openBooking);
+                        this.$router.push({name: 'FinishForm'});
+                    })
+                    .catch(error => {
+                        this.errors.push({message: error.message.replace('GraphQL error: ', '')})
+                    })
+            } catch (e) {
+                throw e;
+            }
+        },
+
+    },
+    mounted() {
+        this.$vuetify.theme = this.newTheme;
+        const driver = this.$store.getters["lead/driver"];
+    },
+    beforeDestroy() {
+        this.$vuetify.theme = theme;
     }
-  }),
-  mounted() {
-    this.$vuetify.theme = this.newTheme;
-  },
-  beforeDestroy() {
-    this.$vuetify.theme = theme;
-  }
 };
 </script>
 
@@ -126,6 +167,11 @@ export default {
 
 .text-para-acelerar {
   opacity: 0.6;
+}
+
+.text-mensage-erro {
+  font-size: 16px;
+  color: red;
 }
 
 .subtitle {

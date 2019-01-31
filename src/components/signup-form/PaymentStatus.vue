@@ -11,20 +11,16 @@
         <p
           class="text-faca-pagamento text-16px mt-3"
         >Você está quase lá para pegar o seu Kovi. Selecione abaixo a forma de pagamento do seu caução e do seu aluguel.</p>
+        <v-divider></v-divider>
       </v-flex>
-
-      <v-flex column wrap xs12 class="mt-5">
-        <p class="subtitle font-weight-bold">PAGAMENTO CAUÇÃO (Cartão de Crédito)</p>
-        <p class="text-success">Pagamento realizado com sucesso!</p>
-      </v-flex>
-
-      <v-flex column wrap xs12 class="mt-5">
-        <p class="subtitle font-weight-bold">PAGAMENTO ALUGUEL (Boleto bancário)</p>
-        <p class="text-pink">Aguardando pagamento.</p>
-
-        <v-flex column wrap xs12 align-self-start class="mt-2">
-          <v-btn round class="btn-pink ml-0" :large="true">PAGAR BOLETO</v-btn>
+      <v-flex v-for="transaction in transactions.items" column wrap xs12 class="mt-5">
+        <p class="subtitle font-weight-bold">{{transaction.description}} ({{transaction.payment_method.type === 'boleto' ? 'Boleto bancário' : 'Cartão de Crédito' }})</p>
+        <p class="text-success" v-if="transaction.status === 'PAID'">Pagamento realizado com sucesso!</p>
+        <p class="text-pink" v-if="transaction.status === 'PENDING'">Aguardando pagamento.</p>
+        <v-flex column wrap xs12 align-self-start class="mt-2" v-if="transaction.status === 'PENDING'">
+          <v-btn round class="btn-pink ml-0" :large="true" :href="transaction.barcode_url">PAGAR BOLETO</v-btn>
         </v-flex>
+        <v-divider></v-divider>
       </v-flex>
     </v-layout>
   </v-layout>
@@ -32,6 +28,7 @@
 
 <script>
 import { theme } from "../../plugins/vuetify";
+import { TRANSACTION_DRIVER_INFO } from "../../services/Transactions";
 
 export default {
   data: () => ({
@@ -39,6 +36,7 @@ export default {
       ...theme,
       primary: "#ff3859"
     },
+      driver: '',
     modal: false,
     form: {
       garageOtherAddress: false,
@@ -48,8 +46,38 @@ export default {
   mounted() {
     this.$vuetify.theme = this.newTheme;
   },
+    apollo: {
+        transactions: {
+            query: TRANSACTION_DRIVER_INFO,
+            variables() {
+                if (this.$route.query.driver) this.driver = this.$route.query.driver;
+                if (this.$route.params.driver) this.driver = this.$route.params.driver;
+
+                return {driver: this.driver}
+            },
+            update(res) {
+                return res.transactions
+            },
+            result(res) {
+                if (!res.loading) {
+                    if (res.error !== undefined || res.data.transactions.items === null) {
+                        this.$store.commit('lead/setTransactions', []);
+                        this.errors = [];
+                        this.errors.push({message: 'Erro ao procurar suas Transações!'});
+                        return false;
+                    }
+
+                    this.$store.commit('lead/setTransactions', res.data.transactions.items);
+                    return res.data.transactions;
+                }
+            }
+        },
+    },
   beforeDestroy() {
     this.$vuetify.theme = theme;
+  },
+  methods: {
+
   }
 };
 </script>
