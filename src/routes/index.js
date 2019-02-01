@@ -15,11 +15,6 @@ const routes = [
     component: () => import('./views/ConfirmNumber')
   },
   {
-    name: 'DoPayment',
-    path: '/reserva',
-    component: () => import('../components/signup-form/DoPayment')
-  },
-  {
     name: 'FormSignup',
     path: '/cadastro',
     component: () => import('./views/SignupSteps'),

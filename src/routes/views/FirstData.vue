@@ -67,7 +67,7 @@
       <v-flex column wrap xs12 class="mt-5">
         <p class="text-ja-comecou mb-0">Já começou o cadastro?</p>
         <a
-          href="#"
+          @click.prevent="verifyRegister"
           class="link-clique-aqui font-weight-bold mt-0"
         >Clique aqui e verifique o seu processo.</a>
       </v-flex>
@@ -96,6 +96,11 @@ export default {
     dataRule: [v => !!v || "Este campo é obrigatório!"],
     stepsUnwatch: null
   }),
+  computed: {
+    driver() {
+      return this.$store.getters["lead/driver"];
+    }
+  },
   methods: {
     updateDriver() {
       this.errorMessage = false;
@@ -103,14 +108,18 @@ export default {
         this.sent = true;
         this.$store.dispatch("lead/sendGetBasics", this.input);
       }
+    },
+    verifyRegister() {
+      this.$parent.$options.parent.loadUserData(this.driver)
     }
   },
   mounted() {
-    const driver = this.$store.getters["lead/driver"];
-    this.input.name = driver.name;
-    this.input.cpf = driver.cpf;
-    this.input.email = driver.email;
-    this.input.work_city = driver.work_city;
+    if (this.driver) {
+      this.input.name = this.driver.name;
+      this.input.cpf = this.driver.cpf;
+      this.input.email = this.driver.email;
+      this.input.work_city = this.driver.work_city;
+    }
 
     // watch steps data
     this.stepsUnwatch = this.$store.watch(

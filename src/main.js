@@ -41,19 +41,15 @@ router.beforeEach(async (to, from, next) => {
   // validar entrada do usuário
   try {
 
-      if (to.params.load)
+    if (to.params.load)
       return next()
 
-    //mock
-    // await sessionStorage.setItem('kovi_phone', '11948211928')
-    // await sessionStorage.setItem('kovi_code2fa', '11948211928')
-    // fim mock
     const phone_number = sessionStorage.getItem('kovi_phone')
     if (!phone_number)
       return next({ name: 'Home', params: { load: true } })
 
     //store.dispatch('lead/createDriver', phone_number)
-      return next()
+    return next()
 
   } catch (e) {
     console.error(e)

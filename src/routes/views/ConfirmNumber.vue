@@ -9,7 +9,7 @@
         <p class="text-verifique-cadastro">Verifique seu telefone</p>
         <p class="text-digite-abaixo">
           Digite abaixo o código enviado para o número
-          <strong>11956088844</strong>.
+          <strong v-if="driver">{{driver.phone_number}}</strong>.
         </p>
       </v-flex>
 
@@ -71,7 +71,7 @@
       </v-flex>
 
       <v-flex column wrap xs12 align-self-center :class="{'mt-5': !code2faVerified || code2fa}">
-        <v-btn class="btn-radius btn-pink" :large="true" @click="confirmCode2fa">Confirmar Código</v-btn>
+        <v-btn :disabled="sent" class="btn-radius btn-pink" :large="true" @click="confirmCode2fa">Confirmar Código</v-btn>
       </v-flex>
     </v-flex>
   </v-layout>
@@ -80,13 +80,23 @@
 <script>
 export default {
   data: () => ({
+    sent: false,
     space1: "",
     space2: "",
     space3: "",
     space4: "",
     code2faWatch: null
   }),
+  watch: {
+    space4(newVal) {
+      if (newVal)
+        this.confirmCode2fa()
+    }
+  },
   computed: {
+    driver() {
+      return this.$store.getters['lead/driver']
+    },
     code2fa() {
       return this.$store.getters["lead/code2fa"];
     },
@@ -103,22 +113,24 @@ export default {
       }
     },
 
-    confirmCode2fa() {
+    async confirmCode2fa() {
       const code2fa = [this.space1, this.space2, this.space3, this.space4];
-      this.$store.dispatch("lead/verifyCode2fa", code2fa.join(""));
+      const isValidCode = await this.$store.dispatch("lead/verifyCode2fa", code2fa.join(""));
+      this.sent = isValidCode
     },
 
     generateCode2fa() {
+      this.sent = false
       this.$store.dispatch("lead/code2fa");
     }
   },
   mounted() {
+    this.$refs.space1.focus()
     if (this.$route.params.code2fa) this.generateCode2fa();
 
     this.code2faWatch = this.$store.watch(
       state => state.lead.code2fa,
       value => {
-        console.log("value:: ", value);
         if (value) this.$router.push({ name: "FirstData" });
       }
     );

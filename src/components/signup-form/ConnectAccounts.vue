@@ -27,49 +27,49 @@
         >{{ textButton(account.appName, account.status) }}</v-btn>
       </v-flex>
 
-      <v-dialog
-        width="500"
-        v-for="account of accounts"
-        :key="account.appName"
-        v-model="account.modal"
-      >
-        <v-card class="wrapper">
-          <v-layout column wrap>
-            <p class="text-envie-historico">
-              Por favor, envie o seu histórico de corridas
-              <strong>{{ account.appName === 'Outros' ? 'do outro aplicativo que você usa' : `${account.appName}` }}</strong>
-            </p>
-            <upload-input
-              title="Foto do perfil"
-              :file-changed-callback="file => imageFile = file.imageFile"
-            ></upload-input>
+      <div v-for="account of accounts" :key="account.appName">
+        <v-dialog width="500" v-model="account.modal" v-if="!account.integration">
+          <v-card class="wrapper">
+            <v-layout column wrap>
+              <p class="text-envie-historico">
+                Por favor, envie o seu histórico de corridas
+                <strong>{{ account.appName === 'Outros' ? 'do outro aplicativo que você usa' : `${account.appName}` }}</strong>
+              </p>
+              <upload-input
+                title="Foto do perfil"
+                :file-changed-callback="file => imageFile = file.imageFile"
+              ></upload-input>
 
-            <v-flex align-self-center row wrap xs12>
-              <p
-                class="error-message text-center"
-                v-show="account.errorMessage"
-              >{{account.textErrorMessage}}</p>
-            </v-flex>
+              <v-flex align-self-center row wrap xs12>
+                <p
+                  class="error-message text-center"
+                  v-show="account.errorMessage"
+                >{{account.textErrorMessage}}</p>
+              </v-flex>
 
-            <v-btn
-              :disabled="account.sent"
-              round
-              class="btn-pink"
-              :large="true"
-              @click="uploadImage(account)"
-            >Salvar</v-btn>
-            <v-flex column wrap xs12 align-self-center>
               <v-btn
                 :disabled="account.sent"
-                flat
-                small
+                round
+                class="btn-pink"
                 :large="true"
-                @click="closeModal(account)"
-              >Cancelar</v-btn>
-            </v-flex>
-          </v-layout>
-        </v-card>
-      </v-dialog>
+                @click="uploadImage(account)"
+              >Salvar</v-btn>
+              <v-flex column wrap xs12 align-self-center>
+                <v-btn
+                  :disabled="account.sent"
+                  flat
+                  small
+                  :large="true"
+                  @click="closeModal(account)"
+                >Cancelar</v-btn>
+              </v-flex>
+            </v-layout>
+          </v-card>
+        </v-dialog>
+
+        <!--integração 99 modal-->
+        <login99 v-if="account.documentType === 'app_99'" v-model="account.modal" @integrate="integrate => account.status = integrate"/>
+      </div>
 
       <v-layout column wrap xs8 align-self-center class="mt-3" v-show="errorNextStep">
         <p class="error-message">Para avançar é necessário adicionar todas as contas.</p>
@@ -84,9 +84,11 @@
 
 <script>
 import UploadInput from "../UploadInput";
+import Login99 from "../Login99";
 export default {
   components: {
-    UploadInput
+    UploadInput,
+    Login99
   },
   data: () => ({
     teste: null,
@@ -100,7 +102,8 @@ export default {
         documentType: "app_uber",
         sent: false,
         errorMessage: false,
-        textErrorMessage: ""
+        textErrorMessage: "",
+        integration: false
       },
       {
         appName: "99",
@@ -109,7 +112,8 @@ export default {
         documentType: "app_99",
         sent: false,
         errorMessage: false,
-        textErrorMessage: ""
+        textErrorMessage: "",
+        integration: true
       },
       {
         appName: "Cabify",
@@ -118,7 +122,8 @@ export default {
         documentType: "app_cabify",
         sent: false,
         errorMessage: false,
-        textErrorMessage: ""
+        textErrorMessage: "",
+        integration: false
       },
       {
         appName: "Lady Driver",
@@ -127,7 +132,8 @@ export default {
         documentType: "app_ladydriver",
         sent: false,
         errorMessage: false,
-        textErrorMessage: ""
+        textErrorMessage: "",
+        integration: false
       },
       {
         appName: "Outros",
@@ -136,7 +142,8 @@ export default {
         documentType: "app_outros",
         sent: false,
         errorMessage: false,
-        textErrorMessage: ""
+        textErrorMessage: "",
+        integration: false
       }
     ]
   }),
@@ -222,16 +229,24 @@ export default {
     const accounts = [].concat(this.$store.getters["lead/accounts"]);
     if (accounts.length) this.accounts = accounts;
     this.accounts = this.accounts.filter(item => {
-      if (driver.survey_app_99 === 1 && item.documentType === "app_99") return true
-      if (driver.survey_app_uber === 1 && item.documentType === "app_uber") return true
-      if (driver.survey_app_cabify === 1 && item.documentType === "app_cabify") return true
-      if (driver.survey_app_lady_driver === 1 && item.documentType === "app_ladydriver") return true
-      if (driver.survey_app_others === 1 && item.documentType === "app_outros") return true
+      if (driver.survey_app_99 === 1 && item.documentType === "app_99")
+        return true;
+      if (driver.survey_app_uber === 1 && item.documentType === "app_uber")
+        return true;
+      if (driver.survey_app_cabify === 1 && item.documentType === "app_cabify")
+        return true;
+      if (
+        driver.survey_app_lady_driver === 1 &&
+        item.documentType === "app_ladydriver"
+      )
+        return true;
+      if (driver.survey_app_others === 1 && item.documentType === "app_outros")
+        return true;
 
-      return false
+      return false;
     });
 
-    this.updateAccountsState()
+    this.updateAccountsState();
   }
 };
 </script>

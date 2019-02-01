@@ -111,7 +111,7 @@ export const actions = {
     if (!phone_number)
       Promise.reject('Telefone não encontrado na session storage')
 
-    apollo.mutate({
+    return apollo.mutate({
       mutation: VERIFY_CODE2FA,
       variables: {
         code2fa,
@@ -125,6 +125,7 @@ export const actions = {
           if (result.data.verifyCode2fa) {
             sessionStorage.setItem(SESSION_STORAGE_CODE2FA, code2fa)
             commit('setCode2fa', code2fa)
+            return true
           } else {
             throw new Error('Código inválido')
           }
@@ -132,11 +133,13 @@ export const actions = {
           // informar ao usuário que o código esta inválido
           sessionStorage.setItem(SESSION_STORAGE_CODE2FA, '')
           commit('setCode2fa', null)
+          return false
         }
       })
       .catch(error => {
         // informar ao usuário que não foi possível validar o código
         console.error('error code2fa:: ', error)
+        return false
       })
   },
 
@@ -185,8 +188,6 @@ export const actions = {
       const values = Object.values(input)
         .filter(value => !value)
 
-      console.log(input)
-      console.log(values)
       if (!values.length)
         complete = true
 

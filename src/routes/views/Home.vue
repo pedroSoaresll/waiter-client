@@ -83,27 +83,17 @@ export default {
           // show error to user
           this.sent = false;
           this.errorMessage = true;
+          return
         }
-      }
-    );
 
-    // watch driver data
-    this.driverUnwatch = this.$store.watch(
-      state => {
-        return state.lead.driver;
-      },
-      value => {
-        if (value.phone_number)
-          this.$router.push({
-            name: "ConfirmNumber",
-            params: { code2fa: true }
-          });
+        this.$router.push({
+          name: "ConfirmNumber"
+        })
       }
     );
   },
 
   beforeDestroy() {
-    if (this.driverUnwatch) this.driverUnwatch();
     if (this.stepsUnwatch) this.stepsUnwatch();
   }
 };
