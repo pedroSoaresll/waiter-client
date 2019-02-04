@@ -30,7 +30,6 @@
           <p>Você possui garagem na sua casa ou alugada para guardar o carro?</p>
           <v-checkbox
             required
-            :rules="dataRule"
             v-model="input.survey_has_garage"
             class="text-18px"
             label="Sim, possuo garagem na minha casa ou alugada"
@@ -40,7 +39,6 @@
         <v-flex column wrap xs12>
           <p>Você possui menos de 13 pontos na sua CNH?</p>
           <v-checkbox
-            :rules="dataRule"
             required
             v-model="input.survey_low_points"
             class="text-18px"
@@ -52,7 +50,6 @@
           <p>Você possui mais de 21 anos?</p>
           <v-checkbox
             required
-            :rules="dataRule"
             v-model="input.survey_be_over_21"
             class="text-18px"
             label="Sim, possuo mais de 21 anos."

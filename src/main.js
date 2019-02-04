@@ -7,7 +7,7 @@ import { AmplifyPlugin } from 'aws-amplify-vue'
 import App from './App.vue'
 import store from './store';
 import apolloClient from './services/ApolloClient'
-import routes from './routes'
+import router from './routes'
 import VueMoment from 'vue-moment'
 import moment from 'moment-timezone'
 import 'moment/locale/pt-br';
@@ -30,11 +30,6 @@ Vue.use(VueMoment, { moment });
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
 });
-
-const router = new VueRouter({
-  mode: 'history',
-  routes
-})
 
 
 router.beforeEach(async (to, from, next) => {

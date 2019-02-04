@@ -1,3 +1,5 @@
+import VueRouter from 'vue-router'
+
 const routes = [
   {
     name: 'Home',
@@ -23,6 +25,11 @@ const routes = [
         name: 'PreData',
         path: 'pre-dados',
         component: () => import('../components/signup-form/PreData')
+      },
+      {
+        name: 'NoHaveRequisites',
+        path: 'nao-tem-os-requisitos',
+        component: () => import('../components/signup-form/NoHaveRequisites')
       },
       {
         name: 'ConnectAccounts',
@@ -68,4 +75,9 @@ const routes = [
   },
 ]
 
-export default routes
+const router = new VueRouter({
+  mode: 'history',
+  routes
+})
+
+export default router

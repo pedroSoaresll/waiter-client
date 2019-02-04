@@ -10,7 +10,7 @@
         <p class="text-a-mudanca">A mudança começa hoje!</p>
       </v-flex>
 
-      <v-form v-model="isValid">
+      <v-form v-model="isValid" @submit.prevent="createDriver">
         <v-flex column wrap xs12 class="mt-5">
           <v-text-field
             label="Número do seu celular"
@@ -87,7 +87,10 @@ export default {
         }
 
         this.$router.push({
-          name: "ConfirmNumber"
+          name: "ConfirmNumber",
+          params: {
+            code2fa: true
+          }
         })
       }
     );

@@ -1,7 +1,7 @@
 import apollo from '../../services/ApolloClient'
-import * as axios from 'axios'
+import router from '../../routes'
 import { CREATE_LEAD, CODE2FA, VERIFY_CODE2FA, COMPLETE_INFO } from '../../services/Lead';
-const SESSION_STORAGE_CODE2FA = 'kovi_code2fs'
+const SESSION_STORAGE_CODE2FA = 'kovi_code2fa'
 const SESSION_STORAGE_PHONE = 'kovi_phone'
 
 export const state = {
@@ -15,6 +15,7 @@ export const state = {
   steps: {
     GET_PHONE: { complete: false, invalid: false },
     GET_BASIC: { complete: false, invalid: false },
+    NO_HAVE_REQUISITES: { complete: false, invalid: false },
     GET_CODE_CONFIRMATION: { complete: false, invalid: false },
     SEND_SURVEY_DRIVER: { complete: false, invalid: false },
     SEND_DOCUMENTS: { complete: false, invalid: false },
@@ -70,19 +71,37 @@ export const mutations = {
 }
 
 export const actions = {
-  restoreActivity({ commit }, driver = null) {
-    console.log('chamou aqui restore activity')
+  restoreActivity({ state }) {
+    if (!state.driver || !sessionStorage.getItem('kovi_code2fa')) {
+      if (router.currentRoute.fullPath !== '/')
+        router.push({ name: 'Home' })
+    } else {
+      console.log('caiu no else:: ', state.driver.status)
+      switch (state.driver.status) {
+        case "PENDING_DOCS":
+          router.push({ name: "FinishForm" });
+          break;
 
-    if (driver.status === 'LEAD') {
-      // change step to GET_BASIC
-    }
+        case "PENDING_BOOKING":
+          router.push({
+            name: "DoPayment",
+            query: { booking: state.driver.booking.id }
+          });
+          break;
 
-    else if (driver.status && !sessionStorage.getItem(SESSION_STORAGE_CODE2FA)) {
-      // change step to GET_CODE_CONFIRMATION
+        case "WAITING_LIST":
+          router.push({ name: 'NoHaveRequisites' })
+          break;
+
+        default:
+          return router.push({
+            name: "FirstData"
+          })
+      }
     }
   },
 
-  code2fa({ commit }) {
+  code2fa() {
 
     const phone = sessionStorage.getItem(SESSION_STORAGE_PHONE)
     if (!phone)
@@ -102,7 +121,7 @@ export const actions = {
       })
   },
 
-  verifyCode2fa({ commit }, code2fa) {
+  verifyCode2fa({ commit, dispatch }, code2fa) {
 
     if (!code2fa || code2fa.length < 4)
       return Promise.reject('code2fa incorreto')
@@ -135,6 +154,10 @@ export const actions = {
           commit('setCode2fa', null)
           return false
         }
+      })
+      .then(codeValid => {
+        if (codeValid)
+          dispatch('restoreActivity')
       })
       .catch(error => {
         // informar ao usuário que não foi possível validar o código
@@ -180,7 +203,7 @@ export const actions = {
     // caso não, enviar para tela de confirmar número
   },
 
-  async sendDocs({state, commit}, input) {
+  async sendDocs({ state, commit }, input) {
     const updated = await updateDriver(state, commit, input)
 
     if (updated) {
@@ -242,12 +265,22 @@ export const actions = {
       ]
         .filter(value => !!value)
 
-      if (!requiredFields.length && oneOrMoreRequiredFields.length)
-        complete = true
+      const validPreData = !requiredFields.length && oneOrMoreRequiredFields.length
+      complete = validPreData
 
       commit('setSteps', {
         SEND_SURVEY_DRIVER: { complete, invalid: false },
       })
+
+      if (!validPreData) {
+        updateDriver(state, commit, {
+          status: 'WAITING_LIST'
+        })
+        commit('setSteps', {
+          NO_HAVE_REQUISITES: { complete: true, invalid: true }
+        })
+        router.push({ name: 'NoHaveRequisites' })
+      }
     } else {
       commit('setSteps', {
         SEND_SURVEY_DRIVER: { complete: false, invalid: true }

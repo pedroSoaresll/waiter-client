@@ -71,7 +71,12 @@
       </v-flex>
 
       <v-flex column wrap xs12 align-self-center :class="{'mt-5': !code2faVerified || code2fa}">
-        <v-btn :disabled="sent" class="btn-radius btn-pink" :large="true" @click="confirmCode2fa">Confirmar Código</v-btn>
+        <v-btn
+          :disabled="sent"
+          class="btn-radius btn-pink"
+          :large="true"
+          @click="confirmCode2fa"
+        >Confirmar Código</v-btn>
       </v-flex>
     </v-flex>
   </v-layout>
@@ -84,18 +89,16 @@ export default {
     space1: "",
     space2: "",
     space3: "",
-    space4: "",
-    code2faWatch: null
+    space4: ""
   }),
   watch: {
     space4(newVal) {
-      if (newVal)
-        this.confirmCode2fa()
+      if (newVal) this.confirmCode2fa();
     }
   },
   computed: {
     driver() {
-      return this.$store.getters['lead/driver']
+      return this.$store.getters["lead/driver"];
     },
     code2fa() {
       return this.$store.getters["lead/code2fa"];
@@ -115,28 +118,22 @@ export default {
 
     async confirmCode2fa() {
       const code2fa = [this.space1, this.space2, this.space3, this.space4];
-      const isValidCode = await this.$store.dispatch("lead/verifyCode2fa", code2fa.join(""));
-      this.sent = isValidCode
+      const isValidCode = await this.$store.dispatch(
+        "lead/verifyCode2fa",
+        code2fa.join("")
+      );
+      this.sent = isValidCode;
     },
 
     generateCode2fa() {
-      this.sent = false
+      this.sent = false;
       this.$store.dispatch("lead/code2fa");
     }
   },
   mounted() {
-    this.$refs.space1.focus()
+    sessionStorage.removeItem('kovi_code2fa')
+    this.$refs.space1.focus();
     if (this.$route.params.code2fa) this.generateCode2fa();
-
-    this.code2faWatch = this.$store.watch(
-      state => state.lead.code2fa,
-      value => {
-        if (value) this.$router.push({ name: "FirstData" });
-      }
-    );
-  },
-  beforeDestroy() {
-    this.code2faWatch();
   }
 };
 </script>
