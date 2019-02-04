@@ -169,7 +169,6 @@ export default {
     enableNextStep() {
       const steps = this.$store.getters["lead/steps"];
       const { complete } = steps.SEND_DOCUMENTS;
-      console.log(steps.SEND_DOCUMENTS);
       return complete;
     }
   },
@@ -188,7 +187,7 @@ export default {
         this.input.address_state = addressData.uf;
         this.input.address_street_details = addressData.complemento;
       } catch (e) {
-        console.log("error to get cep::", e);
+        // console.log("error to get cep::", e);
       }
     },
     updateDriver(ref) {
@@ -220,7 +219,6 @@ export default {
     this.input.emergency_1_phone_number = driver.emergency_1_phone_number;
     this.input.emergency_2_name = driver.emergency_2_name;
     this.input.emergency_2_phone_number = driver.emergency_2_phone_number;
-    console.log(this.input);
   },
   beforeDestroy() {
     this.$vuetify.theme = theme;

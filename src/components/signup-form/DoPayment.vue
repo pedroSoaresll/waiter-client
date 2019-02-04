@@ -57,7 +57,6 @@ export default {
                 return res.booking
             },
             result(res) {
-                console.log(res)
                 if (!res.loading) {
                     if (res.error !== undefined || res.data.booking.id === undefined) {
                         this.$store.commit('lead/setBooking', {});

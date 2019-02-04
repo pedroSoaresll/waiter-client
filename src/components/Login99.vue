@@ -140,7 +140,6 @@ export default {
           this.verify = false;
           this.errorMessage = true;
           this.$emit('integrate', false)
-          console.error(error);
         });
     },
     isValid() {

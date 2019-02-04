@@ -76,7 +76,6 @@ export const actions = {
       if (router.currentRoute.fullPath !== '/')
         router.push({ name: 'Home' })
     } else {
-      console.log('caiu no else:: ', state.driver.status)
       switch (state.driver.status) {
         case "PENDING_DOCS":
           router.push({ name: "FinishForm" });
@@ -113,11 +112,11 @@ export const actions = {
         phone_number: sessionStorage.getItem(SESSION_STORAGE_PHONE)
       }
     })
-      .then(result => {
-        console.log('código 2 fatores:: ', result)
+      .then(() => {
+        return true
       })
-      .catch(error => {
-        console.error('código 2 fatores:: ', error)
+      .catch(() => {
+        return false
       })
   },
 
@@ -159,14 +158,13 @@ export const actions = {
         if (codeValid)
           dispatch('restoreActivity')
       })
-      .catch(error => {
+      .catch(() => {
         // informar ao usuário que não foi possível validar o código
-        console.error('error code2fa:: ', error)
         return false
       })
   },
 
-  createDriver({ commit, dispath }, phone_number) {
+  createDriver({ commit }, phone_number) {
     // chamar apollo para criar usuário
     apollo.mutate({
       mutation: CREATE_LEAD,
@@ -175,7 +173,6 @@ export const actions = {
       }
     })
       .then(result => {
-        console.log('result create driver:: ', result)
         const driver = result.data
           ? result.data.createLead
           : {}
@@ -187,8 +184,7 @@ export const actions = {
         })
 
       })
-      .catch(error => {
-        console.error('error create driver:: ', error)
+      .catch(() => {
         commit('setSteps', {
           GET_PHONE: { complete: false, invalid: true },
         })
@@ -325,8 +321,7 @@ const updateDriver = (state, commit, input) => {
         return false
       }
     })
-    .catch(error => {
-      console.error('error update driver:: ', error)
+    .catch(() => {
       return false
     })
 }
