@@ -71,6 +71,12 @@ export const mutations = {
 }
 
 export const actions = {
+  resetCode2fa({commit}) {
+    commit('setCode2fa', '')
+    commit('setCode2faVerified', false)
+    sessionStorage.removeItem(SESSION_STORAGE_CODE2FA)
+  },
+
   restoreActivity({ state }) {
     if (!state.driver || !sessionStorage.getItem('kovi_code2fa')) {
       if (router.currentRoute.fullPath !== '/')
@@ -100,13 +106,12 @@ export const actions = {
     }
   },
 
-  code2fa() {
-
+  async code2fa() {
     const phone = sessionStorage.getItem(SESSION_STORAGE_PHONE)
     if (!phone)
       return Promise.reject('Telefone não armazenado na session storage')
 
-    apollo.mutate({
+    return await apollo.mutate({
       mutation: CODE2FA,
       variables: {
         phone_number: sessionStorage.getItem(SESSION_STORAGE_PHONE)
@@ -283,7 +288,7 @@ export const actions = {
     }
   },
 
-  async uploadDoc({ state, commit }, { documentType, file }) {
+  async uploadDoc({ state }, { documentType, file }) {
     if (!documentType || !file)
       return Promise.reject('Comprovante não informado')
 
