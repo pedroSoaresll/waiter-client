@@ -23,14 +23,12 @@
             required
           />
           <v-flex column xs12>
-            <v-radio-group v-model="acceptTerms">
-              <v-radio color="#FFFFFF" dark value="accept">
-                <span slot="label" class="text-termos-uso">
-                  Concordo com os
-                  <a href="https://www.kovi.com.br/termos-de-uso" target="_blank">Termos de Uso</a> da Kovi
-                </span>
-              </v-radio>
-            </v-radio-group>
+            <v-checkbox color="#FFFFFF" dark value="true" v-model="acceptTerms">
+              <span slot="label" class="text-termos-uso">
+                Concordo com os
+                <a href="https://www.kovi.com.br/termos-de-uso" target="_blank">Termos de Uso</a> da Kovi.
+              </span>
+            </v-checkbox>
           </v-flex>
         </v-flex>
 
@@ -65,6 +63,7 @@ export default {
   }),
   methods: {
     createDriver() {
+      console.log(this.acceptTerms)
       if (!this.isValid || !this.acceptTerms) return;
       this.errorMessage = false;
       this.sent = true;

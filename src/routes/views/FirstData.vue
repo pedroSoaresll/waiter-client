@@ -49,6 +49,7 @@
             v-model="input.work_city"
             :items="items"
             box
+            color="#FFFFFF"
             dark
             label="Cidade que você vai trabalhar"
             required
@@ -81,10 +82,16 @@ export default {
     sent: false,
     errorMessage: false,
     items: [
-      {
-        text: "Item1",
-        value: "item1"
-      }
+      {text: "Grande São Paulo", value: "SP_CITY"},
+      {text: "Belo Horizonte",value: "BELO_HORIZONTE"},
+      {text: "Brasília",value: "BRASILIA"},
+      {text: "Curitiba",value: "CURITIBA"},
+      {text: "Florianópolis",value: "FLORIPA"},
+      {text: "Porto Alegre",value: "PORTO_ALEGRE"},
+      {text: "Ribeirão Preto",value: "RIBEIRAO_PRETO"},
+      {text: "Rio de Janeiro",value: "RIO"},
+      {text: "São José dos Campos",value: "SJC"},
+      {text: "Outras",value: "OTHERS"},
     ],
     input: {
       name: "",
