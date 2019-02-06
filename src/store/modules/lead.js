@@ -182,9 +182,8 @@ export const actions = {
         commit('setSteps', {
           GET_PHONE: { complete: true, invalid: false },
         })
-
       })
-      .catch(() => {
+      .catch(e => {
         commit('setSteps', {
           GET_PHONE: { complete: false, invalid: true },
         })
