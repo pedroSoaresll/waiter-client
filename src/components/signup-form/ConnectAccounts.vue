@@ -68,7 +68,11 @@
         </v-dialog>
 
         <!--integração 99 modal-->
-        <login99 v-if="account.documentType === 'app_99'" v-model="account.modal" @integrate="integrate => account.status = integrate"/>
+        <login99
+          v-if="account.documentType === 'app_99'"
+          v-model="account.modal"
+          @integrate="integrate => account.status = integrate"
+        />
       </div>
 
       <v-layout column wrap xs8 align-self-center class="mt-3" v-show="errorNextStep">
@@ -147,6 +151,14 @@ export default {
       }
     ]
   }),
+  computed: {
+    driver() {
+      return this.$store.getters["lead/driver"];
+    },
+    accountStore() {
+      return [].concat(this.$store.getters["lead/accounts"]);
+    }
+  },
   methods: {
     textButton(appName, status) {
       switch (status) {
@@ -225,26 +237,43 @@ export default {
     }
   },
   mounted() {
-    const driver = this.$store.getters["lead/driver"];
-    const accounts = [].concat(this.$store.getters["lead/accounts"]);
-    if (accounts.length) this.accounts = accounts;
-    this.accounts = this.accounts.filter(item => {
-      if (driver.survey_app_99 === 1 && item.documentType === "app_99")
-        return true;
-      if (driver.survey_app_uber === 1 && item.documentType === "app_uber")
-        return true;
-      if (driver.survey_app_cabify === 1 && item.documentType === "app_cabify")
-        return true;
-      if (
-        driver.survey_app_lady_driver === 1 &&
-        item.documentType === "app_ladydriver"
-      )
-        return true;
-      if (driver.survey_app_others === 1 && item.documentType === "app_outros")
-        return true;
+    //if (this.accountStore.length) this.accounts = this.accountStore;
+    this.accounts = this.accounts
+      .map(item => {
+        const index = this.accountStore.findIndex(
+          element => element.documentType == item.documentType
+        );
 
-      return false;
-    });
+        return index !== -1 
+          ?  this.accountStore[index]
+          : item
+      })
+      .filter(item => {
+        if (this.driver.survey_app_99 === 1 && item.documentType === "app_99")
+          return true;
+        if (
+          this.driver.survey_app_uber === 1 &&
+          item.documentType === "app_uber"
+        )
+          return true;
+        if (
+          this.driver.survey_app_cabify === 1 &&
+          item.documentType === "app_cabify"
+        )
+          return true;
+        if (
+          this.driver.survey_app_lady_driver === 1 &&
+          item.documentType === "app_ladydriver"
+        )
+          return true;
+        if (
+          this.driver.survey_app_others === 1 &&
+          item.documentType === "app_outros"
+        )
+          return true;
+
+        return false;
+      });
 
     this.updateAccountsState();
   }
