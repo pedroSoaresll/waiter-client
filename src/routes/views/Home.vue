@@ -63,7 +63,6 @@ export default {
   }),
   methods: {
     createDriver() {
-      console.log(this.acceptTerms)
       if (!this.isValid || !this.acceptTerms) return;
       this.errorMessage = false;
       this.sent = true;
