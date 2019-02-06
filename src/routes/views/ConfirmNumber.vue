@@ -60,10 +60,21 @@
 
       <v-flex column wrap xs12 class="mt-5">
         <a
+          v-if="!smsDelivered"
           href="javascript:void(0)"
           @click="generateCode2fa"
           class="text-enviar-codigo"
-        >Enviar código novamente.</a>
+          :class="{'sms-enviado': smsSent}"
+        >
+          {{
+          !errorSmsSent && smsSent
+          ? 'Enviando código para o número informado...'
+          : !errorSmsSent
+          ? 'Enviar código novamente.'
+          : 'Não foi possível enviar o código neste momento.'
+          }}
+        </a>
+        <p v-else class="sms-delivered">SMS enviado com sucesso, logo o código chegará para você.</p>
       </v-flex>
 
       <v-flex column wrap xs12 align-self-center class="mt-5" v-if="code2faVerified && !code2fa">
@@ -86,6 +97,9 @@
 export default {
   data: () => ({
     sent: false,
+    smsSent: false,
+    errorSmsSent: false,
+    smsDelivered: false,
     space1: "",
     space2: "",
     space3: "",
@@ -94,6 +108,12 @@ export default {
   watch: {
     space4(newVal) {
       if (newVal) this.confirmCode2fa();
+    },
+    smsDelivered(newVal) {
+      if (newVal)
+        setTimeout(() => {
+          this.smsDelivered = false;
+        }, 5000);
     }
   },
   computed: {
@@ -101,7 +121,10 @@ export default {
       return this.$store.getters["lead/driver"];
     },
     code2fa() {
-      return this.$store.getters["lead/code2fa"];
+      const code2fa = this.$store.getters["lead/code2fa"];
+      console.log("passou por aqui no computed code2fa:: ", code2fa);
+      this.smsSent = !!code2fa;
+      return code2fa;
     },
     code2faVerified() {
       return this.$store.getters["lead/code2faVerified"];
@@ -125,13 +148,24 @@ export default {
       this.sent = isValidCode;
     },
 
-    generateCode2fa() {
+    async generateCode2fa() {
       this.sent = false;
-      this.$store.dispatch("lead/code2fa");
+      this.smsDelivered = false;
+      this.errorSmsSent = false;
+      this.smsSent = true;
+
+      const sentCodeResponse = await this.$store.dispatch("lead/code2fa");
+      this.smsSent = !sentCodeResponse;
+
+      if (this.smsSent === true) this.errorSmsSent = true;
+      else this.smsDelivered = true;
     }
   },
+  created() {
+    this.$store.dispatch("lead/resetCode2fa");
+  },
   mounted() {
-    sessionStorage.removeItem('kovi_code2fa')
+    sessionStorage.removeItem("kovi_code2fa");
     this.$refs.space1.focus();
     if (this.$route.params.code2fa) this.generateCode2fa();
   }
@@ -179,9 +213,18 @@ export default {
   text-decoration: none;
 }
 
+.sms-enviado {
+  opacity: 0.5;
+}
+
 .text-mensage-erro {
   font-size: 16px;
   color: red;
+}
+
+.sms-delivered {
+  font-size: 16px;
+  color: #43a047;
 }
 
 .btn-radius {
