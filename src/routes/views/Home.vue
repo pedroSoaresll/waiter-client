@@ -27,7 +27,7 @@
               <v-radio color="#FFFFFF" dark value="accept">
                 <span slot="label" class="text-termos-uso">
                   Concordo com os
-                  <a href="#">Termos de Uso</a> da Kovi
+                  <a href="https://www.kovi.com.br/termos-de-uso" target="_blank">Termos de Uso</a> da Kovi
                 </span>
               </v-radio>
             </v-radio-group>
