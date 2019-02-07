@@ -113,7 +113,7 @@
         <v-text-field @blur="updateDriver" clearable label="Cidade"/>
         <v-text-field @blur="updateDriver" clearable label="Estado"/>
         <upload-input
-          title="Foto do comprovante endereço"
+          title="Foto do comprovante endereço"
           :file-changed-callback="file => uploadDoc(file.imageFile, 'garage_photo')"
         />
         <v-checkbox v-model="garageOtherAddress" label="Minha garagem fica em outro endereço"/>
