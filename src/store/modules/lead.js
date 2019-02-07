@@ -296,7 +296,7 @@ export const actions = {
     formData.append(documentType, file)
     formData.append('driverId', state.driver.id)
 
-    return await fetch(`${process.env.VUE_APP_KOVI_API_URL}/documents`, {
+    return await fetch(`${process.env.VUE_APP_KOVI_API_URL}/docs`, {
       method: 'POST',
       body: formData
     })
