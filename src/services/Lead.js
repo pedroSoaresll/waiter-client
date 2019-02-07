@@ -162,6 +162,7 @@ export const COMPLETE_INFO = gql`
       $address_city: String
       $address_neighborhood: String
       $address_street_details: String
+      $address_street_number: String
       $address_street_no_number: Int
       $address_street_name: String
       $address_postal_code: String  
@@ -199,6 +200,7 @@ export const COMPLETE_INFO = gql`
         address_neighborhood: $address_neighborhood
         address_street_details: $address_street_details
         address_street_no_number: $address_street_no_number
+        address_street_number: $address_street_number
         address_street_name: $address_street_name
         address_postal_code: $address_postal_code  
         step: $step
