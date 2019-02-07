@@ -16,7 +16,7 @@
       <v-flex column wrap xs12 class="mt-5">
         <p class="subtitle font-weight-bold text-uppercase">PLANOS DISPONÍVEIS</p>
         <v-radio-group v-model="form.planSelect">
-          <div v-for="plan in plans.items">
+          <div v-for="(plan, index) in plans.items" :key="index">
             <v-radio :label="plan.name" :value="plan.id"/>
             <v-flex align-self-start class="area-info-radio ml-4">
             <span
@@ -56,7 +56,7 @@
       </v-flex>
 
       <v-flex column wrap xs12 align-self-center class="mt-5" v-if="errors.length > 0">
-        <p class="text-mensage-erro" v-for="error in errors">- {{error.message}}</p>
+        <p class="text-mensage-erro" v-for="(error, index) in errors" :key="index">- {{error.message}}</p>
       </v-flex>
 
       <v-flex column wrap xs12 align-self-center class="mt-3">
