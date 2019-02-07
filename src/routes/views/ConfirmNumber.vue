@@ -122,7 +122,6 @@ export default {
     },
     code2fa() {
       const code2fa = this.$store.getters["lead/code2fa"];
-      console.log("passou por aqui no computed code2fa:: ", code2fa);
       this.smsSent = !!code2fa;
       return code2fa;
     },
