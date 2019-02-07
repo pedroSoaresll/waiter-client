@@ -301,7 +301,10 @@ export const actions = {
       body: formData
     })
       .then(result => {
-        return result.json()
+        if (result.ok)
+          return result.json()
+        else 
+          return Promise.reject()
       })
       .then(() => Promise.resolve(true))
       .catch(() => Promise.reject('Nãofoi possível salvar a imagem desejada.'))
