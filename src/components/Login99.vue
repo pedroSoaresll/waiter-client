@@ -2,15 +2,21 @@
   <v-dialog v-model="dialog" persistent max-width="500">
     <v-card>
       <v-card-title class="headline">
-        <img style="margin: 0 auto" src="../assets/99.png">
+        <img style="margin: 0 auto" src="../assets/99.png" />
       </v-card-title>
-      <v-card-text>Informe os 6 primeiros digitos do cartao da 99 e os 4 ultimos
+      <v-card-text
+        >Informe os 6 primeiros digitos do cartao da 99 e os 4 ultimos
         <v-form v-model="valid">
           <div class="text-xs-center">
             <v-dialog v-model="verify" hide-overlay persistent width="300">
               <v-card color="primary" dark>
-                <v-card-text>Acessando 99
-                  <v-progress-linear indeterminate color="#ff3859" class="mb-0"></v-progress-linear>
+                <v-card-text
+                  >Acessando 99
+                  <v-progress-linear
+                    indeterminate
+                    color="#ff3859"
+                    class="mb-0"
+                  ></v-progress-linear>
                 </v-card-text>
               </v-card>
             </v-dialog>
@@ -40,7 +46,10 @@
         </v-form>
       </v-card-text>
       <v-layout column wrap align-center v-show="errorMessage">
-        <p class="error-message">Não foi possível realizar a integraçao, verifique as credenciais e tente novamente.</p>
+        <p class="error-message">
+          Não foi possível realizar a integraçao, verifique as credenciais e
+          tente novamente.
+        </p>
       </v-layout>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -53,7 +62,7 @@
 
 <script>
 import { LOGIN_99 } from "../services/Lead";
-import { theme } from "../plugins/vuetify";
+// import { theme } from "../plugins/vuetify";
 
 export default {
   name: "Login99",
@@ -88,14 +97,14 @@ export default {
   },
   methods: {
     closeModal() {
-      this.valid = false
-      this.verify = false
-      this.errorMessage = false
-      this.cardbegin = null
-      this.step = "5"
-      this.success = false
-      this.cardend = null
-      this.dialog = this.$emit('change', false)
+      this.valid = false;
+      this.verify = false;
+      this.errorMessage = false;
+      this.cardbegin = null;
+      this.step = "5";
+      this.success = false;
+      this.cardend = null;
+      this.dialog = this.$emit("change", false);
     },
     send99(val) {
       this.verify = true;
@@ -129,17 +138,17 @@ export default {
               COMPLETE_INFO_APPS: { complete: true, invalid: false }
             });*/
             this.$emit("change", false);
-            this.$emit('integrate', true)
+            this.$emit("integrate", true);
           }
         })
-        .catch(error => {
+        .catch(() => {
           this.$store.commit("lead/setStep", this.step);
           this.$store.commit("lead/setSteps", {
             COMPLETE_INFO_APPS: { complete: false, invalid: true }
           });
           this.verify = false;
           this.errorMessage = true;
-          this.$emit('integrate', false)
+          this.$emit("integrate", false);
         });
     },
     isValid() {

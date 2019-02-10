@@ -1,16 +1,16 @@
 <template>
   <v-layout column wrap xs12 class="step1">
     <v-flex column wrap xs12 class="wrapper">
-      <img :src="require('../../assets/kovi-logo-red.svg')" alt="logo kovi">
+      <img :src="require('../../assets/kovi-logo-red.svg')" alt="logo kovi" />
     </v-flex>
 
     <!-- steps here -->
     <v-layout column wrap xs12 class="wrapper">
       <v-flex column wrap xs12>
         <p class="text-qual-empresa mb-0">Informações pessoais</p>
-        <p
-          class="text-para-acelerar text-16px mt-2"
-        >Agora precisamos receber uma cópia da sua CNH e saber onde você mora.</p>
+        <p class="text-para-acelerar text-16px mt-2">
+          Agora precisamos receber uma cópia da sua CNH e saber onde você mora.
+        </p>
       </v-flex>
 
       <!-- form / cnh -->
@@ -25,13 +25,17 @@
         />
         <upload-input
           title="Foto da CNH"
-          :file-changed-callback="file => uploadDoc(file.imageFile, 'cnh_photo')"
+          :file-changed-callback="
+            file => uploadDoc(file.imageFile, 'cnh_photo')
+          "
         />
       </v-flex>
 
       <!-- contatos de emergencia -->
       <v-flex column wrap xs12 class="mt-5">
-        <p class="subtitle font-weight-bold text-uppercase">CONTATOS DE EMERGENCIA</p>
+        <p class="subtitle font-weight-bold text-uppercase">
+          CONTATOS DE EMERGENCIA
+        </p>
         <v-text-field
           @blur="updateDriver"
           clearable
@@ -62,7 +66,9 @@
 
       <!-- address -->
       <v-flex column wrap xs12 class="mt-5">
-        <p class="subtitle font-weight-bold text-uppercase">ENDEREÇO DE RESIDÊNCIA</p>
+        <p class="subtitle font-weight-bold text-uppercase">
+          ENDEREÇO DE RESIDÊNCIA
+        </p>
         <v-text-field
           @blur="updateDriver, getCep(input.address_postal_code)"
           clearable
@@ -88,7 +94,12 @@
           v-model="input.address_street_details"
           label="Complemento (Apt, Sala, etc...)"
         />
-        <v-text-field @blur="updateDriver" clearable v-model="input.address_city" label="Cidade"/>
+        <v-text-field
+          @blur="updateDriver"
+          clearable
+          v-model="input.address_city"
+          label="Cidade"
+        />
         <v-text-field
           @blur="updateDriver"
           clearable
@@ -98,39 +109,68 @@
         />
         <upload-input
           title="Foto do comprovante residência"
-          :file-changed-callback="file => uploadDoc(file.imageFile, 'address_photo')"
+          :file-changed-callback="
+            file => uploadDoc(file.imageFile, 'address_photo')
+          "
         />
         <!-- <v-checkbox v-model="garageOtherAddress" label="Minha garagem fica em outro endereço"/> -->
       </v-flex>
 
       <!-- garage if other address -->
       <v-flex column wrap xs12 class="mt-5" v-if="garageOtherAddress">
-        <p class="subtitle font-weight-bold text-uppercase">ENDEREÇO DA GARAGEM</p>
-        <v-text-field @blur="updateDriver" clearable label="CEP"/>
-        <v-text-field @blur="updateDriver" clearable label="Nome da Rua"/>
-        <v-text-field @blur="updateDriver" clearable label="Número da casa/apartamento"/>
-        <v-text-field @blur="updateDriver" clearable label="Complemento (Apt, Sala, etc...)"/>
-        <v-text-field @blur="updateDriver" clearable label="Cidade"/>
-        <v-text-field @blur="updateDriver" clearable label="Estado"/>
+        <p class="subtitle font-weight-bold text-uppercase">
+          ENDEREÇO DA GARAGEM
+        </p>
+        <v-text-field @blur="updateDriver" clearable label="CEP" />
+        <v-text-field @blur="updateDriver" clearable label="Nome da Rua" />
+        <v-text-field
+          @blur="updateDriver"
+          clearable
+          label="Número da casa/apartamento"
+        />
+        <v-text-field
+          @blur="updateDriver"
+          clearable
+          label="Complemento (Apt, Sala, etc...)"
+        />
+        <v-text-field @blur="updateDriver" clearable label="Cidade" />
+        <v-text-field @blur="updateDriver" clearable label="Estado" />
         <upload-input
           title="Foto do comprovante endereço"
-          :file-changed-callback="file => uploadDoc(file.imageFile, 'garage_photo')"
+          :file-changed-callback="
+            file => uploadDoc(file.imageFile, 'garage_photo')
+          "
         />
-        <v-checkbox v-model="garageOtherAddress" label="Minha garagem fica em outro endereço"/>
+        <v-checkbox
+          v-model="garageOtherAddress"
+          label="Minha garagem fica em outro endereço"
+        />
       </v-flex>
 
       <!-- proof garage -->
       <v-flex column wrap xs12 class="mt-5">
-        <p class="subtitle font-weight-bold text-uppercase mb-0">ENDEREÇO DA GARAGEM</p>
+        <p class="subtitle font-weight-bold text-uppercase mb-0">
+          ENDEREÇO DA GARAGEM
+        </p>
         <upload-input
           title="Foto da garagem"
-          :file-changed-callback="file => uploadDoc(file.imageFile, 'garage_photo')"
+          :file-changed-callback="
+            file => uploadDoc(file.imageFile, 'garage_photo')
+          "
         />
-        <p class="subtitle">Por favor, bata uma foto legível e que apareça outras casas do lado.</p>
+        <p class="subtitle">
+          Por favor, bata uma foto legível e que apareça outras casas do lado.
+        </p>
       </v-flex>
 
       <v-flex column wrap xs12 align-self-center class="mt-3">
-        <v-btn :disabled="!enableNextStep" class="btn-radius btn-pink" :large="true" @click="$router.push({ name: 'SelectPlan' })">Avançar</v-btn>
+        <v-btn
+          :disabled="!enableNextStep"
+          class="btn-radius btn-pink"
+          :large="true"
+          @click="$router.push({ name: 'SelectPlan' })"
+          >Avançar</v-btn
+        >
       </v-flex>
     </v-layout>
   </v-layout>
@@ -190,7 +230,7 @@ export default {
         // console.log("error to get cep::", e);
       }
     },
-    updateDriver(ref) {
+    updateDriver(/* ref */) {
       this.$store.dispatch("lead/sendDocs", this.input);
     },
     uploadDoc(file, documentType) {
@@ -225,7 +265,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 .wrapper {
