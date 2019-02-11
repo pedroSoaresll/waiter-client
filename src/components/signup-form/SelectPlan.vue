@@ -1,36 +1,42 @@
 <template>
   <v-layout column wrap xs12 class="step1">
     <v-flex column wrap xs12 class="wrapper">
-      <img :src="require('../../assets/kovi-logo-red.svg')" alt="logo kovi">
+      <img :src="require('../../assets/kovi-logo-red.svg')" alt="logo kovi" />
     </v-flex>
 
     <!-- steps here -->
     <v-layout column wrap xs12 class="wrapper">
       <v-flex column wrap xs12>
         <p class="text-qual-empresa mb-0">Planos disponíveis</p>
-        <p
-          class="text-para-acelerar text-16px mt-2"
-        >Selecione agora o plano que mais se adequa a sua realidade.</p>
+        <p class="text-para-acelerar text-16px mt-2">
+          Selecione agora o plano que mais se adequa a sua realidade.
+        </p>
       </v-flex>
 
       <v-flex column wrap xs12 class="mt-5">
-        <p class="subtitle font-weight-bold text-uppercase">PLANOS DISPONÍVEIS</p>
+        <p class="subtitle font-weight-bold text-uppercase">
+          PLANOS DISPONÍVEIS
+        </p>
         <v-radio-group v-model="form.planSelect">
-          <div v-for="plan in plans.items">
-            <v-radio :label="plan.name" :value="plan.id"/>
+          <div v-for="(plan, index) in plans.items" :key="index">
+            <v-radio :label="plan.name" :value="plan.id" />
             <v-flex align-self-start class="area-info-radio ml-4">
-            <span
-                    class="subtitle"
-            >{{plan.description}}</span>
-              <span class="subtitle">Valor R$ {{plan.transaction_amount/100}} / semana</span>
+              <span class="subtitle">{{ plan.description }}</span>
+              <span class="subtitle"
+                >Valor R$ {{ plan.transaction_amount / 100 }} / semana</span
+              >
             </v-flex>
           </div>
         </v-radio-group>
       </v-flex>
 
       <v-flex column wrap xs12 class="mt-5">
-        <p class="subtitle font-weight-bold text-uppercase mb-0">DATA DE RETIRADA DO CARRO</p>
-        <p class="subtitle">Selecione a data que você gostaria de retirar o carro</p>
+        <p class="subtitle font-weight-bold text-uppercase mb-0">
+          DATA DE RETIRADA DO CARRO
+        </p>
+        <p class="subtitle">
+          Selecione a data que você gostaria de retirar o carro
+        </p>
         <v-dialog
           ref="dialog"
           v-model="modal"
@@ -50,21 +56,40 @@
           <v-date-picker v-model="form.car_delivery_scheduled" scrollable>
             <v-spacer></v-spacer>
             <v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
-            <v-btn flat color="primary" @click="$refs.dialog.save(form.date)">OK</v-btn>
+            <v-btn flat color="primary" @click="$refs.dialog.save(form.date)"
+              >OK</v-btn
+            >
           </v-date-picker>
         </v-dialog>
       </v-flex>
 
-      <v-flex column wrap xs12 align-self-center class="mt-5" v-if="errors.length > 0">
-        <p class="text-mensage-erro" v-for="error in errors">- {{error.message}}</p>
+      <v-flex
+        column
+        wrap
+        xs12
+        align-self-center
+        class="mt-5"
+        v-if="errors.length > 0"
+      >
+        <p
+          class="text-mensage-erro"
+          v-for="(error, index) in errors"
+          :key="index"
+        >
+          - {{ error.message }}
+        </p>
       </v-flex>
 
       <v-flex column wrap xs12 align-self-center class="mt-3">
-        <v-btn class="btn-radius btn-pink"
-               :disabled="form.planSelect === null || form.car_delivery_scheduled === null"
-               @click="createBooking"
-               large
-        >Avançar</v-btn>
+        <v-btn
+          class="btn-radius btn-pink"
+          :disabled="
+            form.planSelect === null || form.car_delivery_scheduled === null
+          "
+          @click="createBooking"
+          large
+          >Avançar</v-btn
+        >
       </v-flex>
     </v-layout>
   </v-layout>
@@ -76,63 +101,66 @@ import { LIST_PLANS } from "../../services/Plans";
 import { BOOKING_OPEN } from "../../services/Booking";
 
 export default {
-    data: () => ({
-        newTheme: {
-            ...theme,
-            primary: "#ff3859"
-        },
-        errors: [],
-        date: new Date().toISOString().substr(0, 10),
-        modal: false,
-        form: {
-            planSelect: null,
-            car_delivery_scheduled: null,
-        }
-    }),
-    apollo: {
-        plans: {
-            query: LIST_PLANS,
-            variables() {
-                return {status: 'ACTIVE', limit: 10, page: 0}
-            },
-        },
+  data: () => ({
+    newTheme: {
+      ...theme,
+      primary: "#ff3859"
     },
-    methods: {
-        async createBooking() {
-            try {
-                return this.$apollo
-                    .mutate({
-                        mutation: BOOKING_OPEN,
-                        variables: {
-                            driver: this.$store.getters["lead/driver"].id,
-                            plan: this.form.planSelect,
-                            started_at: new Date().toJSON().slice(0, 19).replace('T', ' '),
-                            car_delivery_scheduled: this.form.car_delivery_scheduled
-                        },
-                    })
-                    .then(result => {
-                        this.$store.commit('lead/setPlan', result.openBooking);
-                        this.$router.push({name: 'FinishForm'});
-                    })
-                    .catch(error => {
-                        this.errors.push({message: error.message.replace('GraphQL error: ', '')})
-                    })
-            } catch (e) {
-                throw e;
-            }
-        },
-
-    },
-    mounted() {
-        this.$vuetify.theme = this.newTheme;
-        const driver = this.$store.getters["lead/driver"];
-    },
-    beforeDestroy() {
-        this.$vuetify.theme = theme;
+    errors: [],
+    date: new Date().toISOString().substr(0, 10),
+    modal: false,
+    form: {
+      planSelect: null,
+      car_delivery_scheduled: null
     }
+  }),
+  apollo: {
+    plans: {
+      query: LIST_PLANS,
+      variables() {
+        return { status: "ACTIVE", limit: 10, page: 0 };
+      }
+    }
+  },
+  methods: {
+    async createBooking() {
+      try {
+        return this.$apollo
+          .mutate({
+            mutation: BOOKING_OPEN,
+            variables: {
+              driver: this.$store.getters["lead/driver"].id,
+              plan: this.form.planSelect,
+              started_at: new Date()
+                .toJSON()
+                .slice(0, 19)
+                .replace("T", " "),
+              car_delivery_scheduled: this.form.car_delivery_scheduled
+            }
+          })
+          .then(result => {
+            this.$store.commit("lead/setPlan", result.openBooking);
+            this.$router.push({ name: "FinishForm" });
+          })
+          .catch(error => {
+            this.errors.push({
+              message: error.message.replace("GraphQL error: ", "")
+            });
+          });
+      } catch (e) {
+        throw e;
+      }
+    }
+  },
+  mounted() {
+    this.$vuetify.theme = this.newTheme;
+    // const driver = this.$store.getters["lead/driver"];
+  },
+  beforeDestroy() {
+    this.$vuetify.theme = theme;
+  }
 };
 </script>
-
 
 <style scoped>
 .wrapper {

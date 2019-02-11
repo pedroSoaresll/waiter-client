@@ -22,11 +22,11 @@ export default {
       //
     };
   },
-  mounted() {
+  async mounted() {
     const driver = this.$store.getters["lead/driver"];
     const sessionPhoneNumber = sessionStorage.getItem("kovi_phone");
     if (sessionPhoneNumber && driver.phone_number) {
-      this.$store.dispatch("lead/createDriver", driver.phone_number);
+      await this.$store.dispatch("lead/createDriver", driver.phone_number);
     }
     this.$store.dispatch("lead/restoreActivity");
   }

@@ -2,14 +2,15 @@
   <v-layout column wrap align-center class="layout">
     <v-flex column wrap xs12>
       <v-flex xs12>
-        <img :src="require('../../assets/kovi-logo-red.svg')" alt="logo kovi">
+        <img :src="require('../../assets/kovi-logo-red.svg')" alt="logo kovi" />
       </v-flex>
 
       <v-flex column wrap xs12 class="mt-5">
         <p class="text-verifique-cadastro">Verifique seu telefone</p>
         <p class="text-digite-abaixo">
           Digite abaixo o código enviado para o número
-          <strong v-if="driver">{{driver.phone_number}}</strong>.
+          <strong v-if="driver">{{ driver.phone_number }}</strong
+          >.
         </p>
       </v-flex>
 
@@ -25,7 +26,7 @@
           max="1"
           maxlength="1"
           @keyup="handleSpace($event, $refs.space2, null)"
-        >
+        />
         <input
           ref="space2"
           v-model="space2"
@@ -35,7 +36,7 @@
           max="1"
           maxlength="1"
           @keyup="handleSpace($event, $refs.space3, $refs.space1)"
-        >
+        />
         <input
           ref="space3"
           v-model="space3"
@@ -45,7 +46,7 @@
           max="1"
           maxlength="1"
           @keyup="handleSpace($event, $refs.space4, $refs.space2)"
-        >
+        />
         <input
           ref="space4"
           v-model="space4"
@@ -55,7 +56,7 @@
           max="1"
           maxlength="1"
           @keyup="handleSpace($event, null, $refs.space3)"
-        >
+        />
       </v-flex>
 
       <v-flex column wrap xs12 class="mt-5">
@@ -64,30 +65,46 @@
           href="javascript:void(0)"
           @click="generateCode2fa"
           class="text-enviar-codigo"
-          :class="{'sms-enviado': smsSent}"
+          :class="{ 'sms-enviado': smsSent }"
         >
           {{
-          !errorSmsSent && smsSent
-          ? 'Enviando código para o número informado...'
-          : !errorSmsSent
-          ? 'Enviar código novamente.'
-          : 'Não foi possível enviar o código neste momento.'
+            !errorSmsSent && smsSent
+              ? "Enviando código para o número informado..."
+              : !errorSmsSent
+              ? "Enviar código novamente."
+              : "Não foi possível enviar o código neste momento."
           }}
         </a>
-        <p v-else class="sms-delivered">SMS enviado com sucesso, logo o código chegará para você.</p>
+        <p v-else class="sms-delivered">
+          SMS enviado com sucesso, logo o código chegará para você.
+        </p>
       </v-flex>
 
-      <v-flex column wrap xs12 align-self-center class="mt-5" v-if="code2faVerified && !code2fa">
+      <v-flex
+        column
+        wrap
+        xs12
+        align-self-center
+        class="mt-5"
+        v-if="code2faVerified && !code2fa"
+      >
         <p class="text-mensage-erro">Código incorreto.</p>
       </v-flex>
 
-      <v-flex column wrap xs12 align-self-center :class="{'mt-5': !code2faVerified || code2fa}">
+      <v-flex
+        column
+        wrap
+        xs12
+        align-self-center
+        :class="{ 'mt-5': !code2faVerified || code2fa }"
+      >
         <v-btn
           :disabled="sent"
           class="btn-radius btn-pink"
           :large="true"
           @click="confirmCode2fa"
-        >Confirmar Código</v-btn>
+          >Confirmar Código</v-btn
+        >
       </v-flex>
     </v-flex>
   </v-layout>
@@ -122,7 +139,7 @@ export default {
     },
     code2fa() {
       const code2fa = this.$store.getters["lead/code2fa"];
-      console.log("passou por aqui no computed code2fa:: ", code2fa);
+
       this.smsSent = !!code2fa;
       return code2fa;
     },
@@ -172,7 +189,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 .layout {
@@ -237,4 +253,3 @@ export default {
   color: #ffffff;
 }
 </style>
-

@@ -1,7 +1,7 @@
 <template>
   <v-layout column wrap xs12 class="step1">
     <v-flex column wrap xs12 class="wrapper">
-      <img :src="require('../../assets/kovi-logo-red.svg')" alt="logo kovi">
+      <img :src="require('../../assets/kovi-logo-red.svg')" alt="logo kovi" />
     </v-flex>
 
     <!-- steps here -->
@@ -10,16 +10,27 @@
         <v-layout row wrap>
           <v-flex column wrap xs12>
             <p class="text-obrigado mb-0">Pagamento do plano</p>
-            <p
-              class="text-faca-pagamento text-16px mt-3"
-            >Você está quase lá para pegar o seu Kovi. Selecione abaixo a forma de pagamento do seu caução e do seu aluguel.</p>
+            <p class="text-faca-pagamento text-16px mt-3">
+              Você está quase lá para pegar o seu Kovi. Selecione abaixo a forma
+              de pagamento do seu caução e do seu aluguel.
+            </p>
           </v-flex>
 
           <v-flex column wrap xs12 class="mt-4">
-            <p class="subtitle font-weight-bold text-uppercase">PAGAMENTO CAUÇÃO</p>
-            <v-radio-group v-model="form.caucao.PaymentMethod" required v-on:change="valid = true">
-              <v-radio label="Boleto Bancário" value="boleto"/>
-              <v-radio disabled label="Cartão de Crédito" value="cartao-credito"/>
+            <p class="subtitle font-weight-bold text-uppercase">
+              PAGAMENTO CAUÇÃO
+            </p>
+            <v-radio-group
+              v-model="form.caucao.PaymentMethod"
+              required
+              v-on:change="valid = true"
+            >
+              <v-radio label="Boleto Bancário" value="boleto" />
+              <v-radio
+                disabled
+                label="Cartão de Crédito"
+                value="cartao-credito"
+              />
             </v-radio-group>
 
             <!-- area cartão de crédito -->
@@ -74,10 +85,20 @@
           </v-flex>
 
           <v-flex column wrap class="mt-4">
-            <p class="subtitle font-weight-bold text-uppercase">PAGAMENTO ALUGUEL</p>
-            <v-radio-group v-model="form.week.PaymentMethod" required v-on:change="valid = true">
-              <v-radio label="Boleto Bancário" value="boleto"/>
-              <v-radio disabled label="Cartão de Crédito" value="cartao-credito"/>
+            <p class="subtitle font-weight-bold text-uppercase">
+              PAGAMENTO ALUGUEL
+            </p>
+            <v-radio-group
+              v-model="form.week.PaymentMethod"
+              required
+              v-on:change="valid = true"
+            >
+              <v-radio label="Boleto Bancário" value="boleto" />
+              <v-radio
+                disabled
+                label="Cartão de Crédito"
+                value="cartao-credito"
+              />
             </v-radio-group>
 
             <!-- area cartão de crédito -->
@@ -132,12 +153,24 @@
           </v-flex>
         </v-layout>
 
-        <v-flex column wrap xs12 align-self-center class="mt-5" v-if="info.length > 0">
+        <v-flex
+          column
+          wrap
+          xs12
+          align-self-center
+          class="mt-5"
+          v-if="info.length > 0"
+        >
           <div v-for="(item, index) in info" :key="index">
             <p
               class="text-mensage-erro"
-              :class="{'text-mensage-erro': item.type === 'error', 'text-mensage-success': item.type === 'success'}"
-            >- {{item.message}}</p>
+              :class="{
+                'text-mensage-erro': item.type === 'error',
+                'text-mensage-success': item.type === 'success'
+              }"
+            >
+              - {{ item.message }}
+            </p>
           </div>
         </v-flex>
 
@@ -150,7 +183,8 @@
               v-on:click="wrapperPayments"
               class="btn-pink"
               :large="true"
-            >Avançar</v-btn>
+              >Avançar</v-btn
+            >
           </v-flex>
         </v-layout>
       </v-container>
@@ -373,7 +407,7 @@ export default {
           method.transaction_token = res.data.createPaymentMethod.token;
         }
 
-        await this.updateBooking({...method});
+        await this.updateBooking({ ...method });
       } catch (e) {
         this.info.push({ message: "Finzalido com falha!", type: "error" });
       }
@@ -381,7 +415,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 .wrapper {

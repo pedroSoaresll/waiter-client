@@ -71,7 +71,7 @@ export const mutations = {
 }
 
 export const actions = {
-  resetCode2fa({commit}) {
+  resetCode2fa({ commit }) {
     commit('setCode2fa', '')
     commit('setCode2faVerified', false)
     sessionStorage.removeItem(SESSION_STORAGE_CODE2FA)
@@ -142,36 +142,34 @@ export const actions = {
       }
     })
       .then(result => {
-        try {
-          commit('setCode2faVerified', true)
+        commit('setCode2faVerified', true)
 
-          if (result.data.verifyCode2fa) {
-            sessionStorage.setItem(SESSION_STORAGE_CODE2FA, code2fa)
-            commit('setCode2fa', code2fa)
-            return true
-          } else {
-            throw new Error('Código inválido')
-          }
-        } catch (e) {
-          // informar ao usuário que o código esta inválido
-          sessionStorage.setItem(SESSION_STORAGE_CODE2FA, '')
-          commit('setCode2fa', null)
-          return false
+        if (result.data.verifyCode2fa) {
+          sessionStorage.setItem(SESSION_STORAGE_CODE2FA, code2fa)
+          commit('setCode2fa', code2fa)
+          console.log('chegou até o true', result)
+          return true
         }
+        return false
       })
       .then(codeValid => {
         if (codeValid)
           dispatch('restoreActivity')
+
+        return codeValid
       })
-      .catch(() => {
+      .catch(e => {
+        console.log('caiu em falso', e)
         // informar ao usuário que não foi possível validar o código
+        sessionStorage.setItem(SESSION_STORAGE_CODE2FA, '')
+        commit('setCode2fa', null)
         return false
       })
   },
 
   createDriver({ commit }, phone_number) {
     // chamar apollo para criar usuário
-    apollo.mutate({
+    return apollo.mutate({
       mutation: CREATE_LEAD,
       variables: {
         phone_number
@@ -187,11 +185,13 @@ export const actions = {
         commit('setSteps', {
           GET_PHONE: { complete: true, invalid: false },
         })
+        return true
       })
       .catch(e => {
         commit('setSteps', {
           GET_PHONE: { complete: false, invalid: true },
         })
+        return false
       })
 
     // tratar retorno do apollo
@@ -303,7 +303,7 @@ export const actions = {
       .then(result => {
         if (result.ok)
           return result.json()
-        else 
+        else
           return Promise.reject()
       })
       .then(() => Promise.resolve(true))

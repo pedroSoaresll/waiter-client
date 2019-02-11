@@ -2,7 +2,10 @@
   <v-layout column wrap align-center class="layout">
     <v-flex column wrap xs12>
       <v-flex xs12>
-        <img :src="require('../../assets/kovi-logo-white.svg')" alt="logo kovi">
+        <img
+          :src="require('../../assets/kovi-logo-white.svg')"
+          alt="logo kovi"
+        />
       </v-flex>
 
       <v-flex column wrap xs12 class="mt-5">
@@ -26,18 +29,25 @@
             <v-checkbox color="#FFFFFF" dark value="true" v-model="acceptTerms">
               <span slot="label" class="text-termos-uso">
                 Concordo com os
-                <a href="https://www.kovi.com.br/termos-de-uso" target="_blank">Termos de Uso</a> da Kovi.
+                <a href="https://www.kovi.com.br/termos-de-uso" target="_blank"
+                  >Termos de Uso</a
+                >
+                da Kovi.
               </span>
             </v-checkbox>
           </v-flex>
         </v-flex>
 
         <v-flex column wrap xs12 class="mt-4">
-          <p
-            class="error-message"
-            v-show="errorMessage"
-          >Não foi possível receber seu número, por favor tente mais tarde.</p>
-          <v-btn :disabled="sent" @click="createDriver" class="btn-quero-kovi ml-0">Quero um Kovi</v-btn>
+          <p class="error-message" v-show="errorMessage">
+            Não foi possível receber seu número, por favor tente mais tarde.
+          </p>
+          <v-btn
+            :disabled="sent"
+            @click="createDriver"
+            class="btn-quero-kovi ml-0"
+            >Quero um Kovi</v-btn
+          >
         </v-flex>
       </v-form>
     </v-flex>
@@ -45,8 +55,6 @@
 </template>
 
 <script>
-import { CREATE_LEAD } from "../../services/Lead";
-
 export default {
   data: () => ({
     isValid: false,
@@ -81,7 +89,7 @@ export default {
           // show error to user
           this.sent = false;
           this.errorMessage = true;
-          return
+          return;
         }
 
         this.$router.push({
@@ -89,7 +97,7 @@ export default {
           params: {
             code2fa: true
           }
-        })
+        });
       }
     );
   },
