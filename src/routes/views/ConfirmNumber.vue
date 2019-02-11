@@ -149,12 +149,13 @@ export default {
     },
 
     async generateCode2fa() {
+      // debugger;
       this.sent = false;
       this.smsDelivered = false;
       this.errorSmsSent = false;
       this.smsSent = true;
 
-      const sentCodeResponse = await this.$store.dispatch("lead/code2fa");
+      const sentCodeResponse = await this.$store.dispatch("lead/code2fa")
       this.smsSent = !sentCodeResponse;
 
       if (this.smsSent === true) this.errorSmsSent = true;
