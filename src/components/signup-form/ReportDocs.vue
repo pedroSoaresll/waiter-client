@@ -29,6 +29,9 @@
             file => uploadDoc(file.imageFile, 'cnh_photo')
           "
         />
+        <!-- <p class="subtitle">
+          Por favor, tire uma foto nítida em que seja possível ler as informações da CNH.
+        </p> -->
       </v-flex>
 
       <!-- contatos de emergencia -->
@@ -107,12 +110,25 @@
           label="Estado"
           mask="AA"
         />
+
+        <v-flex column wrap xs12 class="mt-5">
+        <p class="subtitle font-weight-bold text-uppercase mb-0">
+          FOTO DO COMPROVANTE DE RESIDÊNCIA
+          <!-- COMPROVANTE DE RESIDENCIA -->
+        </p>
         <upload-input
           title="Foto do comprovante residência"
           :file-changed-callback="
             file => uploadDoc(file.imageFile, 'address_photo')
           "
         />
+        <p class="subtitle">
+          Por favor, tire uma foto nítida em que seja possível ler as informações do comprovante.
+        </p>
+      </v-flex>
+
+
+
         <!-- <v-checkbox v-model="garageOtherAddress" label="Minha garagem fica em outro endereço"/> -->
       </v-flex>
 
@@ -147,10 +163,13 @@
         />
       </v-flex>
 
+  
+
       <!-- proof garage -->
       <v-flex column wrap xs12 class="mt-5">
         <p class="subtitle font-weight-bold text-uppercase mb-0">
-          ENDEREÇO DA GARAGEM
+          FOTO DA SUA GARAGEM
+          <!-- ENDEREÇO DA GARAGEM -->
         </p>
         <upload-input
           title="Foto da garagem"
@@ -159,7 +178,7 @@
           "
         />
         <p class="subtitle">
-          Por favor, bata uma foto legível e que apareça outras casas do lado.
+          Por favor, tire uma foto nítida e que apareçam também as casas do lado.
         </p>
       </v-flex>
 

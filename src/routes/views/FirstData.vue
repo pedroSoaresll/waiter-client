@@ -65,13 +65,13 @@
         <v-btn :disabled="sent" :large="true" class="btn-radius ml-0" @click="updateDriver">Avançar</v-btn>
       </v-flex>
 
-      <v-flex column wrap xs12 class="mt-5">
+      <!-- <v-flex column wrap xs12 class="mt-5">
         <p class="text-ja-comecou mb-0">Já começou o cadastro?</p>
         <a
           @click.prevent="verifyRegister"
           class="link-clique-aqui font-weight-bold mt-0"
         >Clique aqui e verifique o seu processo.</a>
-      </v-flex>
+      </v-flex> -->
     </v-flex>
   </v-layout>
 </template>

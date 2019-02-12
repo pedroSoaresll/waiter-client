@@ -9,10 +9,11 @@
       <v-flex column wrap xs12>
         <p class="text-obrigado mb-0">Obrigado!</p>
         <p class="text-para-acelerar text-16px mt-5">
-					Suas informações estão sendo analisadas pela nossa equipe.
+					Agora suas informações estão sendo analisadas pela nossa equipe.
 				</p>
         <p class="text-para-acelerar text-16px mt-2">
-					<strong>Fique atendo ao seu email / telefone</strong> pois a partir do momento que houver disponibilidade de entrega vamos te enviar um email para você pagar o caução e a primeira mensalidade.
+					<strong> Por favor fique atento ao seu email e telefone</strong>, havendo disponibilidade para a entrega, enviaremos um email com instruções sobre o pagamento do caução e da primeira mensalidade.
+          <!-- pois a partir do momento que houver disponibilidade de entrega vamos te enviar um email para você pagar o caução e a primeira mensalidade. -->
 				</p>
         <p class="text-para-acelerar text-16px mt-2">
 					Um abraço,<br />
