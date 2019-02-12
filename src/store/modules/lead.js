@@ -96,10 +96,11 @@ export const actions = {
     } else {
       switch (state.driver.status) {
         case "PENDING_DOCS":
+        case "PENDING_BOOKING":
           router.push({ name: "FinishForm" });
           break;
 
-        case "PENDING_BOOKING":
+        case "PENDING_PAYMENT":
           router.push({
             name: "DoPayment",
             query: { booking: state.driver.booking.id }
