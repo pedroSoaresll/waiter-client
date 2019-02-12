@@ -2,7 +2,10 @@
   <v-layout column wrap align-center class="layout">
     <v-flex column wrap xs12>
       <v-flex xs12>
-        <img :src="require('../../assets/kovi-logo-white.svg')" alt="logo kovi">
+        <img
+          :src="require('../../assets/kovi-logo-white.svg')"
+          alt="logo kovi"
+        />
       </v-flex>
 
       <v-flex column wrap xs12 class="mt-5">
@@ -11,8 +14,12 @@
       </v-flex>
 
       <v-flex column wrap xs12 class="mt-5">
-        <p class="text-cadastre-agora">Cadastre-se agora e peça já o seu Kovi!</p>
-        <p class="text-para-comecar">Para começar, precisamos saber um pouco mais de você :)</p>
+        <p class="text-cadastre-agora">
+          Cadastre-se agora e peça já o seu Kovi!
+        </p>
+        <p class="text-para-comecar">
+          Para começar, precisamos saber um pouco mais de você :)
+        </p>
       </v-flex>
 
       <v-form v-model="isValid">
@@ -58,20 +65,26 @@
       </v-form>
 
       <v-flex column wrap xs12 class="mt-4">
-        <p
-          class="error-message"
-          v-show="errorMessage"
-        >Não foi possível atualizar suas informações. Por favor, tente novamente mais tarde.</p>
-        <v-btn :disabled="sent" :large="true" class="btn-radius ml-0" @click="updateDriver">Avançar</v-btn>
+        <p class="error-message" v-show="errorMessage">
+          Não foi possível atualizar suas informações. Por favor, tente
+          novamente mais tarde.
+        </p>
+        <v-btn
+          :disabled="sent"
+          :large="true"
+          class="btn-radius ml-0"
+          @click="updateDriver"
+          >Avançar</v-btn
+        >
       </v-flex>
 
-      <v-flex column wrap xs12 class="mt-5">
+      <!-- <v-flex column wrap xs12 class="mt-5">
         <p class="text-ja-comecou mb-0">Já começou o cadastro?</p>
         <a
           @click.prevent="verifyRegister"
           class="link-clique-aqui font-weight-bold mt-0"
         >Clique aqui e verifique o seu processo.</a>
-      </v-flex>
+      </v-flex> -->
     </v-flex>
   </v-layout>
 </template>
@@ -82,16 +95,16 @@ export default {
     sent: false,
     errorMessage: false,
     items: [
-      {text: "Grande São Paulo", value: "SP_CITY"},
-      {text: "Belo Horizonte",value: "BELO_HORIZONTE"},
-      {text: "Brasília",value: "BRASILIA"},
-      {text: "Curitiba",value: "CURITIBA"},
-      {text: "Florianópolis",value: "FLORIPA"},
-      {text: "Porto Alegre",value: "PORTO_ALEGRE"},
-      {text: "Ribeirão Preto",value: "RIBEIRAO_PRETO"},
-      {text: "Rio de Janeiro",value: "RIO"},
-      {text: "São José dos Campos",value: "SJC"},
-      {text: "Outras",value: "OTHERS"},
+      { text: "Grande São Paulo", value: "SAO_PAULO" },
+      { text: "Belo Horizonte", value: "BELO_HORIZONTE" },
+      { text: "Brasília", value: "BRASILIA" },
+      { text: "Curitiba", value: "CURITIBA" },
+      { text: "Florianópolis", value: "FLORIANOPOLIS" },
+      { text: "Porto Alegre", value: "PORTO_ALEGRE" },
+      { text: "Ribeirão Preto", value: "RIBEIRAO_PRETO" },
+      { text: "Rio de Janeiro", value: "RIO_DE_JANEIRO" },
+      { text: "São José dos Campos", value: "SJC" },
+      { text: "Outras", value: "OTHERS" }
     ],
     input: {
       name: "",
@@ -117,7 +130,7 @@ export default {
       }
     },
     verifyRegister() {
-      this.$parent.$options.parent.loadUserData(this.driver)
+      this.$parent.$options.parent.loadUserData(this.driver);
     }
   },
   mounted() {
@@ -154,7 +167,7 @@ export default {
 <style scoped>
 .layout {
   background-color: #ff3859;
-  padding: 30px 20px;
+  padding: 30px 20px 50px 20px;
 }
 
 .text-peca-ja {

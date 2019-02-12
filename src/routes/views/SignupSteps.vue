@@ -1,7 +1,7 @@
 <template>
   <v-layout column wrap align-center class="layout">
     <v-flex column wrap xs12>
-      <router-view/>
+      <router-view />
     </v-flex>
   </v-layout>
 </template>
