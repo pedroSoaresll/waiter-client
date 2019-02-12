@@ -29,9 +29,9 @@
             file => uploadDoc(file.imageFile, 'cnh_photo')
           "
         />
-        <!-- <p class="subtitle">
+        <p class="subtitle">
           Por favor, tire uma foto nítida em que seja possível ler as informações da CNH.
-        </p> -->
+        </p>
       </v-flex>
 
       <!-- contatos de emergencia -->
@@ -275,9 +275,9 @@ export default {
     this.input.address_street_details = driver.address_street_details;
     this.input.license_number = driver.license_number;
     this.input.emergency_1_name = driver.emergency_1_name;
-    this.input.emergency_1_phone_number = driver.emergency_1_phone_number;
+    this.input.emergency_1_phone_number = driver.emergency_1_phone_number.substr(-11);
     this.input.emergency_2_name = driver.emergency_2_name;
-    this.input.emergency_2_phone_number = driver.emergency_2_phone_number;
+    this.input.emergency_2_phone_number = driver.emergency_2_phone_number.substr(-11);
   },
   beforeDestroy() {
     this.$vuetify.theme = theme;

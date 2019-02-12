@@ -1,7 +1,7 @@
 <template>
   <v-layout column wrap xs12 class="step1">
     <v-flex column wrap xs12 class="wrapper">
-      <img :src="require('../../assets/kovi-logo-red.svg')" alt="logo kovi">
+      <img :src="require('../../assets/kovi-logo-red.svg')" alt="logo kovi" />
     </v-flex>
 
     <!-- steps here -->
@@ -9,15 +9,25 @@
       <v-flex column wrap xs12>
         <p class="text-obrigado mb-0">Obrigado!</p>
         <p class="text-para-acelerar text-16px mt-5">
+
 					Agora suas informações estão sendo analisadas pela nossa equipe.
 				</p>
         <p class="text-para-acelerar text-16px mt-2">
 					<strong> Por favor fique atento ao seu email e telefone</strong>, havendo disponibilidade para a entrega, enviaremos um email com instruções sobre o pagamento do caução e da primeira mensalidade.
           <!-- pois a partir do momento que houver disponibilidade de entrega vamos te enviar um email para você pagar o caução e a primeira mensalidade. -->
 				</p>
+<!-- =======
+          Suas informações estão sendo analisadas pela nossa equipe.
+        </p>
         <p class="text-para-acelerar text-16px mt-2">
-					Um abraço,<br />
-					Equipe Kovi
+          <strong>Fique atento ao seu email / telefone</strong> pois a partir do
+          momento que houver disponibilidade de entrega vamos te enviar um email
+          para você pagar o caução e a primeira mensalidade.
+        </p>
+>>>>>>> 59d67a7561b4e7f11aeb13136caa473c13113d32 -->
+        <p class="text-para-acelerar text-16px mt-2">
+          Um abraço,<br />
+          Equipe Kovi
         </p>
       </v-flex>
     </v-layout>
@@ -47,7 +57,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 .wrapper {
@@ -81,8 +90,8 @@ export default {
 }
 
 .text-obrigado {
-	font-size: 30px;
-	color: #4A4A4A;
+  font-size: 30px;
+  color: #4a4a4a;
 }
 
 .text-para-acelerar {
