@@ -53,10 +53,13 @@ export const mutations = {
     state.code2fa = _code2fa;
   },
   setDriver(state, _driver) {
-    zE("webWidget", "prefill", {
-      name: { value: _driver.name },
-      email: { value: _driver.email },
-      phone: { value: _driver.phone_number }
+    zE(function() {
+      zE.identify({
+        name: _driver.name,
+        email: _driver.email,
+        phone: _driver.phone_number,
+        tags: "LEAD"
+      });
     });
     state.driver = {
       ...state.driver,
