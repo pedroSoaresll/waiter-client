@@ -53,7 +53,14 @@
             prepend-icon="event"
             readonly
           ></v-text-field>
-          <v-date-picker v-model="form.car_delivery_scheduled" scrollable>
+          <v-date-picker v-model="form.car_delivery_scheduled" 
+            scrollable
+            :allowed-dates="allowedDates"
+            :min="getMin"
+            :max="getMax"
+            >
+
+
             <v-spacer></v-spacer>
             <v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
             <v-btn flat color="primary" @click="$refs.dialog.save(form.date)"
@@ -133,7 +140,7 @@ export default {
               plan: this.form.planSelect,
               started_at: new Date()
                 .toJSON()
-                .slice(0, 19)
+                .slice(0, 10)
                 .replace("T", " "),
               car_delivery_scheduled: this.form.car_delivery_scheduled
             }
@@ -150,6 +157,21 @@ export default {
       } catch (e) {
         throw e;
       }
+    }
+  },
+  computed: {
+    getMin() {
+      let today = new Date()
+      let timeDelta = today.getDate() + 7 // allows choose booking only after 7 days
+      today.setDate(timeDelta)
+      return today.toISOString().substr(0, 10)
+    },
+    getMax() {
+      let today = new Date()
+      let timeDelta = today.getDate() + 30 // allows choose booking only until 30 days
+      today.setDate(timeDelta)
+      return today.toISOString().substr(0, 10)
+      
     }
   },
   mounted() {
