@@ -32,7 +32,7 @@
           <v-card class="wrapper">
             <v-layout column wrap>
               <p class="text-envie-historico">
-                Por favor, envie o seu histórico de corridas
+                Por favor, envie um print com o seu histórico de corridas
                 <strong>{{ account.appName === 'Outros' ? 'do outro aplicativo que você usa' : `${account.appName}` }}</strong>
               </p>
               <upload-input
