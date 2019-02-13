@@ -14,9 +14,9 @@
       </v-flex>
 
       <v-flex column wrap xs12 class="mt-5">
-        <p class="text-cadastre-agora">
+        <!-- <p class="text-cadastre-agora">
           Cadastre-se agora e peça já o seu Kovi!
-        </p>
+        </p> -->
         <p class="text-para-comecar">
           Para começar, precisamos saber um pouco mais de você :)
         </p>
@@ -66,7 +66,7 @@
 
       <v-flex column wrap xs12 class="mt-4">
         <p class="error-message" v-show="errorMessage">
-          Não foi possível atualizar suas informações. Por favor, tente
+          Ops! Não foi possível atualizar suas informações. Por favor, tente
           novamente mais tarde.
         </p>
         <v-btn

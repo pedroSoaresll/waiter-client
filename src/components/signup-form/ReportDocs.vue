@@ -56,13 +56,13 @@
           @blur="updateDriver"
           clearable
           v-model="input.emergency_2_name"
-          label="Nome do contato 2"
+          label="Nome do contato 2 (opcional)"
         />
         <v-text-field
           @blur="updateDriver"
           clearable
           v-model="input.emergency_2_phone_number"
-          label="Telefone do contato 2"
+          label="Telefone do contato 2 (opcional)"
           mask="(##) #####-####"
         />
       </v-flex>
