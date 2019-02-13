@@ -1,177 +1,171 @@
 <template>
   <v-layout column wrap xs12 class="step1">
     <v-flex column wrap xs12 class="wrapper">
-      <img :src="require('../../assets/kovi-logo-red.svg')" alt="logo kovi" />
+      <img :src="require('../../assets/kovi-logo-red.svg')" alt="logo kovi">
     </v-flex>
 
     <!-- steps here -->
     <v-layout column wrap xs12 class="wrapper">
-      <v-flex column wrap xs12>
-        <p class="text-qual-empresa mb-0">Informações pessoais</p>
-        <p class="text-para-acelerar text-16px mt-2">
-          Agora precisamos receber uma cópia da sua CNH e saber onde você mora.
-        </p>
-      </v-flex>
+      <v-form v-model="isFormValid">
+        <v-flex column wrap xs12>
+          <p class="text-qual-empresa mb-0">Informações pessoais</p>
+          <p
+            class="text-para-acelerar text-16px mt-2"
+          >Agora precisamos receber uma cópia da sua CNH e saber onde você mora.</p>
+        </v-flex>
 
-      <!-- form / cnh -->
-      <v-flex column wrap xs12 class="mt-5">
-        <p class="subtitle font-weight-bold">CNH</p>
-        <v-text-field
-          @blur="updateDriver"
-          clearable
-          label="Número da CNH"
-          v-model="input.license_number"
-          mask="###########"
-        />
-        <upload-input
-          title="Foto da CNH"
-          :file-changed-callback="
+        <!-- form / cnh -->
+        <v-flex column wrap xs12 class="mt-5">
+          <p class="subtitle font-weight-bold">CNH</p>
+          <v-text-field
+            :rules="fieldRules"
+            @blur="updateDriver"
+            clearable
+            label="Número da CNH"
+            v-model="input.license_number"
+            mask="###########"
+          />
+          <upload-input
+            title="Foto da CNH"
+            :file-changed-callback="
             file => uploadDoc(file.imageFile, 'cnh_photo')
           "
-        />
-      </v-flex>
+          />
+        </v-flex>
 
-      <!-- contatos de emergencia -->
-      <v-flex column wrap xs12 class="mt-5">
-        <p class="subtitle font-weight-bold text-uppercase">
-          CONTATOS DE EMERGENCIA
-        </p>
-        <v-text-field
-          @blur="updateDriver"
-          clearable
-          v-model="input.emergency_1_name"
-          label="Nome do contato 1"
-        />
-        <v-text-field
-          @blur="updateDriver"
-          clearable
-          v-model="input.emergency_1_phone_number"
-          label="Telefone do contato 1"
-          mask="(##) #####-####"
-        />
-        <v-text-field
-          @blur="updateDriver"
-          clearable
-          v-model="input.emergency_2_name"
-          label="Nome do contato 2"
-        />
-        <v-text-field
-          @blur="updateDriver"
-          clearable
-          v-model="input.emergency_2_phone_number"
-          label="Telefone do contato 2"
-          mask="(##) #####-####"
-        />
-      </v-flex>
+        <!-- contatos de emergencia -->
+        <v-flex column wrap xs12 class="mt-5">
+          <p class="subtitle font-weight-bold text-uppercase">CONTATOS DE EMERGENCIA</p>
+          <v-text-field
+            :rules="fieldRules"
+            required
+            @blur="updateDriver"
+            clearable
+            v-model="input.emergency_1_name"
+            label="Nome do contato 1"
+          />
+          <v-text-field
+            :rules="[
+              () => fieldRules[0], 
+              () => input.emergency_1_phone_number.length === 11 || 'O número deve ter 11 dígitos com DD.'
+            ]"
+            @blur="updateDriver"
+            clearable
+            required
+            v-model="input.emergency_1_phone_number"
+            label="Telefone do contato 1"
+            mask="(##) #####-####"
+          />
+          <v-text-field
+            @blur="updateDriver"
+            clearable
+            v-model="input.emergency_2_name"
+            label="Nome do contato 2"
+          />
+          <v-text-field
+            @blur="updateDriver"
+            clearable
+            v-model="input.emergency_2_phone_number"
+            label="Telefone do contato 2"
+            mask="(##) #####-####"
+          />
+        </v-flex>
 
-      <!-- address -->
-      <v-flex column wrap xs12 class="mt-5">
-        <p class="subtitle font-weight-bold text-uppercase">
-          ENDEREÇO DE RESIDÊNCIA
-        </p>
-        <v-text-field
-          @blur="updateDriver, getCep(input.address_postal_code)"
-          clearable
-          v-model="input.address_postal_code"
-          label="CEP"
-          mask="#####-###"
-        />
-        <v-text-field
-          @blur="updateDriver"
-          clearable
-          v-model="input.address_street_name"
-          label="Nome da Rua"
-        />
-        <v-text-field
-          @blur="updateDriver"
-          clearable
-          v-model="input.address_street_number"
-          label="Número da casa/apartamento"
-        />
-        <v-text-field
-          @blur="updateDriver"
-          clearable
-          v-model="input.address_street_details"
-          label="Complemento (Apt, Sala, etc...)"
-        />
-        <v-text-field
-          @blur="updateDriver"
-          clearable
-          v-model="input.address_city"
-          label="Cidade"
-        />
-        <v-text-field
-          @blur="updateDriver"
-          clearable
-          v-model="input.address_state"
-          label="Estado"
-          mask="AA"
-        />
-        <upload-input
-          title="Foto do comprovante residência"
-          :file-changed-callback="
+        <!-- address -->
+        <v-flex column wrap xs12 class="mt-5">
+          <p class="subtitle font-weight-bold text-uppercase">ENDEREÇO DE RESIDÊNCIA</p>
+          <v-text-field
+            :rules="fieldRules"
+            @blur="updateDriver, getCep(input.address_postal_code)"
+            clearable
+            v-model="input.address_postal_code"
+            label="CEP"
+            mask="#####-###"
+          />
+          <v-text-field
+            :rules="fieldRules"
+            @blur="updateDriver"
+            clearable
+            v-model="input.address_street_name"
+            label="Nome da Rua"
+          />
+          <v-text-field
+            :rules="fieldRules"
+            @blur="updateDriver"
+            clearable
+            v-model="input.address_street_number"
+            label="Número da casa/apartamento"
+          />
+          <v-text-field
+            @blur="updateDriver"
+            clearable
+            v-model="input.address_street_details"
+            label="Complemento (Apt, Sala, etc...)"
+          />
+          <v-text-field
+            :rules="fieldRules" @blur="updateDriver" clearable v-model="input.address_city" label="Cidade"/>
+          <v-text-field
+            :rules="fieldRules"
+            @blur="updateDriver"
+            clearable
+            v-model="input.address_state"
+            label="Estado"
+            mask="AA"
+          />
+          <upload-input
+            title="Foto do comprovante residência"
+            :file-changed-callback="
             file => uploadDoc(file.imageFile, 'address_photo')
           "
-        />
-        <!-- <v-checkbox v-model="garageOtherAddress" label="Minha garagem fica em outro endereço"/> -->
-      </v-flex>
+          />
+          <!-- <v-checkbox v-model="garageOtherAddress" label="Minha garagem fica em outro endereço"/> -->
+        </v-flex>
 
-      <!-- garage if other address -->
-      <v-flex column wrap xs12 class="mt-5" v-if="garageOtherAddress">
-        <p class="subtitle font-weight-bold text-uppercase">
-          ENDEREÇO DA GARAGEM
-        </p>
-        <v-text-field @blur="updateDriver" clearable label="CEP" />
-        <v-text-field @blur="updateDriver" clearable label="Nome da Rua" />
-        <v-text-field
-          @blur="updateDriver"
-          clearable
-          label="Número da casa/apartamento"
-        />
-        <v-text-field
-          @blur="updateDriver"
-          clearable
-          label="Complemento (Apt, Sala, etc...)"
-        />
-        <v-text-field @blur="updateDriver" clearable label="Cidade" />
-        <v-text-field @blur="updateDriver" clearable label="Estado" />
-        <upload-input
-          title="Foto do comprovante endereço"
-          :file-changed-callback="
+        <!-- garage if other address -->
+        <v-flex column wrap xs12 class="mt-5" v-if="garageOtherAddress">
+          <p class="subtitle font-weight-bold text-uppercase">ENDEREÇO DA GARAGEM</p>
+          <v-text-field
+            :rules="fieldRules" @blur="updateDriver" clearable label="CEP"/>
+          <v-text-field
+            :rules="fieldRules" @blur="updateDriver" clearable label="Nome da Rua"/>
+          <v-text-field
+            :rules="fieldRules" @blur="updateDriver" clearable label="Número da casa/apartamento"/>
+          <v-text-field
+            :rules="fieldRules" @blur="updateDriver" clearable label="Complemento (Apt, Sala, etc...)"/>
+          <v-text-field
+            :rules="fieldRules" @blur="updateDriver" clearable label="Cidade"/>
+          <v-text-field
+            :rules="fieldRules" @blur="updateDriver" clearable label="Estado"/>
+          <upload-input
+            title="Foto do comprovante endereço"
+            :file-changed-callback="
             file => uploadDoc(file.imageFile, 'garage_photo')
           "
-        />
-        <v-checkbox
-          v-model="garageOtherAddress"
-          label="Minha garagem fica em outro endereço"
-        />
-      </v-flex>
+          />
+          <v-checkbox v-model="garageOtherAddress" label="Minha garagem fica em outro endereço"/>
+        </v-flex>
 
-      <!-- proof garage -->
-      <v-flex column wrap xs12 class="mt-5">
-        <p class="subtitle font-weight-bold text-uppercase mb-0">
-          ENDEREÇO DA GARAGEM
-        </p>
-        <upload-input
-          title="Foto da garagem"
-          :file-changed-callback="
+        <!-- proof garage -->
+        <v-flex column wrap xs12 class="mt-5">
+          <p class="subtitle font-weight-bold text-uppercase mb-0">ENDEREÇO DA GARAGEM</p>
+          <upload-input
+            title="Foto da garagem"
+            :file-changed-callback="
             file => uploadDoc(file.imageFile, 'garage_photo')
           "
-        />
-        <p class="subtitle">
-          Por favor, bata uma foto legível e que apareça outras casas do lado.
-        </p>
-      </v-flex>
+          />
+          <p class="subtitle">Por favor, bata uma foto legível e que apareça outras casas do lado.</p>
+        </v-flex>
 
-      <v-flex column wrap xs12 align-self-center class="mt-3">
-        <v-btn
-          :disabled="!enableNextStep"
-          class="btn-radius btn-pink"
-          :large="true"
-          @click="$router.push({ name: 'SelectPlan' })"
-          >Avançar</v-btn
-        >
-      </v-flex>
+        <v-flex column wrap xs12 align-self-center class="mt-3">
+          <v-btn
+            :disabled="!enableNextStep"
+            class="btn-radius btn-pink"
+            :large="true"
+            @click="$router.push({ name: 'SelectPlan' })"
+          >Avançar</v-btn>
+        </v-flex>
+      </v-form>
     </v-layout>
   </v-layout>
 </template>
@@ -190,6 +184,10 @@ export default {
       primary: "#ff3859"
     },
     garageOtherAddress: false,
+    isFormValid: false,
+    fieldRules: [
+      e => !!e || "Este campo é obrigatório" 
+    ],
     input: {
       address_street_name: "",
       address_street_number: "",
@@ -207,9 +205,7 @@ export default {
   }),
   computed: {
     enableNextStep() {
-      const steps = this.$store.getters["lead/steps"];
-      const { complete } = steps.SEND_DOCUMENTS;
-      return complete;
+      return this.isFormValid
     }
   },
   methods: {
