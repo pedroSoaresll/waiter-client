@@ -8,7 +8,6 @@
     <v-layout column wrap xs12 class="wrapper">
       <v-flex column wrap xs12>
         <p class="text-qual-empresa mb-0">Informações pessoais</p>
-
       </v-flex>
 
       <!-- form / cnh -->
@@ -122,7 +121,7 @@
           <li> Estar em seu nome. </li>
           <li> Ter sido emitido há menos de 90 dias. </li>
           <li> Ser uma conta de água, luz, ou telefone. </li>
-          <li> Estar nítida para que seja possível ler as informações do comprovante.</li>
+          <li> Estar nítido para que seja possível ler as informações do comprovante.</li>
         </ul>
         </p>
 

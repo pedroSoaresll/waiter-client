@@ -39,11 +39,11 @@
         </v-flex>
 
         <v-flex column wrap xs12 class="mt-4">
-          <p class="error-message" v-show="errorMessage">
-            Não foi possível receber seu número, por favor tente mais tarde.
-          </p>
           <p class="error-message" v-show="errorMessageTermsOrNumber">
             Você precisa digitar um celular válido e estar de acordo com os Termos de Uso da Kovi para continuar.
+          </p>
+          <p class="error-message" v-show="errorMessage">
+            Não foi possível receber seu número, por favor tente mais tarde.
           </p>
           <v-btn
             :disabled="sent"
