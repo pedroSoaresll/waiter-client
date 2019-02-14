@@ -86,7 +86,7 @@
 
           <v-flex column wrap class="mt-4">
             <p class="subtitle font-weight-bold text-uppercase">
-              PAGAMENTO ALUGUEL
+              PAGAMENTO DA PRIMEIRA SEMANA 
             </p>
             <v-radio-group
               v-model="form.week.PaymentMethod"

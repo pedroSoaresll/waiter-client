@@ -28,7 +28,7 @@
           <v-flex column xs12>
             <v-checkbox color="#FFFFFF" dark value="true" v-model="acceptTerms">
               <span slot="label" class="text-termos-uso">
-                Concordo com os
+                Li e concordo com os
                 <a href="https://www.kovi.com.br/termos-de-uso" target="_blank"
                   >Termos de Uso</a
                 >
@@ -41,6 +41,9 @@
         <v-flex column wrap xs12 class="mt-4">
           <p class="error-message" v-show="errorMessage">
             Não foi possível receber seu número, por favor tente mais tarde.
+          </p>
+          <p class="error-message" v-show="errorMessageTermsOrNumber">
+            Você precisa digitar um celular válido e estar de acordo com os Termos de Uso da Kovi para continuar.
           </p>
           <v-btn
             :disabled="sent"
@@ -59,6 +62,7 @@ export default {
   data: () => ({
     isValid: false,
     errorMessage: false,
+    errorMessageTermsOrNumber: false, //alterado
     sent: false,
     phone: "",
     numberRule: [
@@ -71,7 +75,11 @@ export default {
   }),
   methods: {
     createDriver() {
-      if (!this.isValid || !this.acceptTerms) return;
+      if (!this.isValid || !this.acceptTerms) {
+        this.errorMessageTermsOrNumber = true; //alterado
+        return
+      };
+      this.errorMessageTermsOrNumber = false; //alterado
       this.errorMessage = false;
       this.sent = true;
       this.$store.dispatch("lead/createDriver", this.phone);
@@ -89,6 +97,7 @@ export default {
           // show error to user
           this.sent = false;
           this.errorMessage = true;
+          // this.errorMessageTermsOrNumber = true;
           return;
         }
 

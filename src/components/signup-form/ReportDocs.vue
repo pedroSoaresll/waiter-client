@@ -8,14 +8,16 @@
     <v-layout column wrap xs12 class="wrapper">
       <v-flex column wrap xs12>
         <p class="text-qual-empresa mb-0">Informações pessoais</p>
-        <p class="text-para-acelerar text-16px mt-2">
-          Agora precisamos receber uma cópia da sua CNH e saber onde você mora.
-        </p>
+
       </v-flex>
 
       <!-- form / cnh -->
       <v-flex column wrap xs12 class="mt-5">
+                      <p class="subtitle">
+          Por favor, tire uma foto nítida em que seja possível ler as informações da CNH.
+        </p>
         <p class="subtitle font-weight-bold">CNH</p>
+
         <v-text-field
           @blur="updateDriver"
           clearable
@@ -23,15 +25,14 @@
           v-model="input.license_number"
           mask="###########"
         />
+
         <upload-input
-          title="Foto da CNH"
+          title="Clique aqui para adicionar a foto da CNH"
           :file-changed-callback="
             file => uploadDoc(file.imageFile, 'cnh_photo')
           "
         />
-        <p class="subtitle">
-          Por favor, tire uma foto nítida em que seja possível ler as informações da CNH.
-        </p>
+
       </v-flex>
 
       <!-- contatos de emergencia -->
@@ -116,18 +117,23 @@
           FOTO DO COMPROVANTE DE RESIDÊNCIA
           <!-- COMPROVANTE DE RESIDENCIA -->
         </p>
+        <p class="subtitle"> O comprovante deve: 
+        <ul class="subtitle"> 
+          <li> Estar em seu nome. </li>
+          <li> Ter sido emitido há menos de 90 dias. </li>
+          <li> Ser uma conta de água, luz, ou telefone. </li>
+          <li> Estar nítida para que seja possível ler as informações do comprovante.</li>
+        </ul>
+        </p>
+
         <upload-input
-          title="Foto do comprovante residência"
+          title="Clique aqui para adicionar o comprovante de residência"
           :file-changed-callback="
             file => uploadDoc(file.imageFile, 'address_photo')
           "
         />
-        <p class="subtitle">
-          Por favor, tire uma foto nítida em que seja possível ler as informações do comprovante.
-        </p>
+        
       </v-flex>
-
-
 
         <!-- <v-checkbox v-model="garageOtherAddress" label="Minha garagem fica em outro endereço"/> -->
       </v-flex>
@@ -152,11 +158,12 @@
         <v-text-field @blur="updateDriver" clearable label="Cidade" />
         <v-text-field @blur="updateDriver" clearable label="Estado" />
         <upload-input
-          title="Foto do comprovante endereço"
+          title="Foto do comprovante de endereço"
           :file-changed-callback="
             file => uploadDoc(file.imageFile, 'garage_photo')
           "
         />
+        
         <v-checkbox
           v-model="garageOtherAddress"
           label="Minha garagem fica em outro endereço"
@@ -171,15 +178,16 @@
           FOTO DA SUA GARAGEM
           <!-- ENDEREÇO DA GARAGEM -->
         </p>
+        <p class="subtitle">
+          Por favor, tire uma foto nítida e que apareçam também as casas do lado.
+        </p>
         <upload-input
-          title="Foto da garagem"
+          title="Clique aqui para adicionar foto da garagem"
           :file-changed-callback="
             file => uploadDoc(file.imageFile, 'garage_photo')
           "
         />
-        <p class="subtitle">
-          Por favor, tire uma foto nítida e que apareçam também as casas do lado.
-        </p>
+
       </v-flex>
 
       <v-flex column wrap xs12 align-self-center class="mt-3">

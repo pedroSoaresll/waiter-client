@@ -29,6 +29,7 @@
                 v-model="cardbegin"
                 :rules="cardbeginRules"
                 :counter="6"
+                mask="######"
                 label="6 primeiros digitos"
                 required
               ></v-text-field>
@@ -38,6 +39,7 @@
                 v-model="cardend"
                 :rules="cardendRules"
                 :counter="4"
+                mask="####"
                 label="4 ultimos digitos"
                 required
               ></v-text-field>

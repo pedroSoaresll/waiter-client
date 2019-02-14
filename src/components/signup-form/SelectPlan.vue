@@ -55,6 +55,7 @@
           ></v-text-field>
           <v-date-picker v-model="form.car_delivery_scheduled" 
             scrollable
+            locale="pt-br"
             :allowed-dates="allowedDates"
             :min="getMin"
             :max="getMax"
@@ -62,7 +63,7 @@
 
 
             <v-spacer></v-spacer>
-            <v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
+            <v-btn flat color="primary" @click="modal = false">Cancelar</v-btn>
             <v-btn flat color="primary" @click="$refs.dialog.save(form.date)"
               >OK</v-btn
             >
@@ -130,6 +131,13 @@ export default {
     }
   },
   methods: {
+    allowedDates: val => {
+      let day = new Date(val)
+      if(day.getDay() == 5 || day.getDay() == 6){
+        return false
+      }
+      return day
+     }, 
     async createBooking() {
       try {
         return this.$apollo

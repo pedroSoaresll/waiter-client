@@ -13,7 +13,7 @@
 					Agora suas informações estão sendo analisadas pela nossa equipe.
 				</p>
         <p class="text-para-acelerar text-16px mt-2">
-					<strong> Por favor fique atento ao seu email e telefone</strong>, havendo disponibilidade para a entrega, enviaremos um email com instruções sobre o pagamento do caução e da primeira mensalidade.
+					<strong> Por favor fique atento ao seu email e telefone</strong>, havendo disponibilidade para a entrega, enviaremos um email com instruções sobre o pagamento do caução e da primeira semana.
           <!-- pois a partir do momento que houver disponibilidade de entrega vamos te enviar um email para você pagar o caução e a primeira mensalidade. -->
 				</p>
 <!-- =======
