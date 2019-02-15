@@ -44,18 +44,21 @@
             CONTATOS DE EMERGENCIA
           </p>
           <v-text-field
-            :rules="[
-              () => fieldRules[0], 
-              () => input.emergency_1_phone_number.length === 11 || 'O número deve ter 11 dígitos com DD.'
-            ]"
+            :rules="fieldRules"
+            required
             @blur="updateDriver"
             clearable
             v-model="input.emergency_1_name"
             label="Nome do contato 1"
           />
           <v-text-field
+            :rules="[
+              () => fieldRules[0], 
+              () => input.emergency_1_phone_number.length === 11 || 'O número deve ter 11 dígitos com DD.'
+            ]"
             @blur="updateDriver"
             clearable
+            required
             v-model="input.emergency_1_phone_number"
             label="Telefone do contato 1"
             mask="(##) #####-####"
@@ -275,7 +278,7 @@ export default {
     this.input.address_city = driver.address_city;
     this.input.address_state = driver.address_state;
     this.input.address_postal_code = driver.address_postal_code;
-    this.input.address_street_details = driver.address_street_details || null; //testing this feature
+    this.input.address_street_details = driver.address_street_details;
     this.input.license_number = driver.license_number;
     this.input.emergency_1_name = driver.emergency_1_name;
     this.input.emergency_1_phone_number = driver.emergency_1_phone_number.substr(-11);
