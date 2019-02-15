@@ -216,7 +216,15 @@ export const actions = {
   },
 
   async sendDocs({ state, commit }, input) {
-    const updated = await updateDriver(state, commit, input);
+    const updated = await updateDriver(state, commit, {
+      ...input,
+      emergency_2_name: !input.emergency_2_name 
+        ? 'Não informado' 
+        : input.emergency_2_name,
+      emergency_2_phone_number: !input.emergency_2_phone_number 
+        ? '00000000000'
+        : input.emergency_2_phone_number
+    })
 
     if (updated) {
       let complete = false;

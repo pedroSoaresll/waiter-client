@@ -18,7 +18,7 @@
           PLANOS DISPONÍVEIS
         </p>
         <v-radio-group v-model="form.planSelect">
-          <div v-for="(plan, index) in plans.items" :key="index">
+          <div v-for="(plan, index) in plans.items" :key="index" class="mb-4">
             <v-radio :label="plan.name" :value="plan.id" />
             <v-flex align-self-start class="area-info-radio ml-4">
               <span class="subtitle">{{ plan.description }}</span>
