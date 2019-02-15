@@ -7,28 +7,23 @@
     <!-- steps here -->
     <v-layout column wrap xs12 class="wrapper">
       <v-flex column wrap xs12>
-        <p class="text-obrigado mb-0">Obrigado!</p>
+        <p class="text-obrigado mb-0">Obrigado <i class="far fa-grin-wink kovi-color"></i></p>
         <p class="text-para-acelerar text-16px mt-5">
+					As suas informações estão sendo analisadas pela nossa equipe.
+				</p>
+        <p class="text-para-acelerar text-16px mt-2">
+					<strong> Fique atento ao seu email e telefone</strong>, 
+          enviaremos os próximos passos por lá ;)
+				</p>
 
-					Agora suas informações estão sendo analisadas pela nossa equipe.
-				</p>
         <p class="text-para-acelerar text-16px mt-2">
-					<strong> Por favor fique atento ao seu email e telefone</strong>, havendo disponibilidade para a entrega, enviaremos um email com instruções sobre o pagamento do caução e da primeira semana.
-          <!-- pois a partir do momento que houver disponibilidade de entrega vamos te enviar um email para você pagar o caução e a primeira mensalidade. -->
-				</p>
-<!-- =======
-          Suas informações estão sendo analisadas pela nossa equipe.
-        </p>
-        <p class="text-para-acelerar text-16px mt-2">
-          <strong>Fique atento ao seu email / telefone</strong> pois a partir do
-          momento que houver disponibilidade de entrega vamos te enviar um email
-          para você pagar o caução e a primeira mensalidade.
-        </p>
->>>>>>> 59d67a7561b4e7f11aeb13136caa473c13113d32 -->
-        <p class="text-para-acelerar text-16px mt-2">
-          Um abraço,<br />
+          Grande abraço,<br />
           Equipe Kovi
         </p>
+      </v-flex>
+
+      <v-flex>
+        <img src="https://media.giphy.com/media/aPi30r4NgJ0oU/giphy.gif" alt="logo kovi" />
       </v-flex>
     </v-layout>
   </v-layout>
@@ -103,4 +98,5 @@ export default {
   font-size: 18px;
   color: #4a4a4a;
 }
+
 </style>

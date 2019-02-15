@@ -32,3 +32,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.kovi-color {
+  color: #ff3859;
+}
+</style>

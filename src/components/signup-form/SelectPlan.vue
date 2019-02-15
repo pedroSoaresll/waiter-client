@@ -9,7 +9,7 @@
       <v-flex column wrap xs12>
         <p class="text-qual-empresa mb-0">Planos disponíveis</p>
         <p class="text-para-acelerar text-16px mt-2">
-          Selecione agora o plano que mais se adequa a sua realidade.
+          Agora selecione o melhor plano para você ;)
         </p>
       </v-flex>
 
@@ -32,7 +32,7 @@
 
       <v-flex column wrap xs12 class="mt-5">
         <p class="subtitle font-weight-bold text-uppercase mb-0">
-          DATA DE RETIRADA DO CARRO
+          ESCOLHA A DATA QUE VOCê GOSTARIA DE REITRAR O CARRO
         </p>
         <p class="subtitle">
           Selecione a data que você gostaria de retirar o carro
@@ -49,7 +49,7 @@
           <v-text-field
             slot="activator"
             v-model="form.car_delivery_scheduled"
-            label="Selecione a data"
+            label="Clique aqui e elecione a data"
             prepend-icon="event"
             readonly
           ></v-text-field>
@@ -60,8 +60,6 @@
             :min="getMin"
             :max="getMax"
             >
-
-
             <v-spacer></v-spacer>
             <v-btn flat color="primary" @click="modal = false">Cancelar</v-btn>
             <v-btn flat color="primary" @click="$refs.dialog.save(form.date)"

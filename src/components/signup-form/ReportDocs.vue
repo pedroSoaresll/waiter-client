@@ -9,26 +9,27 @@
     <v-layout column wrap xs12 class="wrapper">
       <v-form v-model="isFormValid">
         <v-flex column wrap xs12>
-          <p class="text-qual-empresa mb-0">Informações pessoais</p>
+          <p class="text-qual-empresa mb-0">Informações pessoais e documentos </p>
         </v-flex>
 
 
         <!-- form / cnh -->
         <v-flex column wrap xs12 class="mt-5">
-          <p class="subtitle">
-            Por favor, tire uma foto nítida em que seja possível ler as informações da CNH.
-          </p>
+
           <p class="subtitle font-weight-bold">CNH</p>
 
           <v-text-field
             :rules="fieldRules"
             @blur="updateDriver"
             clearable
-            label="Número da CNH"
+            label="Digite o número da sua CNH"
             v-model="input.license_number"
             mask="###########"
           />
 
+          <p class="subtitle">
+            Tire uma foto nítida em que seja possível ler as informações da CNH.
+          </p>
           <upload-input
             title="Clique aqui para adicionar a foto da CNH"
             :file-changed-callback="
@@ -41,7 +42,7 @@
         <!-- contatos de emergencia -->
         <v-flex column wrap xs12 class="mt-5">
           <p class="subtitle font-weight-bold text-uppercase">
-            CONTATOS DE EMERGENCIA
+            CONTATOS DE EMERGÊNCIA
           </p>
           <v-text-field
             :rules="fieldRules"
@@ -108,7 +109,7 @@
             @blur="updateDriver"
             clearable
             v-model="input.address_street_details"
-            label="Complemento (Apt, Sala, etc...)"
+            label="Complemento (apto, sala, etc...)"
           />
           <v-text-field
             :rules="fieldRules" @blur="updateDriver" clearable v-model="input.address_city" label="Cidade"/>
@@ -128,7 +129,7 @@
           <!-- <p class="subtitle font-weight-bold text-uppercase mb-0">
             FOTO DO COMPROVANTE DE RESIDÊNCIA
           </p> -->
-          <p class="subtitle"> Por favor, nos envie uma foto de um comprovante de 
+          <p class="subtitle">Envie uma foto de um comprovante de 
             residência que cumpra os seguintes requisitos: 
           <ul class="requisites"> 
             <li> Estar em seu nome. </li>
@@ -176,7 +177,7 @@
             FOTO DA SUA GARAGEM
           </p>
           <p class="subtitle">
-            Por favor, tire uma foto nítida e que apareçam também as casas do lado.
+            Tire uma foto nítida em que apareça também as casas ao lado.
           </p>
           <upload-input
             title="Clique aqui para adicionar foto da garagem"
@@ -214,9 +215,7 @@ export default {
     },
     garageOtherAddress: false,
     isFormValid: false,
-    fieldRules: [
-      e => !!e || "Este campo é obrigatório" //testing this feature
-    ],
+    
     input: {
       address_street_name: "",
       address_street_number: "",
@@ -235,7 +234,10 @@ export default {
   computed: {
     enableNextStep() {
       return this.isFormValid
-    }
+    },
+    fieldRules: [
+      e => !!e || "Este campo é obrigatório" //testing this feature
+    ],
   },
   methods: {
     async getCep(cep) {

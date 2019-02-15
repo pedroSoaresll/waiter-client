@@ -9,7 +9,7 @@
       <v-flex column wrap xs12>
         <p class="text-obrigado mb-0">O seu carro está te esperando!</p>
         <p class="text-faca-pagamento text-16px mt-3">
-            Faça o pagamento do seu caucao e aluguel para o seu Kovi.
+            Faça o pagamento do caução e aluguel para o seu Kovi.
         </p>
       </v-flex>
 

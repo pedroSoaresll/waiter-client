@@ -10,7 +10,7 @@
 
       <v-flex column wrap xs12 class="mt-5">
         <p class="text-uppercase text-peca-ja mt-5 mb-0">Peça já seu Kovi</p>
-        <p class="text-a-mudanca">A mudança começa hoje!</p>
+        <p class="text-a-mudanca">Embarque nessa com a gente!</p>
       </v-flex>
 
       <v-form v-model="isValid" @submit.prevent="createDriver">

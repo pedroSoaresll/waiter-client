@@ -8,10 +8,10 @@
     <v-form ref="form" v-model="isValid">
       <v-layout column wrap xs12 class="wrapper">
         <v-flex column wrap xs12>
-          <p class="text-qual-empresa mb-0">Qual empresa de mobilidade você trabalha hoje?</p>
-          <p
+          <p class="text-qual-empresa mb-0"> Em quais aplicativos de mobilidade você trabalha hoje?</p>
+          <!-- <p
             class="text-para-acelerar text-16px mt-2"
-          >Para acelerar o seu aluguel, precisamos saber para qual empresa de mobilidade você trabalha.</p>
+          >Para acelerar o seu aluguel, precisamos saber para qual empresa de mobilidade você trabalha.</p> -->
         </v-flex>
 
         <v-flex column wrap xs12>
@@ -27,12 +27,13 @@
         </v-flex>
 
         <v-flex column wrap xs12 class="mt-5">
-          <p>Você possui garagem na sua casa ou alugada para guardar o carro?</p>
+          <p>Você possui garagem para alugar o carro?</p>
+          <p class="text-para-acelerar text-16px mt-2">Pode ser prórpia ou alugada.</p>
           <v-checkbox
             required
             v-model="input.survey_has_garage"
             class="text-18px"
-            label="Sim, possuo garagem na minha casa ou alugada"
+            label="Sim, possuo garagem na minha casa ou alugada."
           />
         </v-flex>
 

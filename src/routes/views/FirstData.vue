@@ -10,7 +10,7 @@
 
       <v-flex column wrap xs12 class="mt-5">
         <p class="text-uppercase text-peca-ja mt-5 mb-0">Peça já seu Kovi</p>
-        <p class="text-a-mudanca">A mudança começa hoje!</p>
+        <p class="text-a-mudanca">Embarque nessa com a gente!</p>
       </v-flex>
 
       <v-flex column wrap xs12 class="mt-5">
@@ -18,7 +18,7 @@
           Cadastre-se agora e peça já o seu Kovi!
         </p> -->
         <p class="text-para-comecar">
-          Para começar, precisamos saber um pouco mais de você :)
+          Para começar, precisamos saber um pouco mais sobre você <i class="far fa-grin-wink error-messag"></i>
         </p>
       </v-flex>
 

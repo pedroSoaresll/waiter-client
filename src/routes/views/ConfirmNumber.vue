@@ -6,7 +6,7 @@
       </v-flex>
 
       <v-flex column wrap xs12 class="mt-5">
-        <p class="text-verifique-cadastro">Verifique seu telefone</p>
+        <p class="text-verifique-cadastro">Valide seu telefone</p>
         <p class="text-digite-abaixo">
           Digite abaixo o código enviado para o número
           <strong v-if="driver">{{ driver.phone_number }}</strong

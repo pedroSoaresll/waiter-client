@@ -7,10 +7,10 @@
     <!-- steps here -->
     <v-layout column wrap class="wrapper">
       <v-flex column wrap xs12>
-        <p class="text-qual-empresa mb-0">Conecte suas contas</p>
+        <p class="text-qual-empresa mb-0"> Aplicativos de mobilidade </p>
         <p
           class="text-para-acelerar text-16px mt-2"
-        >Conectando suas contas você garante prioridade para o recebimento do seu carro, é super simples ;)</p>
+        >Envie um print das telas dos aplicativos em que você trabalha, mostrando perfil (nome e foto) e histórico de corridas. </p>
       </v-flex>
 
       <v-flex row wrap xs8 align-self-center>
@@ -32,11 +32,11 @@
           <v-card class="wrapper">
             <v-layout column wrap>
               <p class="text-envie-historico">
-                Por favor, envie um print com o seu histórico de corridas
+                Envie um print do seu aplicativo
                 <strong>{{ account.appName === 'Outros' ? 'do outro aplicativo que você usa' : `${account.appName}` }}</strong>
               </p>
               <upload-input
-                title="Foto do perfil"
+                title="Clique aqui para adicionar o print do aplicativo"
                 :file-changed-callback="file => imageFile = file.imageFile"
               ></upload-input>
 

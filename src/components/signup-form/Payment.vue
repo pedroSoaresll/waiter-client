@@ -11,7 +11,7 @@
           <v-flex column wrap xs12>
             <p class="text-obrigado mb-0">Pagamento do plano</p>
             <p class="text-faca-pagamento text-16px mt-3">
-              Você está quase lá para pegar o seu Kovi. Selecione abaixo a forma
+              Você está quase lá para pegar o seu Kovi. Selecione a forma
               de pagamento do seu caução e do seu aluguel.
             </p>
           </v-flex>
@@ -86,7 +86,7 @@
 
           <v-flex column wrap class="mt-4">
             <p class="subtitle font-weight-bold text-uppercase">
-              PAGAMENTO DA PRIMEIRA SEMANA (E RECORRENCIA)
+              PAGAMENTO DA PRIMEIRA SEMANA {{ cycle }} //
             </p>
             <v-radio-group
               v-model="form.week.PaymentMethod"
