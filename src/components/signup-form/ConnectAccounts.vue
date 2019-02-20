@@ -228,7 +228,10 @@ export default {
     nextStep() {
       this.errorNextStep = false;
 
-      const linkedAccount = this.accounts.filter(item => !item.status);
+      const ignoreAccount = ['app_99']
+      const linkedAccount = this.accounts
+        .filter(item => 
+          !item.status && !ignoreAccount.includes(item.documentType));
 
       if (!linkedAccount.length) this.$router.push({ name: "ReportDocs" });
       else {
