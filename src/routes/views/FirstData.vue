@@ -22,7 +22,7 @@
         </p>
       </v-flex>
 
-      <v-form v-model="valid" ref="form" lazy-validation>
+      <v-form v-model="isValid">
         <v-flex column wrap xs12 class="mt-5">
           <v-text-field
             :rules="dataRule"
@@ -38,12 +38,12 @@
             v-model="input.cpf"
             box
             dark
-            label="CPF - somente números"
+            label="CPF"
             mask="###.###.###-##"
             required
           />
           <v-text-field
-            :rules="emailRule"
+            :rules="dataRule"
             v-model="input.email"
             box
             dark
@@ -69,9 +69,6 @@
           Ops! Não foi possível atualizar suas informações. Por favor, tente
           novamente mais tarde.
         </p>
-        <p class="error-message" v-show="errorMessageNext">
-          Ops! Você precisa preencher todos os campos com informações válidas para continuar 
-        </p>
         <v-btn
           :disabled="sent"
           :large="true"
@@ -95,11 +92,8 @@
 <script>
 export default {
   data: () => ({
-    isValides: true,
-    valid: true,
     sent: false,
     errorMessage: false,
-    errorMessageNext: false,
     items: [
       { text: "Grande São Paulo", value: "SAO_PAULO" },
       { text: "Belo Horizonte", value: "BELO_HORIZONTE" },
@@ -118,22 +112,8 @@ export default {
       email: "",
       work_city: ""
     },
-    dataRule: [v => {
-      if(isValides){
-        return !!v || "Este campo é obrigatório!"
-      }
-    }],
-    emailRule: [
-      v => {
-        if(isValides){
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(v) || 'Digite um email válido'
-        }
-      }
-    ],
-    cpfRule: [
-      v => `${v}`.length === 11 || "O CPF deve ter 11 dígitos."
-    ],
+    isValid: false,
+    dataRule: [v => !!v || "Este campo é obrigatório!"],
     stepsUnwatch: null
   }),
   computed: {
@@ -144,28 +124,21 @@ export default {
   methods: {
     updateDriver() {
       this.errorMessage = false;
-      if (this.isValides) {
+      if (this.isValid) {
         this.sent = true;
         this.$store.dispatch("lead/sendGetBasics", this.input);
-      }else{
-        this.errorMessageNext = true;
       }
     },
     verifyRegister() {
       this.$parent.$options.parent.loadUserData(this.driver);
-    },
-    validate(){
-      if (this.$refs.form.validate()){
-        this.snackbar = true
-      }
     }
   },
   mounted() {
     if (this.driver) {
-      this.input.name = this.driver.name;
-      this.input.cpf = this.driver.cpf;
-      this.input.email = this.driver.email;
-      this.input.work_city = this.driver.work_city;
+      this.input.name = this.driver.name || '';
+      this.input.cpf = this.driver.cpf || '';
+      this.input.email = this.driver.email || '';
+      this.input.work_city = this.driver.work_city || '';
     }
 
     // watch steps data
@@ -189,6 +162,26 @@ export default {
     if (this.stepsUnwatch) this.stepsUnwatch();
   }
 };
+
+
+ 
+    
+    // dataRule: [v => {
+      
+    //     return !!v || "Este campo é obrigatório!"
+      
+    // }],
+    // emailRule: [
+    //   v => {
+
+    //       const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    //       return pattern.test(v) || 'Digite um email válido'
+    //     }
+      
+    // ],
+    // cpfRule: [
+    //   v => `${v}`.length === 11 || "O CPF deve ter 11 dígitos."
+    // ],
 
 
 </script>
@@ -240,3 +233,13 @@ export default {
   color: #ffffff !important;
 }
 </style>
+
+    
+    
+    
+    
+    
+    
+    
+    
+   
