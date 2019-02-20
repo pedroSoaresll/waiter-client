@@ -34,7 +34,7 @@
             required
           />
           <v-text-field
-            :rules="dataRule"
+            :rules="cpfRule"
             v-model="input.cpf"
             box
             dark
@@ -43,7 +43,7 @@
             required
           />
           <v-text-field
-            :rules="dataRule"
+            :rules="emailRule"
             v-model="input.email"
             box
             dark
@@ -113,6 +113,15 @@ export default {
       work_city: ""
     },
     isValid: false,
+    emailRule: [
+      v => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(v) || 'Digite um email válido'
+        }
+    ],
+    cpfRule: [
+      v => `${v}`.length === 11 || "O CPF deve ter 11 dígitos."
+    ],
     dataRule: [v => !!v || "Este campo é obrigatório!"],
     stepsUnwatch: null
   }),
@@ -163,24 +172,6 @@ export default {
     if (this.stepsUnwatch) this.stepsUnwatch();
   }
 };
-   
-    // dataRule: [v => {
-      
-    //     return !!v || "Este campo é obrigatório!"
-      
-    // }],
-    // emailRule: [
-    //   v => {
-
-    //       const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    //       return pattern.test(v) || 'Digite um email válido'
-    //     }
-      
-    // ],
-    // cpfRule: [
-    //   v => `${v}`.length === 11 || "O CPF deve ter 11 dígitos."
-    // ],
-
 
 </script>
 
@@ -231,13 +222,3 @@ export default {
   color: #ffffff !important;
 }
 </style>
-
-    
-    
-    
-    
-    
-    
-    
-    
-   
