@@ -109,6 +109,9 @@ export default {
         });
       }
     );
+
+    // remove cache from local storage
+    localStorage.removeItem('kovi-signup')
   },
 
   beforeDestroy() {
