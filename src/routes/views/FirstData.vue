@@ -135,10 +135,10 @@ export default {
   },
   mounted() {
     if (this.driver) {
-      this.input.name = this.driver.name;
-      this.input.cpf = this.driver.cpf;
-      this.input.email = this.driver.email;
-      this.input.work_city = this.driver.work_city;
+      this.input.name = this.driver.name || '';
+      this.input.cpf = this.driver.cpf || '';
+      this.input.email = this.driver.email || '';
+      this.input.work_city = this.driver.work_city || '';
     }
 
     // watch steps data
