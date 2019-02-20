@@ -22,7 +22,7 @@
         </p>
       </v-flex>
 
-      <v-form v-model="isValid">
+      <v-form ref="formFirstData" v-model="isValid">
         <v-flex column wrap xs12 class="mt-5">
           <v-text-field
             :rules="dataRule"
@@ -124,6 +124,7 @@ export default {
   methods: {
     updateDriver() {
       this.errorMessage = false;
+      this.$refs.formFirstData.validate()
       if (this.isValid) {
         this.sent = true;
         this.$store.dispatch("lead/sendGetBasics", this.input);
