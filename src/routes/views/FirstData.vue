@@ -22,7 +22,7 @@
         </p>
       </v-flex>
 
-      <v-form v-model="isValid">
+      <v-form ref="formFirstData" v-model="isValid">
         <v-flex column wrap xs12 class="mt-5">
           <v-text-field
             :rules="dataRule"
@@ -34,7 +34,7 @@
             required
           />
           <v-text-field
-            :rules="dataRule"
+            :rules="cpfRule"
             v-model="input.cpf"
             box
             dark
@@ -43,7 +43,7 @@
             required
           />
           <v-text-field
-            :rules="dataRule"
+            :rules="emailRule"
             v-model="input.email"
             box
             dark
@@ -113,6 +113,15 @@ export default {
       work_city: ""
     },
     isValid: false,
+    emailRule: [
+      v => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(v) || 'Digite um email válido'
+        }
+    ],
+    cpfRule: [
+      v => `${v}`.length === 11 || "O CPF deve ter 11 dígitos."
+    ],
     dataRule: [v => !!v || "Este campo é obrigatório!"],
     stepsUnwatch: null
   }),
@@ -124,7 +133,8 @@ export default {
   methods: {
     updateDriver() {
       this.errorMessage = false;
-      if (this.isValid) {
+      this.$refs.formFirstData.validate()
+      if (this.isValid && this.input.work_city != "") {
         this.sent = true;
         this.$store.dispatch("lead/sendGetBasics", this.input);
       }
@@ -135,10 +145,10 @@ export default {
   },
   mounted() {
     if (this.driver) {
-      this.input.name = this.driver.name;
-      this.input.cpf = this.driver.cpf;
-      this.input.email = this.driver.email;
-      this.input.work_city = this.driver.work_city;
+      this.input.name = this.driver.name || '';
+      this.input.cpf = this.driver.cpf || '';
+      this.input.email = this.driver.email || '';
+      this.input.work_city = this.driver.work_city || '';
     }
 
     // watch steps data
@@ -162,6 +172,7 @@ export default {
     if (this.stepsUnwatch) this.stepsUnwatch();
   }
 };
+
 </script>
 
 <style scoped>

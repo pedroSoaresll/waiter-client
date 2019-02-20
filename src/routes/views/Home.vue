@@ -109,6 +109,9 @@ export default {
         });
       }
     );
+
+    // remove cache from local storage
+    localStorage.removeItem('kovi-signup')
   },
 
   beforeDestroy() {
@@ -129,8 +132,9 @@ export default {
 }
 
 .text-a-mudanca {
-  font-size: 36pt;
+  font-size: 32pt;
   color: #ffffff;
+  line-height: 1.2;
 }
 
 .text-termos-uso {

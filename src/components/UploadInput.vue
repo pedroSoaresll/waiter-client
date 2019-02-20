@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
       <img :src="imageUrl" height="150" v-if="imageUrl">
-      <v-text-field :label="title" @click="pickFile" v-model="imageName" prepend-icon="attach_file"></v-text-field>
+      <v-text-field :rules="fieldRules" :label="title" @click="pickFile" v-model="imageName" prepend-icon="attach_file"></v-text-field>
       <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked">
     </v-flex>
   </v-container>
@@ -22,7 +22,10 @@ export default {
     dialog: false,
     imageName: "",
     imageUrl: "",
-    imageFile: ""
+    imageFile: "",
+    fieldRules: [
+      v => !!v || "Este campo é obrigatório" //testing this feature
+    ],
   }),
   methods: {
     pickFile() {
