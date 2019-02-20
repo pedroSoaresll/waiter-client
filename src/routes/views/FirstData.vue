@@ -134,7 +134,7 @@ export default {
     updateDriver() {
       this.errorMessage = false;
       this.$refs.formFirstData.validate()
-      if (this.isValid) {
+      if (this.isValid && this.input.work_city != "") {
         this.sent = true;
         this.$store.dispatch("lead/sendGetBasics", this.input);
       }

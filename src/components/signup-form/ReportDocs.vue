@@ -12,7 +12,6 @@
           <p class="text-qual-empresa mb-0">Informações pessoais e documentos </p>
         </v-flex>
 
-
         <!-- form / cnh -->
         <v-flex column wrap xs12 class="mt-5">
 
@@ -53,10 +52,7 @@
             label="Nome do contato 1"
           />
           <v-text-field
-            :rules="[
-              () => fieldRules[0], 
-              () => input.emergency_1_phone_number.length === 11 || 'O número deve ter 11 dígitos com DD.'
-            ]"
+            :rules="fieldRules"
             @blur="updateDriver"
             clearable
             required
@@ -211,10 +207,14 @@ export default {
   data: () => ({
     newTheme: {
       ...theme,
-      primary: "#ff3859"
+      primary: "#ff3859",
+      error: '#ff3859'
     },
     garageOtherAddress: false,
     isFormValid: false,
+    fieldRules: [
+      v => !!v || "Este campo é obrigatório" //testing this feature
+    ],
     
     input: {
       address_street_name: "",
@@ -234,10 +234,7 @@ export default {
   computed: {
     enableNextStep() {
       return this.isFormValid
-    },
-    fieldRules: [
-      e => !!e || "Este campo é obrigatório" //testing this feature
-    ],
+    }
   },
   methods: {
     async getCep(cep) {
@@ -273,19 +270,20 @@ export default {
     this.$vuetify.theme = this.newTheme;
     const driver = this.$store.getters["lead/driver"];
 
-    if (!driver) return;
-    this.input.address_street_name = driver.address_street_name;
-    this.input.address_street_number = driver.address_street_number;
-    this.input.address_neighborhood = driver.address_neighborhood;
-    this.input.address_city = driver.address_city;
-    this.input.address_state = driver.address_state;
-    this.input.address_postal_code = driver.address_postal_code;
-    this.input.address_street_details = driver.address_street_details;
-    this.input.license_number = driver.license_number;
-    this.input.emergency_1_name = driver.emergency_1_name;
-    this.input.emergency_1_phone_number = driver.emergency_1_phone_number.substr(-11);
-    this.input.emergency_2_name = driver.emergency_2_name;
-    this.input.emergency_2_phone_number = driver.emergency_2_phone_number.substr(-11);
+    if (driver){
+      this.input.address_street_name = driver.address_street_name || '';
+      this.input.address_street_number = driver.address_street_number || '';
+      this.input.address_neighborhood = driver.address_neighborhood || '';
+      this.input.address_city = driver.address_city || '';
+      this.input.address_state = driver.address_state || '';
+      this.input.address_postal_code = driver.address_postal_code || '';
+      this.input.address_street_details = driver.address_street_details || '';
+      this.input.license_number = driver.license_number || '';
+      this.input.emergency_1_name = driver.emergency_1_name || '';
+      this.input.emergency_1_phone_number = driver.emergency_1_phone_number || '';
+      this.input.emergency_2_name = driver.emergency_2_name || '';
+      this.input.emergency_2_phone_number = driver.emergency_2_phone_number || '';
+    }
   },
   beforeDestroy() {
     this.$vuetify.theme = theme;
