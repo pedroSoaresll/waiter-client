@@ -32,7 +32,7 @@
 
       <v-flex column wrap xs12 class="mt-5">
         <p class="subtitle font-weight-bold text-uppercase mb-0">
-          ESCOLHA A DATA QUE VOCê GOSTARIA DE REITRAR O CARRO
+          ESCOLHA A DATA QUE VOCÊ GOSTARIA DE REITRAR O CARRO
         </p>
         <p class="subtitle">
           Selecione a data que você gostaria de retirar o carro
@@ -49,7 +49,7 @@
           <v-text-field
             slot="activator"
             v-model="form.car_delivery_scheduled"
-            label="Clique aqui e elecione a data"
+            label="Clique aqui e selecione a data"
             prepend-icon="event"
             readonly
           ></v-text-field>

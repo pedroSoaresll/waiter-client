@@ -22,7 +22,7 @@
         </p>
       </v-flex>
 
-      <v-form v-model="isValid">
+      <v-form v-model="valid" ref="form" lazy-validation>
         <v-flex column wrap xs12 class="mt-5">
           <v-text-field
             :rules="dataRule"
@@ -38,12 +38,12 @@
             v-model="input.cpf"
             box
             dark
-            label="CPF"
+            label="CPF - somente números"
             mask="###.###.###-##"
             required
           />
           <v-text-field
-            :rules="dataRule"
+            :rules="emailRule"
             v-model="input.email"
             box
             dark
@@ -69,6 +69,9 @@
           Ops! Não foi possível atualizar suas informações. Por favor, tente
           novamente mais tarde.
         </p>
+        <p class="error-message" v-show="errorMessageNext">
+          Ops! Você precisa preencher todos os campos com informações válidas para continuar 
+        </p>
         <v-btn
           :disabled="sent"
           :large="true"
@@ -92,8 +95,11 @@
 <script>
 export default {
   data: () => ({
+    isValides: true,
+    valid: true,
     sent: false,
     errorMessage: false,
+    errorMessageNext: false,
     items: [
       { text: "Grande São Paulo", value: "SAO_PAULO" },
       { text: "Belo Horizonte", value: "BELO_HORIZONTE" },
@@ -112,8 +118,22 @@ export default {
       email: "",
       work_city: ""
     },
-    isValid: false,
-    dataRule: [v => !!v || "Este campo é obrigatório!"],
+    dataRule: [v => {
+      if(isValides){
+        return !!v || "Este campo é obrigatório!"
+      }
+    }],
+    emailRule: [
+      v => {
+        if(isValides){
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(v) || 'Digite um email válido'
+        }
+      }
+    ],
+    cpfRule: [
+      v => `${v}`.length === 11 || "O CPF deve ter 11 dígitos."
+    ],
     stepsUnwatch: null
   }),
   computed: {
@@ -124,13 +144,20 @@ export default {
   methods: {
     updateDriver() {
       this.errorMessage = false;
-      if (this.isValid) {
+      if (this.isValides) {
         this.sent = true;
         this.$store.dispatch("lead/sendGetBasics", this.input);
+      }else{
+        this.errorMessageNext = true;
       }
     },
     verifyRegister() {
       this.$parent.$options.parent.loadUserData(this.driver);
+    },
+    validate(){
+      if (this.$refs.form.validate()){
+        this.snackbar = true
+      }
     }
   },
   mounted() {
@@ -162,6 +189,8 @@ export default {
     if (this.stepsUnwatch) this.stepsUnwatch();
   }
 };
+
+
 </script>
 
 <style scoped>
