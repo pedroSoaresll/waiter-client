@@ -22,8 +22,8 @@
         </p>
       </v-flex>
 
-      <v-flex>
-        <img src="https://media.giphy.com/media/aPi30r4NgJ0oU/giphy.gif" alt="logo kovi" />
+      <v-flex column wrap xs12>
+        <img class="gif-image" src="https://media.giphy.com/media/aPi30r4NgJ0oU/giphy.gif" alt="logo kovi" />
       </v-flex>
     </v-layout>
   </v-layout>
@@ -97,6 +97,10 @@ export default {
   opacity: 0.6;
   font-size: 18px;
   color: #4a4a4a;
+}
+
+.gif-image {
+  max-width: 100%
 }
 
 </style>
