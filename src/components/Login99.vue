@@ -125,7 +125,8 @@ export default {
           variables: {
             phone: this.driver.phone_number,
             driver: this.driver.id,
-            code2fa: this.driver.code2fa,
+            code2fa: this.driver.code2fa
+              .split('-')[1],
             username: this.driver.name,
             cardend: this.cardend,
             cardbegin: this.cardbegin
