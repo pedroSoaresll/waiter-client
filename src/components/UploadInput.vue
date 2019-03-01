@@ -46,7 +46,7 @@ export default {
           this.imageFile = files[0];
           this.fileChangedCallback({
             imageUrl: this.imageUrl,
-            imageFile: this.imageFile
+            imageFile: this.imageUrl
           });
         });
       } else {
