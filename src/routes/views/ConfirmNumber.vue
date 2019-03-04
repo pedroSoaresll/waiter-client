@@ -139,8 +139,7 @@ export default {
     },
     code2fa() {
       const code2fa = this.$store.getters["lead/code2fa"];
-
-      this.smsSent = !!code2fa;
+      this.smsSent = !!code2fa; // eslint-disable-line
       return code2fa;
     },
     code2faVerified() {
