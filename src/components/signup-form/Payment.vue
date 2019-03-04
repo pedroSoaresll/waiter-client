@@ -273,20 +273,12 @@ export default {
     async createCreditMethod(data) {
       try {
         const card_token = await this.setCardToken(data);
-        console.log(card_token);
-        console.log({
-          driver: this.driver.id,
-          holder_name: data.cc_holder_name,
-          holder_cpf: data.cc_holder_cpf,
-          token: card_token,
-          status: "ACTIVE"
-        });
+        
         if (card_token === false) {
           this.info.push({ message: "Cartão Inválido!", type: "error" });
           throw new Error("Cartão inválido!");
         }
 
-        console.log("dados ate aqui:: cartão de credito");
         return this.$apollo
           .mutate({
             mutation: PAYMENTMETHOD_CREATE,
@@ -339,7 +331,7 @@ export default {
 
             return result;
           })
-          .catch(error => {
+          .catch(() => {
             this.info.push({
               message: "Não foi possível salvar boleto como pagamento!",
               type: "error"
@@ -362,8 +354,7 @@ export default {
               pre_transaction_method: pre_transaction_method
             }
           })
-          .then(result => {
-            console.warn(result);
+          .then(() => {
             this.info.push({
               message: "Finalizado com sucesso!",
               type: "success"
@@ -373,7 +364,7 @@ export default {
               3000
             );
           })
-          .catch(error => {
+          .catch(() => {
             this.info.push({
               message: "Não foi possível salvar pagamentos!",
               type: "error"

@@ -1,3 +1,4 @@
+/* global zE */
 import apollo from "../../services/ApolloClient";
 import router from "../../routes";
 import {
@@ -161,7 +162,6 @@ export const actions = {
         if (result.data.verifyCode2fa) {
           sessionStorage.setItem(SESSION_STORAGE_CODE2FA, code2fa);
           commit("setCode2fa", code2fa);
-          console.log("chegou até o true", result);
           return true;
         }
         return false;
@@ -171,8 +171,7 @@ export const actions = {
 
         return codeValid;
       })
-      .catch(e => {
-        console.log("caiu em falso", e);
+      .catch(() => {
         // informar ao usuário que não foi possível validar o código
         sessionStorage.setItem(SESSION_STORAGE_CODE2FA, "");
         commit("setCode2fa", null);
@@ -199,7 +198,7 @@ export const actions = {
         });
         return true;
       })
-      .catch(e => {
+      .catch(() => {
         commit("setSteps", {
           GET_PHONE: { complete: false, invalid: true }
         });

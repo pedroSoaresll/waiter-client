@@ -78,7 +78,7 @@ export default {
       if (!this.isValid || !this.acceptTerms) {
         this.errorMessageTermsOrNumber = true; //alterado
         return
-      };
+      }
       this.errorMessageTermsOrNumber = false; //alterado
       this.errorMessage = false;
       this.sent = true;
