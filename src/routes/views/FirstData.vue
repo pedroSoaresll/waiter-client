@@ -90,6 +90,8 @@
 </template>
 
 <script>
+import isValidCpf from '@brazilian-utils/is-valid-cpf';
+
 export default {
   data: () => ({
     sent: false,
@@ -119,8 +121,11 @@ export default {
           return pattern.test(v) || 'Digite um email válido'
         }
     ],
+    // cpfRule: [
+    //   v => `${v}`.length === 11 || "O CPF deve ter 11 dígitos."
+    // ],
     cpfRule: [
-      v => `${v}`.length === 11 || "O CPF deve ter 11 dígitos."
+      cpf => isValidCpf(cpf) || "Digite um CPF válido."
     ],
     dataRule: [v => !!v || "Este campo é obrigatório!"],
     stepsUnwatch: null
