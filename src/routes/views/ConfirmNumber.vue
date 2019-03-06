@@ -157,11 +157,10 @@ export default {
 
     async confirmCode2fa() {
       const code2fa = [this.space1, this.space2, this.space3, this.space4];
-      const isValidCode = await this.$store.dispatch(
+      this.sent = await this.$store.dispatch(
         "lead/verifyCode2fa",
         code2fa.join("")
       );
-      this.sent = isValidCode;
     },
 
     async generateCode2fa() {
