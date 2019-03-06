@@ -120,6 +120,26 @@ export const actions = {
     }
   },
 
+  async code2fa() {
+    const phone = sessionStorage.getItem(SESSION_STORAGE_PHONE);
+    if (!phone)
+      return Promise.reject("Telefone não armazenado na session storage");
+
+    return await apollo
+      .mutate({
+        mutation: CODE2FA,
+        variables: {
+          phone_number: sessionStorage.getItem(SESSION_STORAGE_PHONE)
+        }
+      })
+      .then(() => {
+        return true;
+      })
+      .catch(() => {
+        return false;
+      });
+  },
+
   verifyCode2fa({ commit, dispatch }, code2fa) {
     if (!code2fa || code2fa.length < 4)
       return Promise.reject("code2fa incorreto");
@@ -171,6 +191,8 @@ export const actions = {
         sessionStorage.setItem(SESSION_STORAGE_PHONE, phone_number);
 
         const driver = result.data ? result.data.createLead : {};
+
+        sessionStorage.setItem(SESSION_STORAGE_PHONE, phone_number);
         commit("setDriver", driver);
         commit("setSteps", {
           GET_PHONE: { complete: true, invalid: false }
