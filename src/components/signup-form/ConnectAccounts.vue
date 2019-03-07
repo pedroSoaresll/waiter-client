@@ -157,7 +157,6 @@ export default {
     },
     accountStore() {
       return [].concat(this.$store.getters["lead/accounts"]);
-    
     }
   },
   methods: {
@@ -208,7 +207,6 @@ export default {
         })
         .then(() => {
           this.errorNextStep = false;
-          
           account.status = true;
           this.closeModal(account);
         })
