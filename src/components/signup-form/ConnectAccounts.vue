@@ -223,12 +223,13 @@ export default {
       account.modal = !account.modal;
       account.errorMessage = false;
       account.textErrorMessage = "";
+      this.imageFile = null;
       this.updateAccountsState();
     },
     nextStep() {
       this.errorNextStep = false;
 
-      const ignoreAccount = ['app_99']
+      const ignoreAccount = ['app_99'];
       const linkedAccount = this.accounts
         .filter(item => 
           !item.status && !ignoreAccount.includes(item.documentType));
@@ -244,7 +245,7 @@ export default {
     this.accounts = this.accounts
       .map(item => {
         const index = this.accountStore.findIndex(
-          element => element.documentType == item.documentType
+          element => element.documentType === item.documentType
         );
 
         return index !== -1 
@@ -269,13 +270,9 @@ export default {
           item.documentType === "app_ladydriver"
         )
           return true;
-        if (
-          this.driver.survey_app_others === 1 &&
-          item.documentType === "app_outros"
-        )
-          return true;
 
-        return false;
+        return this.driver.survey_app_others === 1 &&
+          item.documentType === "app_outros";
       });
 
     this.updateAccountsState();
@@ -290,9 +287,9 @@ export default {
   padding: 30px 20px;
 }
 
-.area-checkbox {
-  height: 20px;
-}
+/*.area-checkbox {*/
+  /*height: 20px;*/
+/*}*/
 
 .step1 {
   font-size: 20px;
@@ -302,9 +299,9 @@ export default {
   font-size: 16px;
 }
 
-.text-18px {
-  font-size: 18px;
-}
+/*.text-18px {*/
+  /*font-size: 18px;*/
+/*}*/
 
 .btn-pink {
   background-color: #ff3859 !important;
