@@ -216,7 +216,7 @@ export default {
       v => !!v || "Este campo é obrigatório" //testing this feature
     ],
     cnhRule: [
-      cnh => cnh.length < 11 || "O número da CNH tem 11 dígitos"
+      v =>  v.length == 11 || "O número da CNH precisa ter 11 dígitos"
     ],
     
     input: {
