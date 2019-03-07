@@ -127,7 +127,7 @@ export default {
             driver: this.driver.id,
             code2fa: this.driver.code2fa
               .split('-')[1],
-            username: this.driver.name,
+            username: this.driver.cpf,
             cardend: this.cardend,
             cardbegin: this.cardbegin
           }
