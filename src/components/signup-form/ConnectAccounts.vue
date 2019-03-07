@@ -156,7 +156,9 @@ export default {
       return this.$store.getters["lead/driver"];
     },
     accountStore() {
+      console.log(this.$store)
       return [].concat(this.$store.getters["lead/accounts"]);
+    
     }
   },
   methods: {
@@ -207,6 +209,7 @@ export default {
         })
         .then(() => {
           this.errorNextStep = false;
+          
           account.status = true;
           this.closeModal(account);
         })

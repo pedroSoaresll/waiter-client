@@ -102,6 +102,7 @@ export default {
   }),
   methods: {
     updateDriver() {
+      console.log('store primitivo: ', this.$store)
       this.errorMessage = false;
       this.surveyAppsError = false;
 
