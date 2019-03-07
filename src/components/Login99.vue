@@ -2,7 +2,7 @@
   <v-dialog v-model="dialog" persistent max-width="500">
     <v-card>
       <v-card-title class="headline">
-        <img style="margin: 0 auto" src="../assets/99.png" />
+        <img style="margin: 0 auto" src="../assets/99.png" alt="Imagem cartão 99" />
       </v-card-title>
       <v-card-text
         >Informe os 6 primeiros digitos do cartao da 99 e os 4 ultimos
@@ -64,7 +64,7 @@
 
 <script>
 import { LOGIN_99 } from "../services/Lead";
-// import { theme } from "../plugins/vuetify";
+import { theme } from "../plugins/vuetify";
 
 export default {
   name: "Login99",
@@ -76,6 +76,10 @@ export default {
     event: "change"
   },
   data: () => ({
+    newTheme: {
+      ...theme,
+      error: "#ff3859"
+    },
     valid: false,
     verify: false,
     errorMessage: false,
@@ -157,6 +161,12 @@ export default {
     isValid() {
       return this.valid;
     }
+  },
+  mounted() {
+    this.$vuetify.theme = this.newTheme;
+  },
+  beforeDestroy() {
+    this.$vuetify.theme = theme;
   }
 };
 </script>
