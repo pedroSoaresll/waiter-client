@@ -23,8 +23,7 @@
             :rules="numberRule"
             :counter="11"
             mask="(##) #####-####"
-            required
-          />
+            required></v-text-field>
           <v-flex column xs12>
             <v-checkbox color="#FFFFFF" dark value="true" v-model="acceptTerms">
               <span slot="label" class="text-termos-uso">
@@ -111,7 +110,9 @@ export default {
     );
 
     // remove cache from local storage
-    localStorage.removeItem('kovi-signup')
+    localStorage.removeItem('kovi-signup');
+    sessionStorage.removeItem('kovi_code2fa');
+    sessionStorage.removeItem('kovi_phone');
   },
 
   beforeDestroy() {
@@ -150,8 +151,4 @@ export default {
   color: #ffffff;
 }
 
-/* material edit */
-.theme--light.v-icon {
-  color: #ffffff !important;
-}
 </style>
