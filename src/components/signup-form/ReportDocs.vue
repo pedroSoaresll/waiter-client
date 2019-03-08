@@ -18,7 +18,7 @@
           <p class="subtitle font-weight-bold">CNH</p>
 
           <v-text-field
-            :rules="fieldRules"
+            :rules="cnhRule"
             @blur="updateDriver"
             clearable
             label="Digite o número da sua CNH"
@@ -214,6 +214,9 @@ export default {
     isFormValid: false,
     fieldRules: [
       v => !!v || "Este campo é obrigatório" //testing this feature
+    ],
+    cnhRule: [
+      v =>  v.length == 11 || "O número da CNH precisa ter 11 dígitos"
     ],
     
     input: {
