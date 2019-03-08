@@ -58,6 +58,7 @@ export const mutations = {
       ...state.driver,
       ..._driver
     };
+    if (state.driver.name && state.driver.email)
     zE(function() {
       zE.identify({
         name: state.driver.name,
