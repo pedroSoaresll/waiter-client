@@ -230,7 +230,7 @@ export default {
 
       const ignoreAccount = ['app_99']
       const linkedAccount = this.accounts
-        .filter(item => 
+        .filter(item =>
           !item.status && !ignoreAccount.includes(item.documentType));
 
       if (!linkedAccount.length) this.$router.push({ name: "ReportDocs" });
@@ -247,7 +247,7 @@ export default {
           element => element.documentType == item.documentType
         );
 
-        return index !== -1 
+        return index !== -1
           ?  this.accountStore[index]
           : item
       })
