@@ -54,18 +54,20 @@ export const mutations = {
     state.code2fa = _code2fa;
   },
   setDriver(state, _driver) {
-    zE(function() {
-      zE.identify({
-        name: _driver.name,
-        email: _driver.email,
-        phone: _driver.phone_number,
-        tags: "LEAD"
-      });
-    });
     state.driver = {
       ...state.driver,
       ..._driver
     };
+    if (state.driver.name && state.driver.email)
+    zE(function() {
+      zE.identify({
+        name: state.driver.name,
+        email: state.driver.email,
+        phone: state.driver.phone_number,
+        tags: "LEAD"
+      });
+    });
+
   },
   setBooking(state, _booking) {
     state.booking = _booking;
@@ -218,10 +220,10 @@ export const actions = {
   async sendDocs({ state, commit }, input) {
     const updated = await updateDriver(state, commit, {
       ...input,
-      emergency_2_name: !input.emergency_2_name 
-        ? 'Não informado' 
+      emergency_2_name: !input.emergency_2_name
+        ? 'Não informado'
         : input.emergency_2_name,
-      emergency_2_phone_number: !input.emergency_2_phone_number 
+      emergency_2_phone_number: !input.emergency_2_phone_number
         ? '00000000000'
         : input.emergency_2_phone_number
     })
