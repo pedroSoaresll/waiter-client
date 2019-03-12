@@ -23,7 +23,7 @@
       </v-flex>
 
       <v-flex column wrap xs12>
-        <img class="gif-image" src="https://media.giphy.com/media/aPi30r4NgJ0oU/giphy.gif" alt="logo kovi" />
+        <img class="gif-image" src="https://media.giphy.com/media/aPi30r4NgJ0oU/giphy.gif" alt="GIF de homem digitando no computador" />
       </v-flex>
     </v-layout>
   </v-layout>
