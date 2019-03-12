@@ -13,14 +13,14 @@
         <p class="text-a-mudanca">Embarque nessa com a gente!</p>
       </v-flex>
 
-      <v-flex column wrap xs12 class="mt-5">
+      <!-- <v-flex column wrap xs12 class="mt-5"> -->
         <!-- <p class="text-cadastre-agora">
           Cadastre-se agora e peça já o seu Kovi!
         </p> -->
         <p class="text-para-comecar">
           Para começar, precisamos saber um pouco mais sobre você <i class="far fa-grin-wink error-messag"></i>
         </p>
-      </v-flex>
+      <!-- </v-flex> -->
 
       <v-form ref="formFirstData" v-model="isValid">
         <v-flex column wrap xs12 class="mt-5">
@@ -192,8 +192,9 @@ export default {
 }
 
 .text-a-mudanca {
-  font-size: 36pt;
+  font-size: 32pt;
   color: #ffffff;
+  line-height: 1.1;
 }
 
 .text-cadastre-agora {

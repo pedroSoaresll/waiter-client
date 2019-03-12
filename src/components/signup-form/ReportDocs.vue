@@ -45,22 +45,24 @@
           </p>
           <v-text-field
             :rules="fieldRules"
-            required
-            @blur="updateDriver"
-            clearable
-            v-model="input.emergency_1_name"
-            label="Nome do contato 1"
-          />
-          <v-text-field
-            :rules="fieldRules"
             @blur="updateDriver"
             clearable
             required
             v-model="input.emergency_1_phone_number"
-            label="Telefone do contato 1"
+            label="Telefone do contato"
             mask="(##) #####-####"
           />
+
           <v-text-field
+            :rules="fieldRules"
+            required
+            @blur="updateDriver"
+            clearable
+            v-model="input.emergency_1_name"
+            label="Nome do contato"
+          />
+
+          <!-- <v-text-field
             @blur="updateDriver"
             clearable
             v-model="input.emergency_2_name"
@@ -72,7 +74,7 @@
             v-model="input.emergency_2_phone_number"
             label="Telefone do contato 2 (opcional)"
             mask="(##) #####-####"
-          />
+          /> -->
         </v-flex>
 
         
