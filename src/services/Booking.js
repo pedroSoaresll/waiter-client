@@ -28,6 +28,8 @@ export const BOOKING_INFO = gql`
             transaction_amount
             transaction_discount
             transaction_type
+            transaction_token
+            pre_transaction_token
             pre_transaction_amount
             pre_transaction_discount
             pre_transaction_installments
