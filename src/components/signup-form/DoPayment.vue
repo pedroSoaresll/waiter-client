@@ -70,11 +70,19 @@ export default {
                         return;
                     }
 
+                    const hasTransaction = res.data.booking.transaction_token;
+                    const hasPreTransaction = res.data.booking.pre_transaction_token;
+
                     this.$store.commit('lead/setBooking', res.data.booking);
                     this.$store.commit('lead/setDriver', res.data.booking.driver);
                     this.$store.commit('lead/setPlan', res.data.booking.plan);
+                    
                     if (this.autoGoPay) {
-                        this.$router.push({name: 'Payment', params: {...res.data.booking}});
+                      const route = hasTransaction && hasPreTransaction
+                        ? {name: 'PaymentStatus', params: {...res.data.booking}}
+                        : {name: 'Payment', params: {...res.data.booking}}
+
+                      this.$router.push(route);
                     }
                 }
             }
