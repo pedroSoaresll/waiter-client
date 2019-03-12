@@ -27,14 +27,13 @@
             >
               <v-radio label="Boleto Bancário" value="boleto" />
               <v-radio
-                disabled
                 label="Cartão de Crédito"
                 value="cartao-credito"
               />
             </v-radio-group>
 
             <!-- area cartão de crédito -->
-            <!--<v-flex column wrap xs12 v-if="form.caucao.PaymentMethod === 'cartao-credito'">
+            <v-flex column wrap xs12 v-if="form.caucao.PaymentMethod === 'cartao-credito'">
               <v-text-field
                 v-model="form.caucao.cc_number"
                 label="Número do Cartão"
@@ -81,7 +80,7 @@
                   ></v-text-field>
                 </v-flex>
               </v-layout>
-            </v-flex>-->
+            </v-flex>
           </v-flex>
 
           <v-flex column wrap class="mt-4">
@@ -96,14 +95,13 @@
             >
               <v-radio label="Boleto Bancário" value="boleto" />
               <v-radio
-                disabled
                 label="Cartão de Crédito"
                 value="cartao-credito"
               />
             </v-radio-group>
 
             <!-- area cartão de crédito -->
-            <!--<v-flex column wrap xs12 v-if="form.week.PaymentMethod === 'cartao-credito'">
+           <v-flex column wrap xs12 v-if="form.week.PaymentMethod === 'cartao-credito'">
               <v-text-field
                 v-model="form.week.cc_number"
                 label="Número do Cartão"
@@ -150,7 +148,7 @@
                   ></v-text-field>
                 </v-flex>
               </v-layout>
-            </v-flex>-->
+            </v-flex>
           </v-flex>
         </v-layout>
 
@@ -273,7 +271,7 @@ export default {
     async createCreditMethod(data) {
       try {
         const card_token = await this.setCardToken(data);
-        
+
         if (card_token === false) {
           this.info.push({ message: "Cartão Inválido!", type: "error" });
           throw new Error("Cartão inválido!");
