@@ -34,6 +34,7 @@
             required
           />
           <v-text-field
+            type="tel"
             :rules="cpfRule"
             v-model="input.cpf"
             box
@@ -97,7 +98,7 @@ export default {
     sent: false,
     errorMessage: false,
     items: [
-      { text: "Grande São Paulo", value: "SAO_PAULO" },
+      { text: "São Paulo e grande São Paulo", value: "SAO_PAULO" },
       { text: "Belo Horizonte", value: "BELO_HORIZONTE" },
       { text: "Brasília", value: "BRASILIA" },
       { text: "Curitiba", value: "CURITIBA" },
