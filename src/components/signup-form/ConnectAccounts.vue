@@ -89,12 +89,18 @@
 <script>
 import UploadInput from "../UploadInput";
 import Login99 from "../Login99";
+import { theme } from "../../plugins/vuetify";
+
 export default {
   components: {
     UploadInput,
     Login99
   },
   data: () => ({
+    newTheme: {
+      ...theme,
+      error: '#f23'
+    },
     teste: null,
     imageFile: null,
     errorNextStep: false,
@@ -178,7 +184,7 @@ export default {
           return `success`;
 
         case false:
-          return `error`;
+          return `#f44336`;
 
         default:
           return `gray`;
@@ -240,6 +246,9 @@ export default {
       }
     }
   },
+  created() {
+    this.$vuetify.theme = this.newTheme;
+  },
   mounted() {
     //if (this.accountStore.length) this.accounts = this.accountStore;
     this.accounts = this.accounts
@@ -276,6 +285,9 @@ export default {
       });
 
     this.updateAccountsState();
+  },
+  beforeDestroy() {
+    this.$vuetify.theme = theme;
   }
 };
 </script>
