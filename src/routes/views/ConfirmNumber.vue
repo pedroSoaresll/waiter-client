@@ -20,7 +20,7 @@
         <input
           ref="space1"
           v-model="space1"
-          type="text"
+          type="number"
           class="input-code"
           placeholder="0"
           max="1"
@@ -30,7 +30,7 @@
         <input
           ref="space2"
           v-model="space2"
-          type="text"
+          type="number"
           class="input-code ml-2"
           placeholder="0"
           max="1"
@@ -40,7 +40,7 @@
         <input
           ref="space3"
           v-model="space3"
-          type="text"
+          type="number"
           class="input-code ml-2"
           placeholder="0"
           max="1"
@@ -50,7 +50,7 @@
         <input
           ref="space4"
           v-model="space4"
-          type="text"
+          type="number"
           class="input-code ml-2"
           placeholder="0"
           max="1"

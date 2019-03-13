@@ -18,6 +18,7 @@
           <p class="subtitle font-weight-bold">CNH</p>
 
           <v-text-field
+            type="number"
             :rules="cnhRule"
             @blur="updateDriver"
             clearable
@@ -44,6 +45,7 @@
             CONTATOS DE EMERGÊNCIA
           </p>
           <v-text-field
+            type="number"
             :rules="fieldRules"
             @blur="updateDriver"
             clearable
