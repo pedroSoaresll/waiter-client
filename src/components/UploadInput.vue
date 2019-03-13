@@ -1,8 +1,8 @@
 <template>
   <v-container fluid>
-    <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
+    <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center" @click="pickFile">
       <img class="image-size" :src="imageUrl" height="150" v-if="imageUrl">
-      <v-text-field :rules="fieldRules" :label="title" @click="pickFile" v-model="imageName" prepend-icon="attach_file"></v-text-field>
+      <v-text-field :rules="fieldRules" :label="title" v-model="imageName" prepend-icon="attach_file"></v-text-field>
       <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked">
     </v-flex>
   </v-container>
