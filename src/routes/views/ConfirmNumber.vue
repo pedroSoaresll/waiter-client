@@ -18,6 +18,7 @@
         <span class="text-kovi text-uppercase font-weight-bold">Kovi</span>
         <span class="text-kovi text-uppercase font-weight-bold ml-3">-</span>
         <input
+          type="tel"
           ref="space1"
           v-model="space1"
           class="input-code"
@@ -27,6 +28,7 @@
           @keyup="handleSpace($event, $refs.space2, null)"
         />
         <input
+          type="tel"
           ref="space2"
           v-model="space2"
           class="input-code ml-2"
@@ -36,6 +38,7 @@
           @keyup="handleSpace($event, $refs.space3, $refs.space1)"
         />
         <input
+          type="tel"
           ref="space3"
           v-model="space3"
           class="input-code ml-2"
@@ -45,6 +48,7 @@
           @keyup="handleSpace($event, $refs.space4, $refs.space2)"
         />
         <input
+          type="tel"
           ref="space4"
           v-model="space4"
           class="input-code ml-2"

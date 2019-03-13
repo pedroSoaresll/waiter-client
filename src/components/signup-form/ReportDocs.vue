@@ -18,6 +18,7 @@
           <p class="subtitle font-weight-bold">CNH</p>
 
           <v-text-field
+            type="tel"
             :rules="cnhRule"
             @blur="updateDriver"
             clearable
@@ -44,7 +45,7 @@
             CONTATOS DE EMERGÊNCIA
           </p>
           <v-text-field
-            pattern="[0-9]*"
+            type="tel"
             :rules="fieldRules"
             @blur="updateDriver"
             clearable
@@ -63,7 +64,7 @@
             label="Nome do contato"
           />
 
-          <v-text-field
+          <!-- <v-text-field
             @blur="updateDriver"
             clearable
             v-model="input.emergency_2_name"
@@ -76,7 +77,7 @@
             v-model="input.emergency_2_phone_number"
             label="Telefone do contato 2 (opcional)"
             mask="(##) #####-####"
-          />
+          /> -->
         </v-flex>
 
         
@@ -84,6 +85,7 @@
         <v-flex column wrap xs12 class="mt-5">  
           <p class="subtitle font-weight-bold text-uppercase">ENDEREÇO DE RESIDÊNCIA</p>
           <v-text-field
+            type="tel"
             :rules="fieldRules"
             @blur="updateDriver, getCep(input.address_postal_code)"
             clearable
@@ -99,6 +101,7 @@
             label="Nome da Rua"
           />
           <v-text-field
+            type="tel"
             :rules="fieldRules"
             @blur="updateDriver"
             clearable
