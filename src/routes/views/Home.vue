@@ -16,7 +16,6 @@
       <v-form v-model="isValid" @submit.prevent="createDriver">
         <v-flex column wrap xs12 class="mt-5">
           <v-text-field
-            type="tel"
             label="Número do seu celular"
             v-model="phone"
             box
