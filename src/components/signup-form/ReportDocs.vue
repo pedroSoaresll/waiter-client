@@ -44,6 +44,7 @@
             CONTATOS DE EMERGÊNCIA
           </p>
           <v-text-field
+            pattern="[0-9]*"
             :rules="fieldRules"
             @blur="updateDriver"
             clearable
