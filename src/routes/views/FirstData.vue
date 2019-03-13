@@ -21,7 +21,6 @@
           Para começar, precisamos saber um pouco mais sobre você <i class="far fa-grin-wink error-messag"></i>
         </p>
       <!-- </v-flex> -->
-
       <v-form ref="formFirstData" v-model="isValid">
         <v-flex column wrap xs12 class="mt-5">
           <v-text-field
