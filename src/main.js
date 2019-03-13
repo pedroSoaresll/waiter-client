@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VueAnalytics from 'vue-analytics'
 import './plugins/vuetify'
 import VueApollo from 'vue-apollo'
 import Amplify, * as AmplifyModules from 'aws-amplify'
@@ -25,6 +26,10 @@ Amplify.configure({
 Vue.use(VueRouter);
 Vue.use(VueApollo);
 Vue.use(AmplifyPlugin, AmplifyModules);
+Vue.use(VueAnalytics, {
+  id: 'UA-121958498-6',
+  router
+})
 Vue.use(VueMoment, { moment });
 
 const apolloProvider = new VueApollo({
