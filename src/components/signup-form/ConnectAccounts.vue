@@ -99,7 +99,7 @@ export default {
   data: () => ({
     newTheme: {
       ...theme,
-      error: '#ff3859'
+      error: '#f23'
     },
     teste: null,
     imageFile: null,
@@ -179,13 +179,12 @@ export default {
       }
     },
     colorButton(status) {
-      console.log('status entrando', status)
       switch (status) {
-        case false:
+        case true:
           return `success`;
 
-        case true:
-          return `error`;
+        case false:
+          return `#f44336`;
 
         default:
           return `gray`;
