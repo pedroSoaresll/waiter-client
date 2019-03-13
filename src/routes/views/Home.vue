@@ -17,6 +17,7 @@
         <v-flex column wrap xs12 class="mt-5">
           <v-text-field
             label="Número do seu celular"
+            type="number"
             v-model="phone"
             box
             dark

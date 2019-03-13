@@ -18,6 +18,7 @@
           <p class="subtitle font-weight-bold">CNH</p>
 
           <v-text-field
+            type="number"
             :rules="cnhRule"
             @blur="updateDriver"
             clearable
@@ -44,23 +45,26 @@
             CONTATOS DE EMERGÊNCIA
           </p>
           <v-text-field
-            :rules="fieldRules"
-            required
-            @blur="updateDriver"
-            clearable
-            v-model="input.emergency_1_name"
-            label="Nome do contato 1"
-          />
-          <v-text-field
+            type="number"
             :rules="fieldRules"
             @blur="updateDriver"
             clearable
             required
             v-model="input.emergency_1_phone_number"
-            label="Telefone do contato 1"
+            label="Telefone do contato"
             mask="(##) #####-####"
           />
+
           <v-text-field
+            :rules="fieldRules"
+            required
+            @blur="updateDriver"
+            clearable
+            v-model="input.emergency_1_name"
+            label="Nome do contato"
+          />
+
+          <!-- <v-text-field
             @blur="updateDriver"
             clearable
             v-model="input.emergency_2_name"
@@ -72,7 +76,7 @@
             v-model="input.emergency_2_phone_number"
             label="Telefone do contato 2 (opcional)"
             mask="(##) #####-####"
-          />
+          /> -->
         </v-flex>
 
         
@@ -95,11 +99,12 @@
             label="Nome da Rua"
           />
           <v-text-field
+            type="number"
             :rules="fieldRules"
             @blur="updateDriver"
             clearable
             v-model="input.address_street_number"
-            label="Número da casa/apartamento"
+            label="Número"
           />
           <v-text-field
             @blur="updateDriver"
