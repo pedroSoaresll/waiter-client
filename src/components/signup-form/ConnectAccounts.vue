@@ -89,12 +89,18 @@
 <script>
 import UploadInput from "../UploadInput";
 import Login99 from "../Login99";
+import { theme } from "../../plugins/vuetify";
+
 export default {
   components: {
     UploadInput,
     Login99
   },
   data: () => ({
+    newTheme: {
+      ...theme,
+      error: '#ff3859'
+    },
     teste: null,
     imageFile: null,
     errorNextStep: false,
@@ -173,11 +179,12 @@ export default {
       }
     },
     colorButton(status) {
+      console.log('status entrando', status)
       switch (status) {
-        case true:
+        case false:
           return `success`;
 
-        case false:
+        case true:
           return `error`;
 
         default:
@@ -240,6 +247,9 @@ export default {
       }
     }
   },
+  created() {
+    this.$vuetify.theme = this.newTheme;
+  },
   mounted() {
     //if (this.accountStore.length) this.accounts = this.accountStore;
     this.accounts = this.accounts
@@ -276,6 +286,9 @@ export default {
       });
 
     this.updateAccountsState();
+  },
+  beforeDestroy() {
+    this.$vuetify.theme = theme;
   }
 };
 </script>
