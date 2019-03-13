@@ -99,11 +99,12 @@
             label="Nome da Rua"
           />
           <v-text-field
+            type="number"
             :rules="fieldRules"
             @blur="updateDriver"
             clearable
             v-model="input.address_street_number"
-            label="Número da casa/apartamento"
+            label="Número"
           />
           <v-text-field
             @blur="updateDriver"
