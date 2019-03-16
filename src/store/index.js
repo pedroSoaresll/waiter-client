@@ -14,10 +14,11 @@ const store = new Vuex.Store({
   ],
   strict: process.env.NODE_ENV !== 'production',
 });
-for (const moduleName of Object.keys(modules)) {
-  if (modules[moduleName].actions && modules[moduleName].actions.init) {
-    store.dispatch(`${moduleName}/init`)
-  }
-}
+Object.keys(modules)
+  .forEach((moduleName) => {
+    if (modules[moduleName].actions && modules[moduleName].actions.init) {
+      store.dispatch(`${moduleName}/init`);
+    }
+  });
 
-export default store
+export default store;

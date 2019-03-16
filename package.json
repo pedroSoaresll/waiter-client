@@ -22,11 +22,13 @@
     "aws-amplify": "1.1.19",
     "aws-amplify-vue": "0.2.5",
     "axios": "0.18.0",
+    "lodash": "^4.17.11",
     "graphql": "14.1.1",
     "graphql-tag": "2.10.1",
     "image-webpack-loader": "4.6.0",
     "imagemin-mozjpeg": "8.0.0",
     "imagemin-webpack-plugin": "2.4.1",
+    "moment": "^2.24.0",
     "moment-timezone": "0.5.23",
     "vue": "2.6.2",
     "vue-analytics": "^5.16.4",
@@ -42,30 +44,25 @@
     "@vue/cli-plugin-babel": "3.4.0",
     "@vue/cli-plugin-eslint": "3.4.0",
     "@vue/cli-service": "3.4.0",
-    "babel-eslint": "10.0.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "compression-webpack-plugin": "2.0.0",
     "dotenv-webpack": "1.7.0",
-    "eslint": "5.13.0",
+    "eslint": "^5.15.2",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-vue": "5.1.0",
+    "mini-css-extract-plugin": "^0.5.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
     "stylus": "0.54.5",
     "stylus-loader": "3.0.2",
     "vue-cli-plugin-vuetify": "0.4.6",
+    "vue-eslint-parser": "^6.0.3",
     "vue-template-compiler": "2.6.2",
-    "vuetify-loader": "1.2.0"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
+    "vuetify-loader": "1.2.0",
+    "webpack": "^4.29.6"
   },
   "browserslist": [
     "> 1%",

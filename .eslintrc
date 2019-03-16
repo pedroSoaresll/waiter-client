@@ -1,0 +1,13 @@
+{
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "extends": [
+    //"eslint:recommended",
+    "plugin:vue/essential",
+    "airbnb"
+  ]
+}

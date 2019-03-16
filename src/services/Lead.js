@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import gql from 'graphql-tag';
 
 const returnDriver = `
   id
@@ -66,7 +66,7 @@ const returnDriver = `
   checked_at
   created_at
   updated_at
-`
+`;
 
 export const CREATE_LEAD = gql`
     mutation newLead($phone_number: String!) {
@@ -138,7 +138,7 @@ export const CODE2FA = gql`
         id
       }
     }
-`
+`;
 
 export const VERIFY_CODE2FA = gql`
     mutation verifyCode2fa(
@@ -149,7 +149,7 @@ export const VERIFY_CODE2FA = gql`
         id
       }
     }
-`
+`;
 
 export const COMPLETE_INFO = gql`
     mutation  updateLead(

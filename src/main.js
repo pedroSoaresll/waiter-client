@@ -1,66 +1,54 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import VueAnalytics from 'vue-analytics'
-import './plugins/vuetify'
-import VueApollo from 'vue-apollo'
-import Amplify, * as AmplifyModules from 'aws-amplify'
-import { AmplifyPlugin } from 'aws-amplify-vue'
-import App from './App.vue'
-import store from './store';
-import apolloClient from './services/ApolloClient'
-import router from './routes'
-import VueMoment from 'vue-moment'
-import moment from 'moment-timezone'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import VueMoment from 'vue-moment';
+import moment from 'moment-timezone';
 import 'moment/locale/pt-br';
+import './plugins/vuetify';
+import App from './App.vue';
+import store from './store';
+import router from './routes';
+// import VueAnalytics from 'vue-analytics'
+// import VueApollo from 'vue-apollo'
+// import Amplify, * as AmplifyModules from 'aws-amplify'
+// import { AmplifyPlugin } from 'aws-amplify-vue'
+// import apolloClient from './services/ApolloClient'
+
 moment.suppressDeprecationWarnings = true;
 moment.tz.setDefault('America/Sao_Paulo');
 
-Amplify.configure({
-  Auth: {
-    userPoolId: "us-east-1_bOqbI1cFg",
-    region: "us-east-1",
-    userPoolWebClientId: "gc7m92hpt9e42tus6bj3jnnh3"
-  }
-});
+// Amplify.configure({
+//   Auth: {
+//     userPoolId: "us-east-1_bOqbI1cFg",
+//     region: "us-east-1",
+//     userPoolWebClientId: "gc7m92hpt9e42tus6bj3jnnh3"
+//   }
+// });
 
 Vue.use(VueRouter);
-Vue.use(VueApollo);
-Vue.use(AmplifyPlugin, AmplifyModules);
-Vue.use(VueAnalytics, {
-  id: 'UA-121958498-6',
-  router
-})
+// Vue.use(VueApollo);
+// Vue.use(AmplifyPlugin, AmplifyModules);
+// Vue.use(VueAnalytics, {
+//   id: 'token-here',
+//   router
+// })
 Vue.use(VueMoment, { moment });
 
-const apolloProvider = new VueApollo({
-  defaultClient: apolloClient,
-});
+/* const apolloProvider = new VueApollo({
+ defaultClient: apolloClient,
+ });
+ */
 
+/*
+  router.beforeEach(async (to, from, next) => {
 
-router.beforeEach(async (to, from, next) => {
-  // validar entrada do usuário
-  try {
-
-    if (to.params.load)
-      return next()
-
-    const phone_number = sessionStorage.getItem('kovi_phone')
-    if (!phone_number)
-      return next({ name: 'Home', params: { load: true } })
-
-    //store.dispatch('lead/createDriver', phone_number)
-    return next()
-
-  } catch (e) {
-    // console.error(e)
-  }
-})
+  })
+ */
 
 Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
-  apolloProvider,
+  // apolloProvider,
   render: h => h(App),
 }).$mount('#app');
