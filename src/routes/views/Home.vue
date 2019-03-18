@@ -9,16 +9,16 @@
       </v-flex>
 
       <v-flex row wrap>
-        <p class="font-size-md mt-3">
+        <p class="font-size-md mt-3 mb-3">
           Aponte a câmera para o <span class="font-weight-bold">QR Code</span> localizado
-          próximos a você
-        </p>
+          próximos a você </p>
       </v-flex>
 
       <!--camera-->
+      <video class="camera" ref="camera"></video>
 
       <!--alert-->
-      <v-flex row wrap>
+      <v-flex row wrap class="mt-5">
         <v-alert type="info" :value="true">
           <span class="font-size-sm">Assim que o QR Code for reconhecido você será
           redirecionado para a tela do cardápio do restaurante
@@ -30,7 +30,38 @@
 </template>
 
 <script>
-  export default {};
+export default {
+  mounted: function () {
+    if ('navigator' in window) {
+      // have navigator property
+      navigator.permissions.query({ name: 'camera' })
+        .then((permissionStatus) => {
+          console.log('camera permission status: ', permissionStatus.state);
+          permissionStatus.onchange = function () {
+            console.log('camera permission have a change: ', this.state);
+          };
+        })
+        .catch(errorResult => console.warn('error permission result: ', errorResult));
+
+      navigator.mediaDevices.getUserMedia({
+        video: {
+          width: window.innerWidth,
+          height: window.innerWidth,
+          facingMode: 'environment',
+        },
+      })
+        .then((mediaStream) => {
+          console.log(mediaStream);
+          const { camera } = this.$refs;
+          camera.srcObject = mediaStream;
+          camera.onloadedmetadata = function () {
+            camera.play();
+          };
+        })
+        .catch(errorMediaStream => console.error('error media stream: ', errorMediaStream.name));
+    }
+  },
+};
 </script>
 
 <style lang="sass">
@@ -38,4 +69,7 @@
   .area-logo
     display: block
     max-width: 166px
+
+  .camera
+    width: 100%
 </style>
