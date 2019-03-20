@@ -19,7 +19,7 @@
         <v-btn
                :hidden="cameraPermission !== 'prompt'"
                color="info" class="enable-camera">Habilitar Câmera</v-btn>
-        <video ref="video" class="camera"></video>
+        <video autoplay ref="video" class="camera"></video>
       </div>
 
       <p v-if="cameraNotFound" class="error--text">
@@ -38,9 +38,7 @@
 </template>
 
 <script>
-import QrScanner from 'qr-scanner';
-
-QrScanner.WORKER_PATH = '/js/qr-scanner-worker.min.js';
+import jsQR from 'jsqr';
 
 export default {
   data: () => ({
@@ -53,18 +51,49 @@ export default {
       console.log('value qr code: ', value);
     },
 
+    handleVideoTimeCallback() {
+      const { video } = this.$refs;
+      let timer;
+
+      if (video.paused || video.ended) {
+        if (timer) clearTimeout(timer);
+        return;
+      }
+
+      this.handleVideoFrame();
+      timer = setTimeout(() => {
+        this.handleVideoTimeCallback();
+      }, 500);
+    },
+
+    handleVideoFrame() {
+      const canvas = document.createElement('canvas');
+      const canvasContext = canvas.getContext('2d', { alpha: false });
+      const { video } = this.$refs;
+      const width = 400;
+      const height = 400;
+
+      canvasContext.drawImage(video, 0, 0, width, height);
+      const frame = canvasContext.getImageData(0, 0, width, height);
+
+      const code = jsQR(frame.data, width, height);
+      if (code) console.log('code detected: ', code);
+    },
+
     async handlePermissionCamera(permissionStatus) {
       console.log('camera has been called', permissionStatus);
-      let qrScanner;
 
       switch (permissionStatus.state) {
         case 'prompt':
           console.log('permission is prompt');
           break;
         case 'granted':
-          qrScanner = new QrScanner(this.$refs.video, result => console.log('decoded qr code:', result));
-          qrScanner.start();
-          console.log(qrScanner);
+          navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment', width: 300, height: 300 } })
+            .then((mediaStream) => {
+              const { video } = this.$refs;
+              video.srcObject = mediaStream;
+              video.addEventListener('play', this.handleVideoTimeCallback);
+            })
           break;
         case 'denied':
           console.log('user denied the camera');
