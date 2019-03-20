@@ -16,11 +16,14 @@
 
       <!--camera-->
       <div class="camera-wrapper">
-        <v-btn @click="initQrScanner"
+        <v-btn
                :hidden="cameraPermission !== 'prompt'"
                color="info" class="enable-camera">Habilitar Câmera</v-btn>
-        <video muted playsinline class="camera" ref="camera"></video>
+        <video ref="video" class="camera"></video>
       </div>
+
+      <p v-if="cameraNotFound" class="error--text">
+        Não foi localizado nenhuma câmera em seu dispositivo</p>
 
       <!--alert-->
       <v-flex row wrap class="mt-3">
@@ -35,31 +38,33 @@
 </template>
 
 <script>
-import QrScanner from 'qr-scanner/qr-scanner.min';
+import QrScanner from 'qr-scanner';
 
-QrScanner.WORKER_PATH = '/js/qrscanner-worker.min.js';
+QrScanner.WORKER_PATH = '/js/qr-scanner-worker.min.js';
 
 export default {
   data: () => ({
     cameraPermission: 'prompt',
+    cameraNotFound: false,
     qrScanner: null,
   }),
   methods: {
-    initQrScanner() {
-      console.log(this.$refs.camera);
-      this.qrScanner = new QrScanner(this.$refs.camera, (result) => {
-        console.log('result decoder: ', result);
-      }).start();
+    onDecode(value) {
+      console.log('value qr code: ', value);
     },
 
     async handlePermissionCamera(permissionStatus) {
       console.log('camera has been called', permissionStatus);
+      let qrScanner;
+
       switch (permissionStatus.state) {
         case 'prompt':
           console.log('permission is prompt');
           break;
         case 'granted':
-          console.log('user enabled the camera');
+          qrScanner = new QrScanner(this.$refs.video, result => console.log('decoded qr code:', result));
+          qrScanner.start();
+          console.log(qrScanner);
           break;
         case 'denied':
           console.log('user denied the camera');

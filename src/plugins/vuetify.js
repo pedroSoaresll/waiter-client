@@ -8,7 +8,7 @@ const theme = {
   secondary: '#FFFFFF', // #FFCDD2
   accent: '#ff3859', // #3F51B5
   success: '#4CAF50',
-  error: '#FFF',
+  error: '#ff3859',
 };
 
 Vue.use(Vuetify, {
