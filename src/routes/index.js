@@ -6,6 +6,16 @@ const routes = [
     path: '/',
     component: () => import('./views/Home'),
   },
+  {
+    name: 'GetBasicInfo',
+    path: '/welcome',
+    component: () => import('./views/GetBasicInfo'),
+  },
+  {
+    name: 'ShowMenu',
+    path: '/table/:tableId/:storeId/menu',
+    component: () => import('./views/StoreMenu'),
+  },
 ];
 
 const router = new VueRouter({

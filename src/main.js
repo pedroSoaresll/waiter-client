@@ -12,6 +12,7 @@ import router from './routes';
 // import Amplify, * as AmplifyModules from 'aws-amplify'
 // import { AmplifyPlugin } from 'aws-amplify-vue'
 // import apolloClient from './services/ApolloClient'
+import 'bootstrap-utilities/bootstrap-utilities.css';
 
 moment.suppressDeprecationWarnings = true;
 moment.tz.setDefault('America/Sao_Paulo');

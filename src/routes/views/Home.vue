@@ -19,7 +19,8 @@
         <v-btn
                :hidden="cameraPermission !== 'prompt'"
                color="info" class="enable-camera">Habilitar Câmera</v-btn>
-        <video autoplay ref="video" class="camera"></video>
+        <video hidden autoplay ref="video" class="camera"></video>
+        <canvas ref="canvas" width="315" height="315"></canvas>
       </div>
 
       <p v-if="cameraNotFound" class="error--text">
@@ -67,11 +68,11 @@ export default {
     },
 
     handleVideoFrame() {
-      const canvas = document.createElement('canvas');
+      const { canvas } = this.$refs;
       const canvasContext = canvas.getContext('2d', { alpha: false });
       const { video } = this.$refs;
-      const width = 400;
-      const height = 400;
+      const width = 350;
+      const height = 350;
 
       canvasContext.drawImage(video, 0, 0, width, height);
       const frame = canvasContext.getImageData(0, 0, width, height);
