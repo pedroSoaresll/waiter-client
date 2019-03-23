@@ -1,3 +1,4 @@
+import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueMoment from 'vue-moment';
@@ -13,6 +14,7 @@ import router from './routes';
 // import { AmplifyPlugin } from 'aws-amplify-vue'
 // import apolloClient from './services/ApolloClient'
 import 'bootstrap-utilities/bootstrap-utilities.css';
+import './filters/filters';
 
 moment.suppressDeprecationWarnings = true;
 moment.tz.setDefault('America/Sao_Paulo');

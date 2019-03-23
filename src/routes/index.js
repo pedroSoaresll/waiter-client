@@ -13,8 +13,20 @@ const routes = [
   },
   {
     name: 'ShowMenu',
-    path: '/table/:tableId/:storeId/menu',
+    path: '/table/:tableId/:storeId',
     component: () => import('./views/StoreMenu'),
+    children: [
+      {
+        name: 'Categories',
+        path: 'menu',
+        component: () => import('../components/ShowCategories'),
+      },
+      {
+        name: 'Category',
+        path: ':categoryId',
+        component: () => import('../components/ShowCategory'),
+      },
+    ],
   },
 ];
 

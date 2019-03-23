@@ -1,0 +1,24 @@
+[
+  {
+    "id": "1",
+    "name": "Bebidas",
+    "children": [
+      {
+        "id": "1234",
+        "name": "H2O",
+        "price": 12.70,
+        "description": "Este produto contem isso, aquilo, aquilo, aquilo, aquilo, aquilo, aquilo, aquilo, aquilo, aquilo.",
+        "image": {
+          "small": "photo_small",
+          "medium": "photo_medium",
+          "large": "photo_large"
+        }
+      }
+    ]
+  },
+  {
+    "id": "12",
+    "name": "Pratos",
+    "children": []
+  }
+]

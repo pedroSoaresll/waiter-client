@@ -16,11 +16,12 @@ export default {
 };
 </script>
 
-<style>
-  * {
-    font-family: 'Overpass', sans-serif;
-  }
-  body {
-    font-size: 100%;
-  }
+<style lang="sass">
+  @import './assets/scss/font-sizes.scss'
+
+  *
+    font-family: 'Overpass', sans-serif
+
+  body
+    font-size: 100%
 </style>

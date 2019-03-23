@@ -30,6 +30,7 @@
     "imagemin-webpack-plugin": "2.4.1",
     "jsqr": "^1.2.0",
     "lodash": "^4.17.11",
+    "material-design-icons-iconfont": "^4.0.5",
     "moment": "^2.24.0",
     "moment-timezone": "0.5.23",
     "qr-scanner": "^1.1.1",
