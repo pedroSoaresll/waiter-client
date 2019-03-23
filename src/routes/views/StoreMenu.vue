@@ -31,6 +31,11 @@ export default {
   data: () => ({
     categorySelected: null,
   }),
+  computed: {
+    clientName() {
+      return 'Pedro Oliveira Mock';
+    },
+  },
   methods: {
     getHelp() {
       //

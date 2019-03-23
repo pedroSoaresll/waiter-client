@@ -22,13 +22,13 @@
 
     <v-card-actions>
       <v-layout row wrap justify-end align-center>
-        <v-btn flat color="orange" icon>
+        <v-btn flat color="orange" icon @click="removeItem">
           <v-icon>remove</v-icon>
         </v-btn>
 
         <span class="font-weight-bold font-size-md">0</span>
 
-        <v-btn flat color="orange" icon>
+        <v-btn flat color="orange" icon @click="addItem">
           <v-icon>add</v-icon>
         </v-btn>
       </v-layout>
@@ -44,6 +44,15 @@ export default {
     item: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    addItem() {
+      //
+    },
+
+    removeItem() {
+      //
     },
   },
 };
