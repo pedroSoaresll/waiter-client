@@ -9,15 +9,14 @@
           Qualquer coisa você também pode
           <a @click.prevent="getHelp" class="links font-weight-bold">
             pedir ajuda
-          </a> 🙂
-        </p>
+          </a> 🙂 </p>
       </v-flex>
 
       <v-flex xs12>
         <h3 class="font-size-lg font-weight-bold orange--text mt-4">Cardápio</h3>
       </v-flex>
 
-      <router-view />
+      <router-view/>
     </v-layout>
   </v-container>
 </template>
@@ -33,7 +32,8 @@ export default {
   }),
   computed: {
     clientName() {
-      return 'Pedro Oliveira Mock';
+      const clientName = this.$store.getters['client/name'];
+      return clientName ? clientName.split(' ')[0] : clientName;
     },
   },
   methods: {

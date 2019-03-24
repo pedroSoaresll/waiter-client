@@ -9,7 +9,7 @@ const store = new Vuex.Store({
   modules,
   plugins: [
     PersistedState({
-      key: 'kovi-signup',
+      key: 'wellbe-virtual-waiter',
     }),
   ],
   strict: process.env.NODE_ENV !== 'production',

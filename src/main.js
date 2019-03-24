@@ -41,11 +41,16 @@ Vue.use(VueMoment, { moment });
  });
  */
 
-/*
-  router.beforeEach(async (to, from, next) => {
-
-  })
- */
+router.beforeEach((to, from, next) => {
+  // todo - validate if the qr code is defined
+  if (to.name !== 'Home') {
+    store.dispatch('client/validateQrCodeContent');
+    // validate bottom nav
+    // todo - validate if the qr code have a table and restaurant valid
+    store.dispatch('bottomNav/verify');
+  }
+  next();
+});
 
 Vue.config.productionTip = false;
 

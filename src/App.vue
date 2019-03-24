@@ -1,23 +1,19 @@
 <template>
   <v-app>
     <router-view class="mb-5"/>
-    <v-divider class="mb-5" />
-    <v-bottom-nav :active.sync="bottomNavActive"
-                  :value="showNav"
-                  fixed
-                  shift
-                  color="#FFF">
+    <v-divider class="mb-5"/>
+    <v-bottom-nav :active.sync="bottomNavActive" :value="showNav" fixed shift color="#FFF">
       <v-btn color="primary" flat value="person">
         <span>Eu</span>
         <v-icon>person</v-icon>
       </v-btn>
 
-      <v-btn color="primary" flat value="categories">
+      <v-btn color="primary" flat value="categories" :disabled="!clientName">
         <span>Cardápio</span>
         <v-icon>dashboard</v-icon>
       </v-btn>
 
-      <v-btn color="primary" flat value="orders">
+      <v-btn color="primary" flat value="orders" :disabled="!clientName">
         <span>Pedido</span>
         <v-icon>restaurant</v-icon>
       </v-btn>
@@ -35,9 +31,12 @@ export default {
     };
   },
   computed: {
+    clientName() {
+      return this.$store.getters['client/name'];
+    },
     bottomNavActive: {
       get() {
-        return this.$route.meta.bottomNav;
+        return this.$store.getters['bottomNav/current'];
       },
       set(value) {
         if (!value) return;
@@ -53,7 +52,7 @@ export default {
             break;
           default:
             this.$router.push({ name: 'Home' });
-            // todo - implementar limpeza de sessão para não deixar vestigios e causar possiveis problemas
+          // todo - implement a empty state to indicate that page is not exists
         }
       },
     },

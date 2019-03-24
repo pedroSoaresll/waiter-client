@@ -48,10 +48,6 @@ export default {
     qrScanner: null,
   }),
   methods: {
-    onDecode(value) {
-      console.log('value qr code: ', value);
-    },
-
     handleVideoTimeCallback() {
       const { video } = this.$refs;
       let timer;
@@ -68,17 +64,18 @@ export default {
     },
 
     handleVideoFrame() {
-      const { canvas } = this.$refs;
-      const canvasContext = canvas.getContext('2d', { alpha: false });
-      const { video } = this.$refs;
       const width = 350;
       const height = 350;
+      const { canvas } = this.$refs;
+      const { video } = this.$refs;
+
+      const canvasContext = canvas.getContext('2d', { alpha: false });
 
       canvasContext.drawImage(video, 0, 0, width, height);
       const frame = canvasContext.getImageData(0, 0, width, height);
 
       const code = jsQR(frame.data, width, height);
-      if (code) console.log('code detected: ', code);
+      if (code) this.$store.dispatch('client/startSession', code);
     },
 
     async handlePermissionCamera(permissionStatus) {
@@ -103,6 +100,11 @@ export default {
           break;
       }
     },
+  },
+  beforeDestroy() {
+    const { video } = this.$refs;
+    video.pause();
+    console.log(video);
   },
   mounted() {
     if ('navigator' in window) {

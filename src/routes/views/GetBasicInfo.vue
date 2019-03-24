@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <restaurant-name/>
 
-      <v-form v-model="isValidForm" class="w-100">
+      <v-form v-model="isValidForm" class="w-100" @submit.prevent="updateClientName">
         <v-flex row wrap xs12 mt-4>
           <v-text-field
             :rules="nameRules"
@@ -12,7 +12,7 @@
         </v-flex>
 
         <v-layout row wrap justify-center>
-          <v-btn :disabled="!isValidForm" color="primary">
+          <v-btn type="submit" :disabled="!isValidForm" color="primary">
             Pode me chamar de {{ clientName }}
           </v-btn>
         </v-layout>
@@ -35,6 +35,15 @@ export default {
       v => v.length > 2 || 'Seu nome esta pequeno, coloca seu ultimo nome também',
     ],
   }),
+  methods: {
+    updateClientName() {
+      this.$store.dispatch('client/updateName', this.clientName)
+        .then(() => this.$router.push({ name: 'Categories' }));
+    },
+  },
+  mounted() {
+    this.clientName = this.$store.getters['client/name'] || '';
+  },
 };
 </script>
 
