@@ -16,11 +16,31 @@ export default {
   name: 'ShowCategories',
   data: () => ({
     categories,
+    currentCategory: {
+      name: '',
+      routerName: '',
+      params: {},
+    },
   }),
   methods: {
-    openCategory({ id }) {
-      this.$router.push({ name: 'Category', params: { categoryId: id } });
+    openCategory({ id, name }) {
+      const params = { categoryId: id };
+      this.currentCategory = {
+        name,
+        routerName: 'Category',
+        params,
+      };
+
+      this.$store.commit('breadcrumb/addItem', this.currentCategory);
+      this.$router.push({ name: 'Category', params });
     },
+  },
+  created() {
+    this.$store.commit('breadcrumb/setItems', [{
+      name: 'Cardápio',
+      routerName: 'Categories',
+      params: {},
+    }]);
   },
 };
 </script>

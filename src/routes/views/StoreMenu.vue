@@ -13,7 +13,7 @@
       </v-flex>
 
       <v-flex xs12>
-        <h3 class="font-size-lg font-weight-bold orange--text mt-4">Cardápio</h3>
+        <breadcrumb/>
       </v-flex>
 
       <router-view/>
@@ -23,10 +23,11 @@
 
 <script>
 import RestaurantName from '../../components/RestaurantName.vue';
+import Breadcrumb from '../../components/breadcrumb';
 
 export default {
   name: 'StoreMenu',
-  components: { RestaurantName },
+  components: { Breadcrumb, RestaurantName },
   data: () => ({
     categorySelected: null,
   }),
@@ -44,6 +45,6 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="sass" scoped>
 
 </style>

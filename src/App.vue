@@ -27,10 +27,12 @@ export default {
   components: {},
   data() {
     return {
-      showNav: true,
     };
   },
   computed: {
+    showNav() {
+      return this.$route.name !== 'Home';
+    },
     clientName() {
       return this.$store.getters['client/name'];
     },
