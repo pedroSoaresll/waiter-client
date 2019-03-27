@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12 v-for="item of categories[0].children" :key="item.id">
+    <v-flex xs12 md6 v-for="item of categories[0].children" :key="item.id">
       <item :item="item"/>
     </v-flex>
   </v-layout>
