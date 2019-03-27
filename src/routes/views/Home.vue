@@ -83,8 +83,6 @@ export default {
 
       switch (permissionStatus.state) {
         case 'prompt':
-          console.log('permission is prompt');
-          break;
         case 'granted':
           navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment', width: 300, height: 300 } })
             .then((mediaStream) => {
