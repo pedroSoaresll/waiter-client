@@ -44,7 +44,7 @@ export default {
         top: 0
         right: -20px
         color: #000
-  
+
     .menu-link
       text-decoration: none
 </style>
