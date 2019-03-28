@@ -13,6 +13,16 @@
           "medium": "photo_medium",
           "large": "photo_large"
         }
+      }, {
+        "id": "12345",
+        "name": "H2O",
+        "price": 12.70,
+        "description": "Este produto contem isso, aquilo, aquilo, aquilo, aquilo, aquilo, aquilo, aquilo, aquilo, aquilo.",
+        "image": {
+          "small": "photo_small",
+          "medium": "photo_medium",
+          "large": "photo_large"
+        }
       }
     ]
   },

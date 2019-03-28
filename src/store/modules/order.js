@@ -34,9 +34,8 @@ export const mutations = {
     state.ordersSeparated = removeItem();
   },
 
-  remoteSeparateItem(state, item) {
-    state.ordersSeparated = state.ordersSeparated
-      .filter(_item => _item.id !== item.id);
+  setOrdersSeparated(state, items) {
+    state.ordersSeparated = items;
   },
 
   setOrdersRequested(state, items) {
@@ -48,6 +47,7 @@ export const mutations = {
 export const actions = {
   requestOrdersSeparated({ state, commit }) {
     // only do this if API response is OK
-    commit('setOrdersSeparated', state.ordersSeparated);
+    commit('setOrdersRequested', state.ordersSeparated);
+    commit('setOrdersSeparated', []);
   },
 };

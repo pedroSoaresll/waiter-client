@@ -41,7 +41,7 @@
       </v-layout>
     </v-card-actions>
 
-    <v-snackbar v-model="snackbar" vertical bottom timeout="3500">
+    <v-snackbar v-model="snackbar" vertical bottom :timeout="3500">
       Item foi adicionado a sua lista de pedidos
       <v-layout row wrap justify-end>
         <v-btn flat @click="$router.push({ name: 'Orders' })">Quero ver meus pedidos</v-btn>
