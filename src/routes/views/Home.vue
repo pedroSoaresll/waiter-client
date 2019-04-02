@@ -11,27 +11,29 @@
       <v-flex row wrap>
         <p class="font-size-md mt-3 mb-3">
           Aponte a câmera para o <span class="font-weight-bold">QR Code</span> localizado
-          na mesa do restaurante que você se encontra</p>
+          próximo a você.</p>
       </v-flex>
 
       <!--camera-->
-      <div class="camera-wrapper">
+      <div class="camera-wrapper" v-if="!cameraNotFound">
         <v-btn
                :hidden="cameraPermission !== 'prompt'"
-               color="info" class="enable-camera">Habilitar Câmera</v-btn>
+               color="info" class="enable-camera"
+               @click="enableCamera">Habilitar Câmera</v-btn>
         <video hidden autoplay ref="video" class="camera"></video>
         <canvas ref="canvas" width="315" height="315"></canvas>
       </div>
 
-      <p v-if="cameraNotFound" class="error--text">
-        Não foi localizado nenhuma câmera em seu dispositivo</p>
+      <p v-else class="error--text font-weight-bold text-center mt-4 mb-3">
+        Não foi localizado nenhuma câmera em seu dispositivo
+        para que possa ser feito a leitura do QR Code.</p>
 
       <!--alert-->
       <v-flex row wrap class="mt-3">
         <v-alert type="info" :value="true">
-          <span class="font-size-sm">Assim que o QR Code for reconhecido você será
+          <p class="font-size-sm">Assim que o QR Code for reconhecido, você será
           redirecionado para a tela do cardápio do restaurante
-          que você se encontra :)</span>
+          que você se encontra :)</p>
         </v-alert>
       </v-flex>
     </v-layout>
@@ -48,6 +50,24 @@ export default {
     qrScanner: null,
   }),
   methods: {
+    enableCamera() {
+      // have navigator property
+      const that = this;
+      navigator.permissions.query({ name: 'camera' })
+        .then((permissionStatus) => {
+          this.handlePermissionCamera(permissionStatus);
+          permissionStatus.onchange = function () {
+            that.handlePermissionCamera(this);
+          };
+        })
+        .catch(errorResult => console.warn('error permission result: ', errorResult));
+    },
+
+    disableCamera() {
+      const { video } = this.$refs;
+      video.pause();
+    },
+
     handleVideoTimeCallback() {
       const { video } = this.$refs;
       let timer;
@@ -75,21 +95,32 @@ export default {
       const frame = canvasContext.getImageData(0, 0, width, height);
 
       const code = jsQR(frame.data, width, height);
-      if (code) this.$store.dispatch('client/startSession', code);
+      if (code) {
+        this.disableCamera();
+        this.$store.dispatch('client/startSession', code);
+      }
     },
 
     async handlePermissionCamera(permissionStatus) {
       console.log('camera has been called', permissionStatus);
+      this.cameraPermission = permissionStatus.state;
+      const { video } = this.$refs;
+      const parent = video.parentNode;
+      const size = parent.offsetWidth;
+      video.width = size;
+      video.height = size;
 
       switch (permissionStatus.state) {
         case 'prompt':
         case 'granted':
-          navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment', width: 300, height: 300 } })
+          navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment', width: size, height: size } })
             .then((mediaStream) => {
-              const { video } = this.$refs;
               video.srcObject = mediaStream;
               video.addEventListener('play', this.handleVideoTimeCallback);
             })
+            .catch((error) => {
+              if (error.name === 'NotFoundError') this.cameraNotFound = true;
+            });
           break;
         case 'denied':
           console.log('user denied the camera');
@@ -99,23 +130,10 @@ export default {
       }
     },
   },
-  beforeDestroy() {
-    const { video } = this.$refs;
-    video.pause();
-    console.log(video);
-  },
+
   mounted() {
-    if ('navigator' in window) {
-      // have navigator property
-      const that = this;
-      navigator.permissions.query({ name: 'camera' })
-        .then((permissionStatus) => {
-          this.handlePermissionCamera(permissionStatus);
-          permissionStatus.onchange = function () {
-            that.handlePermissionCamera(this);
-          };
-        })
-        .catch(errorResult => console.warn('error permission result: ', errorResult));
+    if (!('navigator' in window)) {
+      console.error('your navigator no have support');
     }
   },
 };
