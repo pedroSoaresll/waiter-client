@@ -42,6 +42,10 @@ export const mutations = {
     state.ordersRequested = state.ordersRequested
       .concat(items);
   },
+
+  setOrdersRequestedRaw(state, items) {
+    state.ordersRequested = items;
+  },
 };
 
 export const actions = {
@@ -49,5 +53,10 @@ export const actions = {
     // only do this if API response is OK
     commit('setOrdersRequested', state.ordersSeparated);
     commit('setOrdersSeparated', []);
+  },
+
+  clearOrders({ commit }) {
+    commit('setOrdersSeparated', []);
+    commit('setOrdersRequestedRaw', []);
   },
 };

@@ -46,6 +46,23 @@ export const actions = {
     router.push({ name: 'GetBasicInfo', params: { tableId: table, storeId: restaurant } });
   },
 
+  logoutSession({ rootState, commit }) {
+    const { order } = rootState;
+    if (order.ordersRequested.length) {
+      const hasPendingItem = order.ordersRequested
+        .filter(item => item.status !== 'DELIVERED');
+      // check if there is still a request with a different delivery status
+      // if exists, show the dialog to inform the user
+      if (hasPendingItem.length) throw new Error('Você ainda tem pedidos sendo preparado ou na espera para ser entregue a você.');
+    }
+    // if all ok to logout, clean qrcode and clean orders and go to Home
+    commit('setQrCode', {
+      table: null,
+      restaurant: null,
+    });
+    commit('setName', null);
+  },
+
   validateQrCodeContent({ state, commit }) {
     const { qrCode } = state;
 

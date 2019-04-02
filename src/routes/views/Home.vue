@@ -132,6 +132,9 @@ export default {
   },
 
   mounted() {
+    this.$store.dispatch('order/clearOrders');
+    this.$store.dispatch('client/logoutSession');
+
     if (!('navigator' in window)) {
       console.error('your navigator no have support');
     }
