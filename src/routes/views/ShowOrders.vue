@@ -7,6 +7,7 @@
     <v-layout row wrap class="mt-5 mb-5">
       <v-flex xs12>
         <h3>Pedido em aberto</h3>
+        <p class="mt-2">Aqui você verá os itens que você selecionou para pedir do cardápio.</p>
       </v-flex>
 
       <v-flex xs12 class="mt-3" v-if="orderSeparated.length">
@@ -39,6 +40,7 @@
     <v-layout row wrap class="mt-5">
       <v-flex xs12>
         <h3>Pedidos fechados</h3>
+        <p class="mt-2">Aqui você verá como está o andamento dos itens que você pediu.</p>
       </v-flex>
 
       <v-flex xs12 class="mt-3" v-if="orderRequested.length">
