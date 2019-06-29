@@ -106,11 +106,14 @@ module.exports = {
       path: path.resolve(__dirname, 'dist'),
     },
     devServer: {
-      port: 3002,
-      host: 'localhost',
-      allowedHosts: ['localhost'],
+      port: 80,
+      host: '0.0.0.0',
       compress: true,
       hot: true,
     },
+    watchOptions: {
+      ignored: /node_modules/,  
+      poll: true
+    }
   },
 };
