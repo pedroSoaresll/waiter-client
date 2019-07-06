@@ -1,14 +1,15 @@
-FROM node:10.15.0
- 
-RUN mkdir /app
+FROM node:10.16.0-alpine
+
 WORKDIR /app
- 
+
+COPY package.json . 
+
+RUN npm i -g yarn @vue/cli && yarn install
+
 ENV PATH /app/node_modules/.bin:$PATH
- 
-COPY package.json /app/package.json
-RUN npm install
-RUN npm install -g @vue/cli
+
+ADD . /app
 
 EXPOSE 3002
 
-CMD npm start
+CMD yarn start
