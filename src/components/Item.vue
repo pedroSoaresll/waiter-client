@@ -71,8 +71,7 @@ export default {
     },
 
     removeItem() {
-      if (this.quantity)
-        --this.quantity;
+      if (this.quantity) --this.quantity;
     },
 
     orderThat() {

@@ -12,8 +12,7 @@ export const mutations = {
   separateItem(state, item) {
     const itemExists = state.ordersSeparated.findIndex(_item => _item.id === item.id);
     if (itemExists !== -1) {
-      state.ordersSeparated[itemExists].quantity =
-        state.ordersSeparated[itemExists].quantity + item.quantity;
+      state.ordersSeparated[itemExists].quantity = state.ordersSeparated[itemExists].quantity + item.quantity;
       return;
     }
 
