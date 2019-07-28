@@ -1,0 +1,268 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Category {
+  createdAt: String!
+  icon: String
+  id: ID!
+  name: String!
+  restaurant: Restaurant!
+  status: CategoryStatusEnum!
+  updatedAt: String!
+}
+
+type Client {
+  createdAt: String!
+  id: ID!
+  name: String
+  updatedAt: String!
+}
+
+type Collaborator {
+  collaboratorsAccess: [CollaboratorAccess!]!
+  createdAt: String!
+  email: String!
+  id: ID!
+  name: String!
+  password: String!
+  updatedAt: String!
+}
+
+type CollaboratorAccess {
+  accessType: CollaboratorAccessTypeEnum!
+  collaborator: Collaborator!
+  createdAt: String!
+  id: ID!
+  inActivity: Boolean!
+  restaurant: Restaurant
+  status: CollaboratorAccessStatusEnum!
+  updatedAt: String!
+}
+
+type Item {
+  amount: Float!
+  category: Category!
+  createdAt: String!
+  id: ID!
+  name: String!
+  restaurant: Restaurant!
+  status: ItemStatusEnum!
+  updatedAt: String!
+}
+
+type Mutation {
+  closeOrder: Order!
+  createCategory(input: CreateCategoryInput!): Category!
+  createClient(input: CreateClientInput!): Client!
+  createItem(input: CreateItemInput!): Item!
+  createOrderItem(input: CreateOrderItemInput!): OrderItem!
+  createRestaurant(input: CreateRestaurantInput!): Restaurant!
+  createTable(input: CreateTableInput!): Table!
+  createTokenToClient(input: CreateTokenToClientInput!): Token
+  createTokenToCollaborator(input: CreateTokenToCollaboratorInput!): Token
+  deliveredOrderItem(input: DeliveredOrderItemInput!): OrderItem!
+  doingOrderItem(input: DoingOrderItemInput!): OrderItem!
+  doneOrderItem(input: DoneOrderItemInput!): OrderItem!
+  initSession(input: InitSessionInput!): Order
+  removeOrderItem(input: RemoveOrderItemInput!): OrderItem!
+}
+
+type Order {
+  amount: String
+  client: Client!
+  createdAt: String!
+  id: ID!
+  orderItems: [OrderItem!]!
+  restaurant: Restaurant!
+  status: OrderStatusEnum!
+  table: Table!
+  updatedAt: String!
+}
+
+type OrderItem {
+  createdAt: String!
+  deliveredAt: String
+  doingAt: String
+  doneAt: String
+  id: ID!
+  item: Item!
+  order: Order!
+  status: OrderItemStatusEnum!
+  updatedAt: String!
+}
+
+type Query {
+  categories: [Category!]!
+  client(id: ID!): Client
+  clients: [Client!]!
+  collaboratorAccess: [CollaboratorAccess!]!
+  collaborators(first: Int, offset: Int): [Collaborator!]!
+  items: [Item!]!
+  itemsByCategory(category: String!): [Item!]!
+  order: Order!
+  restaurants: [Restaurant!]!
+  tables: [Table!]!
+}
+
+type Restaurant {
+  collaboratorsAccess: [CollaboratorAccess!]!
+  createdAt: String!
+  displayName: String!
+  id: ID!
+  name: String!
+  updatedAt: String!
+}
+
+type Schema {
+  mutation: Mutation
+  query: Query
+}
+
+type Subscription {
+  orderItemStatusUpdated: OrderItem!
+}
+
+type Table {
+  createdAt: String!
+  id: ID!
+  name: String!
+  qrcode: String!
+  restaurant: Restaurant!
+  status: TableStatusEnum!
+  updatedAt: String!
+}
+
+type TableHistory {
+  client: Client!
+  createdAt: String!
+  id: ID!
+  order: Order!
+  table: Table!
+  unemploymentAt: String!
+  updatedAt: String!
+}
+
+type Token {
+  token: String!
+}
+
+enum CategoryStatusEnum {
+  ACTIVE
+  INACTIVE
+}
+
+enum CollaboratorAccessStatusEnum {
+  ACTIVE
+  INACTIVE
+}
+
+enum CollaboratorAccessTypeEnum {
+  ADMIN
+  COMMON
+}
+
+enum ItemStatusEnum {
+  ACTIVE
+  INACTIVE
+}
+
+enum OrderItemStatusEnum {
+  CANCELED
+  DELIVERED
+  DOING
+  DONE
+  PENDING
+}
+
+enum OrderStatusEnum {
+  DOING
+  DONE
+  FINISH
+  PENDING
+}
+
+enum TableStatusEnum {
+  ACTIVE
+  INACTIVE
+}
+
+input CreateCategoryInput {
+  icon: String
+  name: String!
+}
+
+input CreateClientInput {
+  name: String!
+}
+
+input CreateCollaboratorAccessInput {
+  todo: String!
+}
+
+input CreateCollaboratorInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
+input CreateItemInput {
+  amount: Float!
+  categoryId: String!
+  name: String!
+}
+
+input CreateOrderItemInput {
+  itemId: String!
+}
+
+input CreateRestaurantInput {
+  collaboratorName: String!
+  displayName: String!
+  email: String!
+  password: String!
+}
+
+input CreateTableInput {
+  name: String!
+  restaurant: ID!
+  status: TableStatusEnum
+}
+
+input CreateTokenToClientInput {
+  clientName: String!
+  restaurantId: ID!
+  tableId: ID!
+}
+
+input CreateTokenToCollaboratorInput {
+  email: String!
+  password: String!
+  restaurantName: String!
+}
+
+input DeliveredOrderItemInput {
+  orderItemId: String!
+}
+
+input DoingOrderItemInput {
+  orderItemId: String!
+}
+
+input DoneOrderItemInput {
+  orderItemId: String!
+}
+
+input InitSessionInput {
+  name: String!
+  restaurant: String!
+  table: String!
+}
+
+input RemoveOrderItemInput {
+  orderItemId: String!
+}

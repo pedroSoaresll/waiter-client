@@ -1,0 +1,11 @@
+mutation CREATE_TOKEN_TO_CLIENT(
+  $clientName: String!, $restaurantId: ID!, $tableId: ID!
+) {
+  createTokenToClient(input: {
+    clientName: $clientName
+    restaurantId: $restaurantId
+    tableId: $tableId
+  }) {
+    token
+  }
+}

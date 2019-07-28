@@ -8,6 +8,6 @@
   "extends": [
     //"eslint:recommended",
     "plugin:vue/essential",
-    "airbnb"
+    "airbnb-base"
   ]
 }

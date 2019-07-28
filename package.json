@@ -47,6 +47,7 @@
     "@vue/cli-plugin-babel": "3.4.0",
     "@vue/cli-plugin-eslint": "3.4.0",
     "@vue/cli-service": "3.4.0",
+    "babel-eslint": "^10.0.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "compression-webpack-plugin": "2.0.0",
     "dotenv-webpack": "1.7.0",

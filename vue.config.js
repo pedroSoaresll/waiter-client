@@ -18,7 +18,7 @@ module.exports = {
     module: {
       rules: [
         {
-          test: /\.(gql)$/,
+          test: /\.(gql|graphql)$/,
           include: path.resolve(__dirname, 'src'),
           loader: 'graphql-tag/loader',
         },
@@ -111,7 +111,7 @@ module.exports = {
       compress: true,
       allowedHosts: [
         'localhost',
-      ]
+      ],
     },
   },
 };
