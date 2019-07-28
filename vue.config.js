@@ -107,19 +107,11 @@ module.exports = {
     },
     devServer: {
       port: 80,
-      host: '0.0.0.0',
+      host: 'localhost',
       compress: true,
-      watchContentBase: true,
       allowedHosts: [
         'localhost',
-        '0.0.0.0'
       ]
-    },
-    watch: true,
-    watchOptions: {
-      ignored: /node_modules/,  
-      aggregateTimeout: 300,
-      poll: 1000
     },
   },
 };

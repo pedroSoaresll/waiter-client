@@ -13,7 +13,6 @@
     "@babel/preset-env": "7.3.1",
     "@brazilian-utils/is-valid-cpf": "^0.1.11",
     "@google/maps": "0.5.5",
-    "adyen-cse-js": "git+https://github.com/Adyen/adyen-cse-web.git",
     "apollo-boost": "0.1.27",
     "apollo-cache-inmemory": "1.4.2",
     "apollo-client": "2.4.12",
