@@ -1,6 +1,7 @@
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import VueApollo from 'vue-apollo';
 import VueMoment from 'vue-moment';
 import moment from 'moment-timezone';
 import 'moment/locale/pt-br';
@@ -9,10 +10,9 @@ import App from './App.vue';
 import store from './store';
 import router from './routes';
 // import VueAnalytics from 'vue-analytics'
-// import VueApollo from 'vue-apollo'
 // import Amplify, * as AmplifyModules from 'aws-amplify'
 // import { AmplifyPlugin } from 'aws-amplify-vue'
-// import apolloClient from './services/ApolloClient'
+import apolloClient from './services/ApolloClient';
 import 'bootstrap-utilities/bootstrap-utilities.css';
 import './filters/filters';
 
@@ -27,8 +27,8 @@ moment.tz.setDefault('America/Sao_Paulo');
 //   }
 // });
 
+Vue.use(VueApollo);
 Vue.use(VueRouter);
-// Vue.use(VueApollo);
 // Vue.use(AmplifyPlugin, AmplifyModules);
 // Vue.use(VueAnalytics, {
 //   id: 'token-here',
@@ -54,9 +54,13 @@ router.beforeEach((to, from, next) => {
 
 Vue.config.productionTip = false;
 
+const apolloProvider = new VueApollo({
+  defaultClient: apolloClient,
+});
+
 new Vue({
   router,
   store,
-  // apolloProvider,
+  apolloProvider,
   render: h => h(App),
 }).$mount('#app');

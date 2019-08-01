@@ -1,0 +1,1 @@
+export const WAITER_TOKEN = 'PO_WAITER_TOKEN';

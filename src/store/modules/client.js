@@ -2,6 +2,7 @@
 import router from '../../routes';
 import apolloClient from '../../services/ApolloClient';
 import GQL_AUTHENTICATION from '../../services/authentication.graphql';
+import { WAITER_TOKEN } from '../../common/client';
 
 export const state = {
   qrCode: {
@@ -28,6 +29,7 @@ export const mutations = {
   },
 
   setToken(state, value) {
+    window.localStorage.setItem(WAITER_TOKEN, value);
     state.token = value;
   },
 };
@@ -107,9 +109,10 @@ export const actions = {
       },
     });
 
-    console.log('authentication', authentication);
+    const { data: { createTokenToClient: { token } } } = authentication;
 
     // update name
     commit('setName', value);
+    commit('setToken', token);
   },
 };

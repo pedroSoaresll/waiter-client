@@ -10,18 +10,27 @@
 
 <script>
 /* mocks */
-import categories from '../mocks/category';
+import GET_CATEGORIES from '../services/categories.graphql';
 
 export default {
   name: 'ShowCategories',
   data: () => ({
-    categories,
     currentCategory: {
       name: '',
       routerName: '',
       params: {},
     },
   }),
+  apollo: {
+    categories: {
+      query: GET_CATEGORIES,
+      update({ categories }) {
+        const response = categories;
+        response.children = [];
+        return response;
+      },
+    },
+  },
   methods: {
     openCategory({ id, name }) {
       const params = { categoryId: id };
