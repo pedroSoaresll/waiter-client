@@ -37,8 +37,7 @@ export default {
   }),
   methods: {
     updateClientName() {
-      this.$store.dispatch('client/updateName', this.clientName)
-        .then(() => this.$router.push({ name: 'Categories' }));
+      this.$store.dispatch('client/updateName', this.clientName);
     },
   },
   mounted() {

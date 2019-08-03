@@ -74,6 +74,7 @@ export const actions = {
       restaurant: null,
     });
     commit('setName', null);
+    commit('setToken', null);
   },
 
   validateQrCodeContent({ state, commit }) {
@@ -95,24 +96,25 @@ export const actions = {
   /*
    * called that function when you want update client name
    * */
-  async updateName({ commit, state }, value) {
+  updateName({ commit, state }, value) {
     if (!value) return;
 
     // generate token to client
     // eslint-disable-next-line global-require
-    const authentication = await apolloClient.mutate({
+    apolloClient.mutate({
       mutation: GQL_AUTHENTICATION,
       variables: {
         clientName: value,
         restaurantId: state.qrCode.restaurant,
         tableId: state.qrCode.table,
       },
+    }).then(({ data }) => {
+      const { createTokenToClient: { token } } = data;
+
+      commit('setName', value);
+      commit('setToken', token);
+
+      router.push({ name: 'Categories' }, () => location.reload(true));
     });
-
-    const { data: { createTokenToClient: { token } } } = authentication;
-
-    // update name
-    commit('setName', value);
-    commit('setToken', token);
   },
 };

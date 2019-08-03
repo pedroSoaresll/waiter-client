@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-img :src="require('../assets/images/macarrao.jpg')" :alt="item.name">
+    <v-img v-if="item.image" :src="item.image" :alt="item.name">
       <div class="fill-height bottom-gradient"></div>
     </v-img>
     <v-card-title primary-title>
@@ -10,7 +10,7 @@
         </v-flex>
         <v-flex xs6>
           <p class="text-right text-success font-weight-bold font-size-md">
-            {{ item.price | price_formatted }} </p>
+            {{ item.amount | price_formatted }} </p>
         </v-flex>
 
         <v-flex xs12>
@@ -34,7 +34,7 @@
 
       <v-layout row wrap v-if="quantity">
         <v-flex xs12>
-          <v-btn class="w-100" flat color="green" @click="orderThat">
+          <v-btn class="w-100 text-white" color="green" @click="orderThat">
             Colocar este item em pedidos
           </v-btn>
         </v-flex>

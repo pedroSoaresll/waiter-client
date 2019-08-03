@@ -48,7 +48,9 @@ type Item {
   amount: Float!
   category: Category!
   createdAt: String!
+  description: String
   id: ID!
+  image: String
   name: String!
   restaurant: Restaurant!
   status: ItemStatusEnum!
