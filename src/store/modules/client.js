@@ -16,6 +16,7 @@ export const state = {
 export const getters = {
   qrCode: state => state.qrCode,
   name: state => state.name,
+  token: state => state.token,
 };
 
 export const mutations = {
@@ -75,6 +76,8 @@ export const actions = {
     });
     commit('setName', null);
     commit('setToken', null);
+
+    router.push({ name: 'Home' });
   },
 
   validateQrCodeContent({ state, commit }) {
@@ -114,7 +117,8 @@ export const actions = {
       commit('setName', value);
       commit('setToken', token);
 
-      router.push({ name: 'Categories' }, () => location.reload(true));
+      // eslint-disable-next-line no-restricted-globals
+      location.reload();
     });
   },
 };

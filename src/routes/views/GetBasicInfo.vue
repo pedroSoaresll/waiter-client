@@ -5,10 +5,8 @@
 
       <v-form v-model="isValidForm" class="w-100" @submit.prevent="updateClientName">
         <v-flex row wrap xs12 mt-4>
-          <v-text-field
-            :rules="nameRules"
-            label="Como podemos te chamar?"
-            outline v-model.trim="clientName"></v-text-field>
+          <v-text-field :rules="nameRules" label="Como podemos te chamar?" outline
+                        v-model.trim="clientName"></v-text-field>
         </v-flex>
 
         <v-layout row wrap justify-center>
@@ -39,6 +37,13 @@ export default {
     updateClientName() {
       this.$store.dispatch('client/updateName', this.clientName);
     },
+  },
+  created() {
+    if (this.$store.getters['client/token']) {
+      this.$router.push({
+        name: 'Categories',
+      });
+    }
   },
   mounted() {
     this.clientName = this.$store.getters['client/name'] || '';

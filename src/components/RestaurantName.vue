@@ -1,10 +1,10 @@
 <template>
-  <v-layout row wrap align-center>
-    <v-flex xs10>
+  <v-layout row wrap align-center justify-space-between>
+    <v-flex xs10 md11>
       <h1 class="font-size-lg purple--text">Restaurante X</h1>
     </v-flex>
 
-    <v-flex xs2>
+    <v-flex xs2 md1>
       <v-btn flat icon @click="logout">
         <v-icon>close</v-icon>
       </v-btn>

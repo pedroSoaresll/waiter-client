@@ -1,0 +1,7 @@
+mutation ADD_ORDERITEM($itemId: String!) {
+  createOrderItem(input: {
+    itemId: $itemId
+  }) {
+    id
+  }
+}

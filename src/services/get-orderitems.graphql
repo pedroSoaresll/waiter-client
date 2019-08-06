@@ -1,0 +1,14 @@
+query GET_ORDERITEMS {
+  order {
+    id
+    orderItems{
+      id
+      status
+      item {
+        id
+        name
+        amount
+      }
+    }
+  }
+}

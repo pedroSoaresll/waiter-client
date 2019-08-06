@@ -1,3 +1,6 @@
+import apolloClient from '../../services/ApolloClient';
+import ADD_ORDERITEM from '../../services/add-orderitems.graphql';
+
 export const state = {
   ordersSeparated: [],
   ordersRequested: [],
@@ -50,8 +53,32 @@ export const mutations = {
 export const actions = {
   requestOrdersSeparated({ state, commit }) {
     // only do this if API response is OK
-    commit('setOrdersRequested', state.ordersSeparated);
-    commit('setOrdersSeparated', []);
+    const makeOrder = item => apolloClient.mutate({
+      mutation: ADD_ORDERITEM,
+      variables: {
+        itemId: item.id,
+      },
+    });
+
+    const executePromise = state.ordersSeparated.flatMap((item) => {
+      const times = [];
+
+      for (let i = 0; i < item.quantity; i += 1) {
+        times.push(makeOrder(item));
+      }
+
+      return times;
+    });
+
+    Promise.all(executePromise)
+      .then((response) => {
+        console.log('resposta das responses', response);
+        commit('setOrdersRequested', state.ordersSeparated);
+        commit('setOrdersSeparated', []);
+      })
+      .catch((error) => {
+        console.error('erro das responses', error);
+      });
   },
 
   clearOrders({ commit }) {

@@ -6,8 +6,8 @@
     </v-flex>
 
     <v-flex xs12 class="mt-3" v-if="orderSeparated.length">
-      <v-data-table item-key="orders-pending" rows-per-page-text="Itens por página" :headers="headers" :items="orderSeparated"
-                    no-data-text="Nenhum resultado para mostrar" class="elevation-1">
+      <v-data-table item-key="orders-pending" rows-per-page-text="Itens por página" :headers="headers"
+                    :items="orderSeparated" no-data-text="Nenhum resultado para mostrar" class="elevation-1">
         <template slot="items" slot-scope="props">
           <td class="text-xs-center">{{ props.item.quantity }}</td>
           <td class="text-xs-left">{{ props.item.name }}</td>

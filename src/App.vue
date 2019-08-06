@@ -3,7 +3,7 @@
     <router-view class="mb-5"/>
     <v-divider class="mb-5"/>
     <v-bottom-nav :active.sync="bottomNavActive" :value="showNav" fixed shift color="#FFF">
-      <v-btn color="primary" flat value="person">
+      <v-btn color="primary" flat value="person" :disabled="!!clientToken">
         <span>Eu</span>
         <v-icon>person</v-icon>
       </v-btn>
@@ -35,6 +35,9 @@ export default {
     },
     clientName() {
       return this.$store.getters['client/name'];
+    },
+    clientToken() {
+      return this.$store.getters['client/token'];
     },
     bottomNavActive: {
       get() {
