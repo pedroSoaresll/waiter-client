@@ -146,7 +146,7 @@ export default {
     }
 
     // get qr code mock
-    this.$store.dispatch('client/startSession', MOCK_QRCODE);
+    // this.$store.dispatch('client/startSession', MOCK_QRCODE);
   },
 };
 </script>
